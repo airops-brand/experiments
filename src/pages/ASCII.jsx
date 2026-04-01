@@ -421,7 +421,7 @@ export default function ASCII() {
           position: 'absolute',
           left: '50%',
           top: '50%',
-          transform: 'translate(-39%, -54%)',
+          transform: 'translate(-36%, -50%)',
           display: 'flex',
           alignItems: 'flex-start',
           lineHeight: 1,
@@ -431,7 +431,7 @@ export default function ASCII() {
           {/* N in Ballet */}
           <span style={{
             fontFamily: "'Ballet', cursive",
-            fontSize: 'clamp(90px, 13vw, 200px)',
+            fontSize: 'clamp(300px, 42vw, 700px)',
             fontWeight: 400,
             color: '#002910',
             lineHeight: 0.85,
@@ -440,7 +440,7 @@ export default function ASCII() {
           {/* ext in light serif, with CONF label inside */}
           <span style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontSize: 'clamp(80px, 11.5vw, 180px)',
+            fontSize: 'clamp(260px, 37vw, 620px)',
             fontWeight: 300,
             color: '#002910',
             lineHeight: 0.9,
