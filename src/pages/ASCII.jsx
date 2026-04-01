@@ -1,350 +1,11 @@
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-// ─── CSS-in-JS styles ───────────────────────────────────────────────────────
-const S = {
-  root: {
-    '--bg-color': '#f7f3f0',
-    '--text-color': '#3d3434',
-    '--secondary-color': '#938a84',
-    '--hairline': '#e3deda',
-    '--accent': '#b08a8a',
-    '--font-main': "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-    '--font-mono': "'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace",
-    '--pad': '24px',
-    backgroundColor: '#f7f3f0',
-    color: '#3d3434',
-    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-    height: '100vh',
-    width: '100vw',
-    overflow: 'hidden',
-    display: 'flex',
-    flexDirection: 'column',
-    WebkitFontSmoothing: 'antialiased',
-    MozOsxFontSmoothing: 'grayscale',
-    cursor: 'none',
-    position: 'relative',
-  },
-  cursorDot: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    transform: 'translate(-50%, -50%)',
-    borderRadius: '50%',
-    zIndex: 9999,
-    pointerEvents: 'none',
-    mixBlendMode: 'multiply',
-    width: 6,
-    height: 6,
-    backgroundColor: '#b08a8a',
-  },
-  cursorOutline: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    transform: 'translate(-50%, -50%)',
-    borderRadius: '50%',
-    zIndex: 9999,
-    pointerEvents: 'none',
-    mixBlendMode: 'multiply',
-    width: 40,
-    height: 40,
-    border: '1px solid #b08a8a',
-    transition: 'width 0.2s, height 0.2s',
-  },
-  cornerIndex: {
-    position: 'fixed',
-    fontFamily: "'Inter', -apple-system, sans-serif",
-    fontWeight: 500,
-    fontSize: '2.5rem',
-    lineHeight: 1,
-    zIndex: 1000,
-    color: '#3d3434',
-    transition: 'color 0.3s ease',
-    cursor: 'none',
-    userSelect: 'none',
-  },
-  canvasZone: {
-    position: 'relative',
-    height: '70vh',
-    width: '100%',
-    overflow: 'hidden',
-    borderBottom: '1px solid #e3deda',
-    flexShrink: 0,
-  },
-  canvas: {
-    display: 'block',
-    width: '100%',
-    height: '100%',
-  },
-  heroText: {
-    position: 'absolute',
-    bottom: 24,
-    left: 24,
-    pointerEvents: 'auto',
-    cursor: 'none',
-  },
-  heroHeadline: {
-    fontSize: '3rem',
-    fontWeight: 400,
-    fontFamily: 'Georgia, "Times New Roman", Times, serif',
-    letterSpacing: '-0.01em',
-    marginBottom: 8,
-    color: '#3d3434',
-    lineHeight: 1.1,
-  },
-  heroSubline: {
-    fontFamily: "'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace",
-    fontSize: '0.8rem',
-    color: '#b08a8a',
-  },
-  panelZone: {
-    height: '30vh',
-    width: '100%',
-    padding: 24,
-    display: 'grid',
-    gridTemplateColumns: '2fr 1.5fr 1fr',
-    gap: 40,
-    alignContent: 'start',
-    fontSize: '0.85rem',
-    lineHeight: 1.5,
-    flexShrink: 0,
-  },
-  panelCol: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 24,
-  },
-  metaLine: {
-    display: 'flex',
-    gap: 12,
-    color: '#938a84',
-    fontSize: '0.75rem',
-    textTransform: 'uppercase',
-    letterSpacing: '0.05em',
-    marginBottom: 4,
-  },
-  bioText: {
-    maxWidth: 400,
-    color: '#3d3434',
-    transition: 'font-family 0.1s, letter-spacing 0.1s, color 0.1s',
-  },
-  linkList: {
-    listStyle: 'none',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 8,
-  },
-  colophon: {
-    marginTop: 24,
-    color: '#938a84',
-    fontSize: '0.75rem',
-  },
-  telemetry: {
-    fontFamily: "'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace",
-    fontSize: '0.7rem',
-    color: '#938a84',
-    textAlign: 'right',
-    marginTop: 'auto',
-  },
-  navOverlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100vw',
-    height: '100vh',
-    background: 'rgba(247, 243, 240, 0.96)',
-    backdropFilter: 'blur(10px)',
-    zIndex: 2000,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    transition: 'opacity 0.4s ease',
-  },
-  navContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '2rem',
-    textAlign: 'center',
-  },
-  navItem: {
-    fontSize: '3rem',
-    fontWeight: 300,
-    color: '#938a84',
-    cursor: 'none',
-    transition: 'color 0.3s',
-    userSelect: 'none',
-  },
-}
+// ─── Announcement text used as canvas character source ───────────────────────
+const ANNOUNCEMENT_TEXT = `AirOps Next Conference @context schema.org @type Event name AirOps Next Conference description A full-day conference for content engineers marketing leaders and practitioners building in the AI search era. Keynotes working sessions and conversations designed around AI search visibility content engineering and whats next in the AEO landscape. url https://airops.com/next eventStatus EventScheduled startDate 2025-05-13T09:00:00-05:00 endDate 2025-05-13T18:00:00-05:00 duration PT9H location City Winery 461 West 23rd Street New York NY 10011 geo latitude 40.7474 longitude -74.0040 organizer AirOps https://airops.com AirOps is the content engineering platform for marketing teams. It unifies AI search visibility AEO traditional SEO and content production into one operating system so brands get seen cited and cited first in AI assistants including ChatGPT Claude Perplexity Gemini. about Answer Engine Optimization AEO Content Engineering AI Search Visibility Page360 Brand Kits audience Content Engineers Marketing Leaders SEO and AEO Practitioners Growth Marketers keywords AEO Answer Engine Optimization AI search visibility content engineering LLM optimization AI citations ChatGPT visibility Perplexity citations Claude citations Gemini visibility SEO 2025 content marketing conference B2B marketing AirOps Page360 Brand Kit Golden Prompts content operations marketing conference NYC subEvent Keynote Sessions Working Sessions Practitioner Panels Networking inviteStatus invite-preferred AirOps customers cohort graduates public practitioners sponsor AirOps https://airops.com relatedProducts AirOps Insights Page360 AirOps Workflows Brand Kits Knowledge AirOps MCP AirOps Anywhere Content Engineering Certification AirOps Next Agent Runtime customerLogos Chime Webflow Ramp Carta Sage Apollo Wiz LegalZoom Xero Vanta Klaviyo AssemblyAI Zeffy Ping Identity robotsDirective index follow canonicalUrl https://airops.com/next AirOps Next May 13 New York City AI Search Conference for Marketing Leaders`
 
-// ─── Text Scramble ────────────────────────────────────────────────────────────
-class TextScramble {
-  constructor(el, onUpdate) {
-    this.el = el
-    this.onUpdate = onUpdate
-    this.chars = '!<>-_\\/[]{}—=+*^?#________'
-    this.originalText = el
-    this.frameRequest = null
-    this.frame = 0
-    this.queue = []
-  }
-
-  setText(newText) {
-    const oldText = this.currentText || this.originalText
-    const length = Math.max(oldText.length, newText.length)
-    const promise = new Promise((resolve) => { this.resolve = resolve })
-
-    this.queue = []
-    for (let i = 0; i < length; i++) {
-      const from = oldText[i] || ''
-      const to = newText[i] || ''
-      const start = Math.floor(Math.random() * 40)
-      const end = start + Math.floor(Math.random() * 40)
-      this.queue.push({ from, to, start, end })
-    }
-
-    cancelAnimationFrame(this.frameRequest)
-    this.frame = 0
-    this.update()
-    return promise
-  }
-
-  update() {
-    let output = []
-    let complete = 0
-    for (let i = 0, n = this.queue.length; i < n; i++) {
-      let { from, to, start, end, char } = this.queue[i]
-      if (this.frame >= end) {
-        complete++
-        output.push({ type: 'text', val: to })
-      } else if (this.frame >= start) {
-        if (!char || Math.random() < 0.28) {
-          char = this.randomChar()
-          this.queue[i].char = char
-        }
-        output.push({ type: 'scramble', val: char })
-      } else {
-        output.push({ type: 'text', val: from })
-      }
-    }
-
-    this.onUpdate(output)
-
-    if (complete === this.queue.length) {
-      this.resolve && this.resolve()
-    } else {
-      this.frameRequest = requestAnimationFrame(this.update.bind(this))
-      this.frame++
-    }
-  }
-
-  randomChar() {
-    return this.chars[Math.floor(Math.random() * this.chars.length)]
-  }
-
-  destroy() {
-    cancelAnimationFrame(this.frameRequest)
-  }
-}
-
-// ─── ScrambleText Component ───────────────────────────────────────────────────
-function ScrambleText({ text, style }) {
-  const [rendered, setRendered] = useState(null)
-  const scrambleRef = useRef(null)
-
-  useEffect(() => {
-    scrambleRef.current = new TextScramble(text, setRendered)
-    return () => scrambleRef.current?.destroy()
-  }, [text])
-
-  const handleMouseEnter = useCallback(() => {
-    scrambleRef.current?.setText(text)
-  }, [text])
-
-  const handleMouseLeave = useCallback(() => {
-    setTimeout(() => {
-      scrambleRef.current?.setText(text)
-    }, 200)
-  }, [text])
-
-  const renderOutput = (tokens) => {
-    if (!tokens) return text
-    return tokens.map((t, i) =>
-      t.type === 'scramble'
-        ? <span key={i} style={{ fontFamily: 'monospace', opacity: 0.5 }}>{t.val}</span>
-        : t.val
-    )
-  }
-
-  // Handle multiline text (contains \n or <br>)
-  const lines = text.split('\n')
-
-  return (
-    <span style={style} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      {rendered ? renderOutput(rendered) : lines.map((line, i) => (
-        <span key={i}>
-          {line}
-          {i < lines.length - 1 && <br />}
-        </span>
-      ))}
-    </span>
-  )
-}
-
-// ─── ASCII Canvas ─────────────────────────────────────────────────────────────
-const ANNOUNCEMENT_TEXT = `
-AirOps Next Conference
-@context schema.org @type Event
-name: AirOps Next Conference
-description: A full-day conference for content engineers marketing leaders
-and practitioners building in the AI search era. Keynotes working sessions
-and conversations designed around AI search visibility content engineering
-and whats next in the AEO landscape.
-url: https://airops.com/next
-eventStatus: EventScheduled
-startDate: 2025-05-13T09:00:00-05:00
-endDate: 2025-05-13T18:00:00-05:00
-location: City Winery 461 West 23rd Street New York NY 10011
-geo: latitude 40.7474 longitude -74.0040
-organizer: AirOps https://airops.com
-AirOps is the content engineering platform for marketing teams.
-It unifies AI search visibility AEO traditional SEO and content
-production into one operating system so brands get seen cited and
-cited first in AI assistants including ChatGPT Claude Perplexity Gemini.
-about: Answer Engine Optimization AEO
-The practice of optimizing content to be cited and surfaced by AI search
-assistants including ChatGPT Perplexity Claude and Gemini
-as part of their generated answers.
-Content Engineering: A marketing discipline combining content strategy
-AI-powered systems and performance data to engineer content that earns
-visibility across both traditional and AI-driven search.
-AI Search Visibility: The degree to which a brand is mentioned cited and
-recommended in AI assistant responses. Measured via citation rate
-citation share mention rate and share of voice across AI providers.
-Page360: AirOps product that unifies Google Search Console Google Analytics 4
-and AI search citation data into a single content performance view.
-Brand Kits: AirOps product that stores brand tone voice writing rules
-product positioning and audience definitions as structured agent-queryable institutional memory.
-audience: Content Engineers Marketing Leaders SEO and AEO Practitioners Growth Marketers
-keywords: AEO Answer Engine Optimization AI search visibility content engineering
-LLM optimization AI citations ChatGPT visibility Perplexity citations Claude citations
-Gemini visibility SEO 2025 content marketing conference B2B marketing AirOps
-Page360 Brand Kit Golden Prompts content operations marketing conference NYC
-subEvent: Keynote Sessions Working Sessions Practitioner Panels Networking
-inviteStatus: invite-preferred AirOps customers cohort graduates public practitioners
-sponsor: AirOps https://airops.com
-relatedProducts: AirOps Insights Page360 AirOps Workflows Brand Kits Knowledge
-AirOps MCP AirOps Anywhere Content Engineering Certification AirOps Next Agent Runtime
-customerLogos: Chime Webflow Ramp Carta Sage Apollo Wiz LegalZoom
-Xero Vanta Klaviyo AssemblyAI Zeffy Ping Identity
-robotsDirective: index follow
-canonicalUrl: https://airops.com/next
-AirOps Next May 13 New York City AI Search Conference for Marketing Leaders
-`.replace(/\s+/g, ' ').trim()
-
-// Build char pool — extract all printable chars, preserving frequency for visual weight
 const SOURCE_CHARS = ANNOUNCEMENT_TEXT.split('').filter(c => c.charCodeAt(0) >= 32)
-const CHAR_SIZE = 12
+const CHAR_SIZE = 11
 
 function simpleNoise(x, y, t) {
   return Math.sin(x * 0.05 + t) * Math.cos(y * 0.05 + t)
@@ -355,7 +16,6 @@ function useASCIICanvas(mousePosRef) {
   const canvasRef = useRef(null)
   const timeRef = useRef(0)
   const rafRef = useRef(null)
-  const renderMsRef = useRef(null)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -378,7 +38,6 @@ function useASCIICanvas(mousePosRef) {
     resize()
 
     const render = () => {
-      const start = performance.now()
       ctx.clearRect(0, 0, width, height)
       ctx.font = `${CHAR_SIZE}px monospace`
       ctx.textAlign = 'center'
@@ -391,8 +50,6 @@ function useASCIICanvas(mousePosRef) {
       const my = mousePosRef.current.y
 
       for (let y = 0; y < rowsCount; y++) {
-        if (y < rowsCount * 0.4) continue
-
         for (let x = 0; x < colsCount; x++) {
           const posX = x * CHAR_SIZE
           const posY = y * CHAR_SIZE
@@ -401,81 +58,175 @@ function useASCIICanvas(mousePosRef) {
           const dy = posY - (my - canvasRect.top)
           const dist = Math.sqrt(dx * dx + dy * dy)
 
-          const normalizedY = (rowsCount - y) / rowsCount
-          const noiseVal = simpleNoise(x, y, timeRef.current * 0.5)
-          const mountainHeight = 0.3 + (Math.sin(x * 0.05 + timeRef.current * 0.1) * 0.1) + (Math.cos(x * 0.2) * 0.05)
+          const noiseVal = simpleNoise(x, y, timeRef.current * 0.4)
+          // Fade from bottom only — top is sparse, bottom is denser
+          const normalizedY = y / rowsCount
+          const density = 0.15 + normalizedY * 0.5
 
           let char = ''
           let alpha = 0
 
-          if (normalizedY < mountainHeight + (noiseVal * 0.1)) {
-            // Index into the announcement text — position in text driven by grid coords + time scroll
-            const scroll = Math.floor(timeRef.current * 4)
+          if (Math.abs(noiseVal) > (1 - density)) {
+            const scroll = Math.floor(timeRef.current * 3)
             const index = ((x + y * colsCount) + scroll) % SOURCE_CHARS.length
             char = SOURCE_CHARS[index]
-            alpha = 1 - (normalizedY * 2)
+            alpha = Math.abs(noiseVal) * normalizedY * 0.7
           }
 
-          if (dist < 150) {
-            const lensStrength = 1 - (dist / 150)
-            if (Math.random() > 0.5) {
-              // Pull accent chars from source text at a faster scroll
-              const accentIdx = (Math.floor(timeRef.current * 20) + x + y) % SOURCE_CHARS.length
-              char = SOURCE_CHARS[accentIdx]
-              ctx.fillStyle = `rgba(176, 138, 138, ${lensStrength})`
-            } else {
-              ctx.fillStyle = `rgba(147, 138, 132, ${alpha})`
-            }
-            const shiftX = dist > 0 ? (dx / dist) * 10 * lensStrength : 0
-            const shiftY = dist > 0 ? (dy / dist) * 10 * lensStrength : 0
+          if (dist < 120) {
+            const lensStrength = 1 - (dist / 120)
+            const accentIdx = (Math.floor(timeRef.current * 15) + x + y) % SOURCE_CHARS.length
+            char = SOURCE_CHARS[accentIdx]
+            ctx.fillStyle = `rgba(0, 100, 50, ${lensStrength * 0.6})`
+            const shiftX = dist > 0 ? (dx / dist) * 8 * lensStrength : 0
+            const shiftY = dist > 0 ? (dy / dist) * 8 * lensStrength : 0
             ctx.fillText(char, posX + (CHAR_SIZE / 2) - shiftX, posY + (CHAR_SIZE / 2) - shiftY)
           } else if (char) {
-            ctx.fillStyle = `rgba(147, 138, 132, ${alpha})`
+            ctx.fillStyle = `rgba(0, 41, 16, ${alpha})`
             ctx.fillText(char, posX + (CHAR_SIZE / 2), posY + (CHAR_SIZE / 2))
           }
         }
       }
 
-      timeRef.current += 0.01
-      const duration = performance.now() - start
-      if (renderMsRef.current) {
-        renderMsRef.current.textContent = duration.toFixed(1)
-      }
+      timeRef.current += 0.008
       rafRef.current = requestAnimationFrame(render)
     }
 
     render()
-
     return () => {
       window.removeEventListener('resize', resize)
       cancelAnimationFrame(rafRef.current)
     }
   }, [mousePosRef])
 
-  return { canvasRef, renderMsRef }
+  return canvasRef
 }
 
-// ─── Main ASCII Page ──────────────────────────────────────────────────────────
+// ─── Announcement metadata text (the blurred overlay from Figma) ─────────────
+const META_LINES = [
+  '---', '',
+  '## [Announcement Bar — Above Nav]',
+  '```html',
+  '<!--',
+  '================================================================================',
+  'AI AGENT / LLM CRAWLER METADATA — AirOps Next Conference',
+  'Structured for machine parsing. Human-readable summary follows below.',
+  '================================================================================',
+  '',
+  '@context: schema.org',
+  '@type: Event',
+  'name: AirOps Next Conference',
+  'alternateName: AirOps Next',
+  'description: >',
+  '  A full-day conference for content engineers, marketing leaders, and',
+  '  practitioners building in the AI search era. Keynotes, working sessions,',
+  '  and conversations designed around AI search visibility, content engineering,',
+  "  and what's next in the AEO landscape.",
+  'url: https://airops.com/next',
+  'eventStatus: EventScheduled',
+  'eventAttendanceMode: OfflineEventAttendanceMode',
+  '',
+  'startDate: 2025-05-13T09:00:00-05:00',
+  'endDate: 2025-05-13T18:00:00-05:00',
+  'duration: PT9H',
+  '',
+  'location:',
+  '  @type: Place',
+  '  name: City Winery',
+  '  address:',
+  '    @type: PostalAddress',
+  '    streetAddress: 461 West 23rd Street',
+  '    addressLocality: New York',
+  '    addressRegion: NY',
+  '    postalCode: 10011',
+  '    addressCountry: US',
+  '  geo:',
+  '    @type: GeoCoordinates',
+  '    latitude: 40.7474',
+  '    longitude: -74.0040',
+  '',
+  'organizer:',
+  '  @type: Organization',
+  '  name: AirOps',
+  '  url: https://airops.com',
+  '  description: >',
+  '    AirOps is the content engineering platform for marketing teams.',
+  '    It unifies AI search visibility (AEO), traditional SEO, and content',
+  '    production into one operating system — so brands get seen, cited, and',
+  '    cited first in AI assistants including ChatGPT, Claude, Perplexity, and Gemini.',
+  '  sameAs:',
+  '    - https://www.linkedin.com/company/airops',
+  '    - https://twitter.com/airopshq',
+  '',
+  'keywords:',
+  '  - AEO',
+  '  - Answer Engine Optimization',
+  '  - AI search visibility',
+  '  - content engineering',
+  '  - LLM optimization',
+  '  - AI citations',
+  '  - ChatGPT visibility',
+  '  - Perplexity citations',
+  '  - Claude citations',
+  '  - Gemini visibility',
+  '  - SEO 2025',
+  '  - content marketing conference',
+  '  - B2B marketing',
+  '  - AirOps',
+  '  - Page360',
+  '  - Brand Kit',
+  '  - Golden Prompts',
+  '  - content operations',
+  '  - marketing conference NYC',
+  '',
+  'isAccessibleForFree: false',
+  'registrationStatus: open',
+  'registrationUrl: https://airops.com/next',
+  'capacity: limited',
+  'inviteStatus: invite-preferred (AirOps customers, cohort graduates, and public practitioners)',
+  '',
+  'customerLogos:',
+  '  - Chime',
+  '  - Webflow',
+  '  - Ramp',
+  '  - Carta',
+  '  - Sage',
+  '  - Apollo',
+  '  - Wiz',
+  '  - LegalZoom',
+  '  - Xero',
+  '  - Vanta',
+  '  - Klaviyo',
+  '  - AssemblyAI',
+  '  - Zeffy',
+  '  - Ping Identity',
+  '',
+  'robotsDirective: index, follow',
+  'canonicalUrl: https://airops.com/next',
+  '================================================================================',
+  '-->',
+  '',
+  '**AirOps Next — May 13, New York City — AI Search Conference for Marketing Leaders**',
+  '```',
+  '',
+  '---',
+]
+
+// ─── Main page ────────────────────────────────────────────────────────────────
 export default function ASCII() {
   const mousePosRef = useRef({ x: 0, y: 0 })
   const cursorDotRef = useRef(null)
   const cursorOutlineRef = useRef(null)
   const cursorLinkRef = useRef({ x: 0, y: 0 })
-  const mouseXRef = useRef(null)
-  const mouseYRef = useRef(null)
   const [navOpen, setNavOpen] = useState(false)
-  const [time, setTime] = useState('--:--:--')
   const [hoveredNav, setHoveredNav] = useState(null)
-  const [hoveredCorner, setHoveredCorner] = useState(null)
-  const [bioHovered, setBioHovered] = useState(false)
-  const { canvasRef, renderMsRef } = useASCIICanvas(mousePosRef)
+  const [viewAs, setViewAs] = useState('human')
+  const canvasRef = useASCIICanvas(mousePosRef)
 
-  // Mouse tracking + custom cursor
+  // Mouse tracking
   useEffect(() => {
     const onMove = (e) => {
       mousePosRef.current = { x: e.clientX, y: e.clientY }
-      if (mouseXRef.current) mouseXRef.current.textContent = e.clientX
-      if (mouseYRef.current) mouseYRef.current.textContent = e.clientY
       if (cursorDotRef.current) {
         cursorDotRef.current.style.left = `${e.clientX}px`
         cursorDotRef.current.style.top = `${e.clientY}px`
@@ -503,206 +254,364 @@ export default function ASCII() {
     return () => cancelAnimationFrame(rafId)
   }, [])
 
-  // Clock
-  useEffect(() => {
-    const update = () => {
-      const now = new Date()
-      setTime(now.toLocaleTimeString('en-US', { hour12: false }) + ' UTC+4')
-    }
-    update()
-    const id = setInterval(update, 1000)
-    return () => clearInterval(id)
-  }, [])
-
-  const corners = [
-    { pos: { top: 24, left: 24 }, label: 'S' },
-    { pos: { top: 24, right: 24 }, label: 'K' },
-    { pos: { bottom: 24, left: 24 }, label: '0' },
-    { pos: { bottom: 24, right: 24 }, label: '1' },
-  ]
-
-  const navItems = ['Experiments', 'Writing', 'Capabilities', 'About']
-
   return (
-    <div style={S.root}>
-      {/* Custom cursor */}
-      <div ref={cursorDotRef} style={S.cursorDot} />
-      <div ref={cursorOutlineRef} style={S.cursorOutline} />
+    <div style={{
+      position: 'relative',
+      width: '100vw',
+      height: '100vh',
+      overflow: 'hidden',
+      cursor: 'none',
+      background: '#fff',
+      fontFamily: "'Inter', -apple-system, sans-serif",
+    }}>
 
-      {/* Corner indices */}
-      {corners.map(({ pos, label }) => (
-        <div
-          key={label}
-          style={{
-            ...S.cornerIndex,
-            ...pos,
-            color: hoveredCorner === label ? '#b08a8a' : '#3d3434',
-          }}
-          onClick={() => setNavOpen(true)}
-          onMouseEnter={() => setHoveredCorner(label)}
-          onMouseLeave={() => setHoveredCorner(null)}
-        >
-          {label}
+      {/* ── ASCII canvas background ── */}
+      <canvas ref={canvasRef} style={{
+        position: 'absolute',
+        inset: 0,
+        width: '100%',
+        height: '100%',
+        zIndex: 0,
+      }} />
+
+      {/* ── White overlay so ASCII is subtle ── */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: 'rgba(255, 255, 255, 0.82)',
+        zIndex: 1,
+        pointerEvents: 'none',
+      }} />
+
+      {/* ── Green gradient wash from bottom (mix-blend-darken) ── */}
+      <div style={{
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        width: '100%',
+        height: '55%',
+        background: 'radial-gradient(ellipse 120% 100% at 30% 100%, rgba(0,255,100,0.35) 0%, rgba(100,255,180,0.15) 40%, transparent 70%), radial-gradient(ellipse 60% 80% at 70% 100%, rgba(180,240,200,0.2) 0%, transparent 60%)',
+        mixBlendMode: 'darken',
+        zIndex: 2,
+        pointerEvents: 'none',
+      }} />
+
+      {/* ── Center spine ── */}
+      <div style={{
+        position: 'absolute',
+        left: '50%',
+        top: 0,
+        bottom: 0,
+        width: 1,
+        background: 'rgba(0, 41, 16, 0.15)',
+        zIndex: 3,
+        pointerEvents: 'none',
+      }} />
+
+      {/* ── Blurred metadata overlay (right half, mix-blend-difference) ── */}
+      <div style={{
+        position: 'absolute',
+        left: 'calc(50% + 14px)',
+        top: 27,
+        width: 652,
+        opacity: 0.05,
+        filter: 'blur(1px)',
+        mixBlendMode: 'difference',
+        color: '#fff',
+        fontFamily: "'SF Mono', 'Menlo', monospace",
+        fontSize: 13,
+        letterSpacing: '-0.52px',
+        lineHeight: '1.4',
+        whiteSpace: 'pre-wrap',
+        zIndex: 3,
+        pointerEvents: 'none',
+        userSelect: 'none',
+      }}>
+        {META_LINES.map((line, i) => (
+          <div key={i} style={{ lineHeight: '1.4', marginBottom: 0 }}>{line || '\u00a0'}</div>
+        ))}
+      </div>
+
+      {/* ── Hero content layer ── */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 4 }}>
+
+        {/* Nav logo (centered, top) */}
+        <div style={{
+          position: 'absolute',
+          left: '50%',
+          top: 43,
+          transform: 'translateX(-50%)',
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 18,
+          fontWeight: 500,
+          letterSpacing: '-0.3px',
+          color: '#002910',
+          userSelect: 'none',
+          cursor: 'pointer',
+        }} onClick={() => setNavOpen(true)}>
+          air<span style={{ fontWeight: 700 }}>O</span>ps
         </div>
-      ))}
 
-      {/* Nav overlay */}
+        {/* VIEW AS toggle (top right) */}
+        <div style={{
+          position: 'absolute',
+          top: 40,
+          right: 50,
+          background: '#f8fffa',
+          border: '1px solid #dfeae3',
+          borderRadius: 8,
+          padding: '8px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 8,
+          cursor: 'none',
+        }}>
+          <div style={{
+            fontFamily: "'SF Mono', monospace",
+            fontSize: 10,
+            fontWeight: 500,
+            color: '#008c44',
+            letterSpacing: '0.42px',
+            textTransform: 'uppercase',
+          }}>VIEW AS:</div>
+          <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+            {['human', 'agent'].map((mode) => (
+              <button key={mode} onClick={() => setViewAs(mode)} style={{
+                display: 'flex', gap: 4, alignItems: 'center', justifyContent: 'center',
+                background: 'none', border: 'none', padding: 0, cursor: 'none',
+              }}>
+                <div style={{
+                  width: 14, height: 14, borderRadius: '50%',
+                  border: `1.5px solid ${viewAs === mode ? '#008c44' : '#002910'}`,
+                  background: viewAs === mode ? '#008c44' : 'transparent',
+                  flexShrink: 0,
+                }} />
+                <span style={{
+                  fontFamily: viewAs === mode ? "'Cormorant Garamond', Georgia, serif" : "'Inter', sans-serif",
+                  fontSize: 14,
+                  color: '#002910',
+                  whiteSpace: 'nowrap',
+                  letterSpacing: '-0.1px',
+                }}>{mode.charAt(0).toUpperCase() + mode.slice(1)}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Ghost "airOps" left background text */}
+        <div style={{
+          position: 'absolute',
+          left: -20,
+          top: 60,
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 'clamp(100px, 16vw, 240px)',
+          fontWeight: 700,
+          color: '#002910',
+          opacity: 0.03,
+          letterSpacing: '-0.04em',
+          userSelect: 'none',
+          pointerEvents: 'none',
+          lineHeight: 1,
+        }}>
+          air<span>O</span>ps
+        </div>
+
+        {/* "Next" headline — Ballet N + Cormorant ext */}
+        <div style={{
+          position: 'absolute',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-39%, -54%)',
+          display: 'flex',
+          alignItems: 'flex-start',
+          lineHeight: 1,
+          pointerEvents: 'none',
+          userSelect: 'none',
+        }}>
+          {/* N in Ballet */}
+          <span style={{
+            fontFamily: "'Ballet', cursive",
+            fontSize: 'clamp(90px, 13vw, 200px)',
+            fontWeight: 400,
+            color: '#002910',
+            lineHeight: 0.85,
+            letterSpacing: '-0.02em',
+          }}>N</span>
+          {/* ext in light serif, with CONF label inside */}
+          <span style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: 'clamp(80px, 11.5vw, 180px)',
+            fontWeight: 300,
+            color: '#002910',
+            lineHeight: 0.9,
+            letterSpacing: '-0.04em',
+            position: 'relative',
+          }}>
+            ext
+            {/* CONF floats above the "t" */}
+            <span style={{
+              position: 'absolute',
+              right: 0,
+              top: 0,
+              transform: 'translateY(-100%)',
+              fontFamily: "'SF Mono', monospace",
+              fontSize: 'clamp(8px, 0.55vw, 11px)',
+              fontWeight: 500,
+              color: '#008c44',
+              letterSpacing: '0.3px',
+              lineHeight: 1.4,
+              whiteSpace: 'nowrap',
+            }}>CONF</span>
+          </span>
+        </div>
+
+        {/* Event details — bottom left */}
+        <div style={{
+          position: 'absolute',
+          left: 'calc(50% - 220px)',
+          bottom: 90,
+          color: '#002910',
+          lineHeight: 1.2,
+        }}>
+          <div style={{
+            fontFamily: "'SF Mono', monospace",
+            fontSize: 14,
+            fontWeight: 500,
+            color: '#008c44',
+            letterSpacing: '0.48px',
+            textTransform: 'uppercase',
+            marginBottom: 4,
+          }}>Register Today</div>
+          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 22, letterSpacing: '-0.02em' }}>May 13th</div>
+          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 22, letterSpacing: '-0.02em' }}>New York City</div>
+          <div style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: 22,
+            fontWeight: 400,
+            letterSpacing: '-0.01em',
+          }}>Pier 57, City Winery</div>
+        </div>
+
+        {/* Description + CTA — bottom right of center */}
+        <div style={{
+          position: 'absolute',
+          left: 'calc(50% + 175px)',
+          bottom: 80,
+          width: 440,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 20,
+        }}>
+          <p style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: 15,
+            color: '#002910',
+            lineHeight: 1.5,
+            letterSpacing: '-0.01em',
+            margin: 0,
+          }}>
+            See what's winning in AI search before it's common knowledge. Hear from the teams who've already made the shift, and what they'd do differently. Get a first look at what AirOps is building next. Walk away with strategies you can actually use.
+          </p>
+          <button style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
+            background: '#00ff64',
+            color: '#002910',
+            border: 'none',
+            borderRadius: 58,
+            padding: '14px 24px',
+            fontSize: 17,
+            fontFamily: "'Inter', sans-serif",
+            fontWeight: 600,
+            letterSpacing: '-0.01em',
+            cursor: 'none',
+            width: 'fit-content',
+            whiteSpace: 'nowrap',
+          }}>
+            Claim your spot
+            <span style={{ fontSize: 18, lineHeight: 1 }}>→</span>
+          </button>
+        </div>
+
+      </div>
+
+      {/* ── Custom cursor ── */}
+      <div ref={cursorDotRef} style={{
+        position: 'fixed', top: 0, left: 0,
+        transform: 'translate(-50%, -50%)',
+        width: 6, height: 6,
+        borderRadius: '50%',
+        background: '#002910',
+        zIndex: 9999,
+        pointerEvents: 'none',
+        mixBlendMode: 'multiply',
+      }} />
+      <div ref={cursorOutlineRef} style={{
+        position: 'fixed', top: 0, left: 0,
+        transform: 'translate(-50%, -50%)',
+        width: 36, height: 36,
+        borderRadius: '50%',
+        border: '1px solid #002910',
+        zIndex: 9999,
+        pointerEvents: 'none',
+        mixBlendMode: 'multiply',
+        transition: 'width 0.2s, height 0.2s',
+      }} />
+
+      {/* ── Nav overlay ── */}
       <div
         style={{
-          ...S.navOverlay,
+          position: 'fixed', inset: 0,
+          background: 'rgba(248, 255, 250, 0.96)',
+          backdropFilter: 'blur(12px)',
+          zIndex: 2000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           opacity: navOpen ? 1 : 0,
           pointerEvents: navOpen ? 'auto' : 'none',
+          transition: 'opacity 0.35s ease',
+          cursor: 'none',
         }}
         onClick={(e) => { if (e.target === e.currentTarget) setNavOpen(false) }}
       >
-        <div style={S.navContent}>
-          {navItems.map((item) => (
-            item === 'Experiments'
-              ? (
-                <Link
-                  key={item}
-                  to="/"
-                  style={{
-                    ...S.navItem,
-                    color: hoveredNav === item ? '#b08a8a' : '#938a84',
-                    textDecoration: 'none',
-                  }}
-                  onMouseEnter={() => setHoveredNav(item)}
-                  onMouseLeave={() => setHoveredNav(null)}
-                  onClick={() => setNavOpen(false)}
-                >
-                  {item}
-                </Link>
-              )
-              : (
-                <div
-                  key={item}
-                  style={{
-                    ...S.navItem,
-                    color: hoveredNav === item ? '#b08a8a' : '#938a84',
-                  }}
-                  onMouseEnter={() => setHoveredNav(item)}
-                  onMouseLeave={() => setHoveredNav(null)}
-                >
-                  {item}
-                </div>
-              )
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', textAlign: 'center' }}>
+          {['Experiments', 'Writing', 'Capabilities', 'About'].map((item) => (
+            item === 'Experiments' ? (
+              <Link key={item} to="/" onClick={() => setNavOpen(false)} style={{
+                fontSize: '3rem', fontWeight: 300, color: hoveredNav === item ? '#008c44' : '#002910',
+                textDecoration: 'none', transition: 'color 0.3s', cursor: 'none',
+                fontFamily: "'Inter', sans-serif",
+              }}
+                onMouseEnter={() => setHoveredNav(item)}
+                onMouseLeave={() => setHoveredNav(null)}
+              >{item}</Link>
+            ) : (
+              <div key={item} style={{
+                fontSize: '3rem', fontWeight: 300,
+                color: hoveredNav === item ? '#008c44' : '#002910',
+                transition: 'color 0.3s', cursor: 'none',
+                fontFamily: "'Inter', sans-serif",
+              }}
+                onMouseEnter={() => setHoveredNav(item)}
+                onMouseLeave={() => setHoveredNav(null)}
+              >{item}</div>
+            )
           ))}
-          <div
-            style={{
-              ...S.navItem,
-              color: hoveredNav === 'close' ? '#b08a8a' : '#938a84',
-              fontSize: '1.5rem',
-            }}
+          <div style={{
+            fontSize: '1.4rem', fontWeight: 300,
+            color: hoveredNav === 'close' ? '#008c44' : '#938a84',
+            transition: 'color 0.3s', cursor: 'none',
+            fontFamily: "'SF Mono', monospace",
+            letterSpacing: '0.05em',
+          }}
             onMouseEnter={() => setHoveredNav('close')}
             onMouseLeave={() => setHoveredNav(null)}
             onClick={() => setNavOpen(false)}
-          >
-            Close
-          </div>
-        </div>
-      </div>
-
-      {/* Canvas zone */}
-      <div style={S.canvasZone}>
-        <canvas ref={canvasRef} style={S.canvas} />
-        <div style={S.heroText}>
-          <div style={S.heroHeadline}>
-            <ScrambleText text={'AirOps Next\nConf 2026'} />
-          </div>
-          <div style={S.heroSubline}>Exploring the delta between signal and noise.</div>
-        </div>
-      </div>
-
-      {/* Info panel */}
-      <div style={S.panelZone}>
-        {/* Col 1 */}
-        <div style={S.panelCol}>
-          <div>
-            <div style={S.metaLine}>
-              <span>Sandro Kozmanishvili</span>
-              <span>{time}</span>
-            </div>
-            <p
-              style={{
-                ...S.bioText,
-                fontFamily: bioHovered
-                  ? "'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace"
-                  : "'Inter', -apple-system, sans-serif",
-                letterSpacing: bioHovered ? '-0.5px' : 'normal',
-                color: bioHovered ? '#b08a8a' : '#3d3434',
-              }}
-              onMouseEnter={() => setBioHovered(true)}
-              onMouseLeave={() => setBioHovered(false)}
-            >
-              Multidisciplinary designer based in Tbilisi. Focusing on the intersection of generative visuals and functional interfaces.
-            </p>
-          </div>
-          <div style={{ fontSize: '0.8rem', color: '#938a84', marginTop: 'auto' }}>
-            Currently building visual video sound and digital products.
-          </div>
-        </div>
-
-        {/* Col 2 */}
-        <div style={S.panelCol}>
-          <LinkList />
-          <div style={S.colophon}>
-            Built with Vite, React, Vercel.<br />
-            Typeface: Inter &amp; SF Mono.
-          </div>
-        </div>
-
-        {/* Col 3 */}
-        <div style={{ ...S.panelCol, textAlign: 'right', justifyContent: 'space-between' }}>
-          <div style={{ fontSize: '0.75rem' }}>© 2025</div>
-          <div style={S.telemetry}>
-            RENDER: <span ref={renderMsRef}>0.0</span>ms<br />
-            X: <span ref={mouseXRef}>0</span> Y: <span ref={mouseYRef}>0</span>
-          </div>
+          >[ close ]</div>
         </div>
       </div>
     </div>
-  )
-}
-
-// ─── LinkList ────────────────────────────────────────────────────────────────
-function LinkList() {
-  const [hovered, setHovered] = useState(null)
-  const links = ['Email', 'Are.na', 'GitHub', 'Instagram']
-
-  return (
-    <ul style={S.linkList}>
-      {links.map((label) => (
-        <li key={label}>
-          <a
-            href="#"
-            style={{
-              textDecoration: 'none',
-              color: hovered === label ? '#b08a8a' : '#3d3434',
-              position: 'relative',
-              display: 'inline-block',
-              width: 'fit-content',
-              cursor: 'none',
-            }}
-            onMouseEnter={() => setHovered(label)}
-            onMouseLeave={() => setHovered(null)}
-          >
-            {label}
-            <span style={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              width: '100%',
-              height: 1,
-              background: '#b08a8a',
-              transform: hovered === label ? 'scaleX(1)' : 'scaleX(0)',
-              transformOrigin: hovered === label ? 'left' : 'right',
-              transition: 'transform 0.4s cubic-bezier(0.19, 1, 0.22, 1)',
-              display: 'block',
-            }} />
-          </a>
-        </li>
-      ))}
-    </ul>
   )
 }
