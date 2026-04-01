@@ -453,6 +453,56 @@ export default function ASCII() {
           </span>
         </div>
 
+        {/* ── Ticker ── */}
+        <div style={{
+          position: 'absolute',
+          bottom: 56,
+          left: 0,
+          width: '100%',
+          overflow: 'hidden',
+          borderTop: '1px solid rgba(0, 41, 16, 0.12)',
+          borderBottom: '1px solid rgba(0, 41, 16, 0.12)',
+          padding: '9px 0',
+          pointerEvents: 'none',
+          userSelect: 'none',
+          zIndex: 5,
+        }}>
+          <style>{`
+            @keyframes ticker {
+              0%   { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+            }
+            .ticker-track {
+              display: flex;
+              width: max-content;
+              animation: ticker 28s linear infinite;
+            }
+          `}</style>
+          <div className="ticker-track">
+            {[...Array(6)].map((_, i) => (
+              <span key={i} style={{
+                fontFamily: "'SF Mono', 'Menlo', monospace",
+                fontSize: 11,
+                fontWeight: 500,
+                color: '#002910',
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                whiteSpace: 'nowrap',
+                paddingRight: '4rem',
+              }}>
+                MAY 13
+                <span style={{ color: '#008c44', margin: '0 1.2rem' }}>—</span>
+                NEW YORK CITY
+                <span style={{ color: '#008c44', margin: '0 1.2rem' }}>—</span>
+                CITY WINERY
+                <span style={{ color: '#008c44', margin: '0 1.2rem' }}>—</span>
+                REGISTER TODAY
+                <span style={{ color: '#008c44', margin: '0 1.2rem' }}>—</span>
+              </span>
+            ))}
+          </div>
+        </div>
+
         {/* Event details — bottom left */}
         <div style={{
           position: 'absolute',
