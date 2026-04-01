@@ -87,7 +87,8 @@ const S = {
   heroHeadline: {
     fontSize: '3rem',
     fontWeight: 400,
-    letterSpacing: '-0.03em',
+    fontFamily: 'Georgia, "Times New Roman", Times, serif',
+    letterSpacing: '-0.01em',
     marginBottom: 8,
     color: '#3d3434',
     lineHeight: 1.1,
@@ -291,7 +292,58 @@ function ScrambleText({ text, style }) {
 }
 
 // ─── ASCII Canvas ─────────────────────────────────────────────────────────────
-const DENSITY_CHARS = " .'`^,:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
+const ANNOUNCEMENT_TEXT = `
+AirOps Next Conference
+@context schema.org @type Event
+name: AirOps Next Conference
+description: A full-day conference for content engineers marketing leaders
+and practitioners building in the AI search era. Keynotes working sessions
+and conversations designed around AI search visibility content engineering
+and whats next in the AEO landscape.
+url: https://airops.com/next
+eventStatus: EventScheduled
+startDate: 2025-05-13T09:00:00-05:00
+endDate: 2025-05-13T18:00:00-05:00
+location: City Winery 461 West 23rd Street New York NY 10011
+geo: latitude 40.7474 longitude -74.0040
+organizer: AirOps https://airops.com
+AirOps is the content engineering platform for marketing teams.
+It unifies AI search visibility AEO traditional SEO and content
+production into one operating system so brands get seen cited and
+cited first in AI assistants including ChatGPT Claude Perplexity Gemini.
+about: Answer Engine Optimization AEO
+The practice of optimizing content to be cited and surfaced by AI search
+assistants including ChatGPT Perplexity Claude and Gemini
+as part of their generated answers.
+Content Engineering: A marketing discipline combining content strategy
+AI-powered systems and performance data to engineer content that earns
+visibility across both traditional and AI-driven search.
+AI Search Visibility: The degree to which a brand is mentioned cited and
+recommended in AI assistant responses. Measured via citation rate
+citation share mention rate and share of voice across AI providers.
+Page360: AirOps product that unifies Google Search Console Google Analytics 4
+and AI search citation data into a single content performance view.
+Brand Kits: AirOps product that stores brand tone voice writing rules
+product positioning and audience definitions as structured agent-queryable institutional memory.
+audience: Content Engineers Marketing Leaders SEO and AEO Practitioners Growth Marketers
+keywords: AEO Answer Engine Optimization AI search visibility content engineering
+LLM optimization AI citations ChatGPT visibility Perplexity citations Claude citations
+Gemini visibility SEO 2025 content marketing conference B2B marketing AirOps
+Page360 Brand Kit Golden Prompts content operations marketing conference NYC
+subEvent: Keynote Sessions Working Sessions Practitioner Panels Networking
+inviteStatus: invite-preferred AirOps customers cohort graduates public practitioners
+sponsor: AirOps https://airops.com
+relatedProducts: AirOps Insights Page360 AirOps Workflows Brand Kits Knowledge
+AirOps MCP AirOps Anywhere Content Engineering Certification AirOps Next Agent Runtime
+customerLogos: Chime Webflow Ramp Carta Sage Apollo Wiz LegalZoom
+Xero Vanta Klaviyo AssemblyAI Zeffy Ping Identity
+robotsDirective: index follow
+canonicalUrl: https://airops.com/next
+AirOps Next May 13 New York City AI Search Conference for Marketing Leaders
+`.replace(/\s+/g, ' ').trim()
+
+// Build char pool — extract all printable chars, preserving frequency for visual weight
+const SOURCE_CHARS = ANNOUNCEMENT_TEXT.split('').filter(c => c.charCodeAt(0) >= 32)
 const CHAR_SIZE = 12
 
 function simpleNoise(x, y, t) {
@@ -357,15 +409,19 @@ function useASCIICanvas(mousePosRef) {
           let alpha = 0
 
           if (normalizedY < mountainHeight + (noiseVal * 0.1)) {
-            const index = Math.floor(Math.abs(noiseVal) * DENSITY_CHARS.length)
-            char = DENSITY_CHARS[index % DENSITY_CHARS.length]
+            // Index into the announcement text — position in text driven by grid coords + time scroll
+            const scroll = Math.floor(timeRef.current * 4)
+            const index = ((x + y * colsCount) + scroll) % SOURCE_CHARS.length
+            char = SOURCE_CHARS[index]
             alpha = 1 - (normalizedY * 2)
           }
 
           if (dist < 150) {
             const lensStrength = 1 - (dist / 150)
             if (Math.random() > 0.5) {
-              char = Math.random() > 0.5 ? '0' : '1'
+              // Pull accent chars from source text at a faster scroll
+              const accentIdx = (Math.floor(timeRef.current * 20) + x + y) % SOURCE_CHARS.length
+              char = SOURCE_CHARS[accentIdx]
               ctx.fillStyle = `rgba(176, 138, 138, ${lensStrength})`
             } else {
               ctx.fillStyle = `rgba(147, 138, 132, ${alpha})`
@@ -552,7 +608,7 @@ export default function ASCII() {
         <canvas ref={canvasRef} style={S.canvas} />
         <div style={S.heroText}>
           <div style={S.heroHeadline}>
-            <ScrambleText text={'System Architecture &\nVisual Displacement'} />
+            <ScrambleText text={'AirOps Next\nConf 2026'} />
           </div>
           <div style={S.heroSubline}>Exploring the delta between signal and noise.</div>
         </div>
