@@ -456,7 +456,7 @@ export default function ASCII() {
         {/* ── Ticker ── */}
         <div style={{
           position: 'absolute',
-          bottom: 56,
+          bottom: 0,
           left: 0,
           width: '100%',
           overflow: 'hidden',
@@ -507,7 +507,7 @@ export default function ASCII() {
         <div style={{
           position: 'absolute',
           left: 'calc(50% - 220px)',
-          bottom: 90,
+          bottom: 56,
           color: '#002910',
           lineHeight: 1.2,
         }}>
@@ -534,7 +534,7 @@ export default function ASCII() {
         <div style={{
           position: 'absolute',
           left: 'calc(50% + 175px)',
-          bottom: 80,
+          bottom: 56,
           width: 440,
           display: 'flex',
           flexDirection: 'column',
