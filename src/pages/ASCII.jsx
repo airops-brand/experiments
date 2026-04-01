@@ -339,17 +339,11 @@ export default function ASCII() {
         <div style={{
           position: 'absolute',
           left: '50%',
-          top: 43,
+          top: 36,
           transform: 'translateX(-50%)',
-          fontFamily: "'Inter', sans-serif",
-          fontSize: 18,
-          fontWeight: 500,
-          letterSpacing: '-0.3px',
-          color: '#002910',
-          userSelect: 'none',
           cursor: 'pointer',
         }} onClick={() => setNavOpen(true)}>
-          air<span style={{ fontWeight: 700 }}>O</span>ps
+          <img src="/logo-airops.svg" alt="AirOps" style={{ height: 28, width: 'auto', display: 'block' }} />
         </div>
 
         {/* VIEW AS toggle (top right) */}
@@ -398,22 +392,16 @@ export default function ASCII() {
           </div>
         </div>
 
-        {/* Ghost "airOps" left background text */}
+        {/* Ghost logo left background */}
         <div style={{
           position: 'absolute',
-          left: -20,
-          top: 60,
-          fontFamily: "'Inter', sans-serif",
-          fontSize: 'clamp(100px, 16vw, 240px)',
-          fontWeight: 700,
-          color: '#002910',
-          opacity: 0.03,
-          letterSpacing: '-0.04em',
+          left: -40,
+          top: 40,
+          opacity: 0.04,
           userSelect: 'none',
           pointerEvents: 'none',
-          lineHeight: 1,
         }}>
-          air<span>O</span>ps
+          <img src="/logo-airops.svg" alt="" style={{ height: 'clamp(120px, 18vw, 280px)', width: 'auto' }} />
         </div>
 
         {/* "Next" headline — Ballet N + Cormorant ext */}
