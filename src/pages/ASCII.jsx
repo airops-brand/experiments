@@ -460,9 +460,10 @@ export default function ASCII() {
           left: 0,
           width: '100%',
           overflow: 'hidden',
-          borderTop: '1px solid rgba(0, 41, 16, 0.12)',
-          borderBottom: '1px solid rgba(0, 41, 16, 0.12)',
-          padding: '9px 0',
+          borderTop: '2px solid #002910',
+          borderBottom: '2px solid #002910',
+          padding: '12px 0',
+          background: 'transparent',
           pointerEvents: 'none',
           userSelect: 'none',
           zIndex: 5,
@@ -474,30 +475,33 @@ export default function ASCII() {
             }
             .ticker-track {
               display: flex;
+              gap: 64px;
               width: max-content;
-              animation: ticker 28s linear infinite;
+              white-space: nowrap;
+              animation: ticker 25s linear infinite;
             }
           `}</style>
           <div className="ticker-track">
-            {[...Array(6)].map((_, i) => (
+            {[...Array(8)].map((_, i) => (
               <span key={i} style={{
-                fontFamily: "'SF Mono', 'Menlo', monospace",
-                fontSize: 11,
-                fontWeight: 500,
+                fontFamily: "'Inter', sans-serif",
+                fontSize: 13,
+                fontWeight: 700,
                 color: '#002910',
                 letterSpacing: '0.12em',
                 textTransform: 'uppercase',
-                whiteSpace: 'nowrap',
-                paddingRight: '4rem',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 16,
               }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#002910', display: 'inline-block', flexShrink: 0 }} />
                 MAY 13
-                <span style={{ color: '#008c44', margin: '0 1.2rem' }}>—</span>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#002910', display: 'inline-block', flexShrink: 0 }} />
                 NEW YORK CITY
-                <span style={{ color: '#008c44', margin: '0 1.2rem' }}>—</span>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#002910', display: 'inline-block', flexShrink: 0 }} />
                 CITY WINERY
-                <span style={{ color: '#008c44', margin: '0 1.2rem' }}>—</span>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#002910', display: 'inline-block', flexShrink: 0 }} />
                 REGISTER TODAY
-                <span style={{ color: '#008c44', margin: '0 1.2rem' }}>—</span>
               </span>
             ))}
           </div>
