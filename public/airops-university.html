@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AirOps University</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --white: #ffffff;
+    --off-white: #F8FFFA;
+    --near-black: #000d05;
+    --green-50: #f8fffb;
+    --green-100: #dfeae3;
+    --green-200: #CCFFE0;
+    --green-500: #008c44;
+    --green-600: #002910;
+    --accent-label: #EEFF8C;
+    --text-primary: #09090b;
+    --text-secondary: #676c79;
+    --text-tertiary: #a5aab6;
+    --stroke-green: #d4e8da;
+
+    --sidebar-bg: #002910;
+    --sidebar-border: rgba(255,255,255,0.08);
+    --sidebar-active-bg: rgba(255,255,255,0.07);
+    --sidebar-label-color: rgba(255,255,255,0.28);
+    --sidebar-link-color: rgba(255,255,255,0.52);
+    --sidebar-link-hover-bg: rgba(255,255,255,0.06);
+    --sidebar-link-active-color: #ffffff;
+
+    --hero-bg: #ffffff;
+    --hero-border: #e8f0eb;
+
+    --sidebar-width: 220px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: var(--white);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    width: var(--sidebar-width);
+    min-height: 100vh;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--sidebar-border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+  }
+
+  .sidebar-logo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--sidebar-border);
+    text-decoration: none;
+    display: block;
+    flex-shrink: 0;
+  }
+  .sidebar-logo-sub {
+    font-family: 'DM Mono','Courier New',monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--sidebar-label-color);
+    display: block; margin-top: 7px;
+  }
+
+  .sidebar-section {
+    padding: 18px 0 6px;
+    border-bottom: 1px solid var(--sidebar-border);
+    flex-shrink: 0;
+  }
+  .sidebar-section-label {
+    font-family: 'DM Mono','Courier New',monospace;
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--sidebar-label-color);
+    padding: 0 20px 6px; display: block;
+  }
+
+  .sidebar-link {
+    display: flex; align-items: center; gap: 9px;
+    padding: 8px 20px;
+    font-size: 13px; color: var(--sidebar-link-color);
+    text-decoration: none;
+    transition: color 0.15s, background 0.15s;
+    position: relative;
+  }
+  .sidebar-link:hover { color: var(--sidebar-link-active-color); background: var(--sidebar-link-hover-bg); }
+  .sidebar-link.active { color: #ffffff; background: rgba(255,255,255,0.07); font-weight: 500; }
+  .sidebar-link.active::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px; background: var(--green-500);
+  }
+
+  .sidebar-link-icon { font-size: 12px; flex-shrink: 0; width: 16px; text-align: center; opacity: 0.55; }
+  .sidebar-link.active .sidebar-link-icon { opacity: 1; }
+
+  .sidebar-link-badge {
+    margin-left: auto;
+    font-family: 'DM Mono',monospace;
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    background: rgba(0,230,118,0.18); color: #7adba0;
+    padding: 2px 6px; flex-shrink: 0;
+  }
+
+  .sidebar-spacer { flex: 1; }
+
+  .sidebar-cta {
+    padding: 18px 20px;
+    border-top: 1px solid var(--sidebar-border);
+    flex-shrink: 0;
+  }
+  .sidebar-cta-btn {
+    display: block; width: 100%;
+    font-size: 13px; font-weight: 600;
+    color: var(--white); background: var(--green-500);
+    border: none; padding: 10px;
+    cursor: pointer; text-align: center; text-decoration: none;
+    transition: background 0.15s; margin-bottom: 8px;
+  }
+  .sidebar-cta-btn:hover { background: #5fcc8a; }
+  .sidebar-signin {
+    display: block; font-size: 12px;
+    color: rgba(255,255,255,0.38); text-align: center;
+    text-decoration: none; transition: color 0.15s;
+  }
+  .sidebar-signin:hover { color: rgba(255,255,255,0.75); }
+
+  .main { margin-left: var(--sidebar-width); flex: 1; min-width: 0; }
+
+  .hero {
+    background: var(--hero-bg);
+    border-bottom: 1px solid var(--hero-border);
+    padding: 80px 64px 72px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -100px; right: -80px;
+    width: 480px; height: 480px;
+    background: radial-gradient(ellipse at center, rgba(0,140,68,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 840px; }
+
+  .hero-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #e0f5ea; border: 1px solid #b8dfc8;
+    padding: 5px 12px; margin-bottom: 26px;
+  }
+  .hero-pill-dot { width: 6px; height: 6px; background: var(--green-500); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .hero-pill-text {
+    font-family: 'DM Mono','Courier New',monospace;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--green-500);
+  }
+
+  .hero h1 {
+    font-family: Georgia,'Times New Roman',serif;
+    font-size: 60px; font-weight: 400;
+    color: var(--near-black); line-height: 1.06;
+    letter-spacing: -0.03em; max-width: 800px; margin-bottom: 20px;
+  }
+  .hero h1 em { font-style: normal; color: var(--green-500); }
+
+  .hero-sub {
+    font-size: 16px; color: var(--text-secondary);
+    max-width: 500px; line-height: 1.65; margin-bottom: 34px;
+  }
+
+  .hero-actions { display: flex; align-items: center; gap: 12px; margin-bottom: 52px; }
+  .btn-primary {
+    font-size: 14px; font-weight: 600; color: var(--white);
+    background: var(--green-500); border: none;
+    padding: 12px 24px; cursor: pointer; text-decoration: none; transition: background 0.15s;
+  }
+  .btn-primary:hover { background: #5fcc8a; }
+  .btn-ghost {
+    font-size: 14px; font-weight: 500; color: var(--text-secondary);
+    background: transparent; border: 1px solid var(--stroke-green);
+    padding: 11px 24px; cursor: pointer; text-decoration: none;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .btn-ghost:hover { border-color: var(--green-500); color: var(--near-black); }
+
+  .hero-stats { display: flex; border-top: 1px solid var(--stroke-green); padding-top: 34px; }
+  .hero-stat { flex: 1; padding-right: 32px; }
+  .hero-stat+.hero-stat { border-left: 1px solid var(--stroke-green); padding-left: 32px; }
+  .hero-stat-num {
+    font-family: Georgia,serif; font-size: 34px; font-weight: 400;
+    color: var(--near-black); letter-spacing: -0.02em; line-height: 1; margin-bottom: 5px;
+  }
+  .hero-stat-num em { font-style: normal; color: var(--green-500); }
+  .hero-stat-label { font-size: 12px; color: var(--text-tertiary); }
+
+  .marquee-wrap {
+    background: var(--green-100);
+    border-bottom: 1px solid var(--stroke-green);
+    padding: 11px 0; overflow: hidden;
+  }
+  .marquee-track { display: flex; animation: marquee 28s linear infinite; white-space: nowrap; }
+  .marquee-item {
+    display: inline-flex; align-items: center; gap: 18px; padding: 0 20px;
+    font-family: 'DM Mono',monospace; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--green-500); flex-shrink: 0;
+  }
+  .mdot { width: 3px; height: 3px; background: var(--green-500); border-radius: 50%; opacity: 0.4; }
+  @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  .section { padding: 72px 64px; }
+  .section.alt { background: var(--off-white); }
+  .section.dark { background: var(--near-black); }
+  .section.green-wash { background: #eef8f2; }
+
+  .eyebrow {
+    display: inline-block;
+    font-family: 'DM Mono',monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    background: var(--accent-label); color: var(--near-black);
+    padding: 3px 9px; margin-bottom: 16px;
+  }
+  .eyebrow.green { background: #cceedd; color: var(--green-500); }
+
+  .stitle {
+    font-family: Georgia,serif; font-size: 42px; font-weight: 400;
+    color: var(--near-black); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 12px;
+  }
+  .stitle.light { color: #fff; }
+
+  .ssub {
+    font-size: 15px; color: var(--text-secondary);
+    max-width: 480px; line-height: 1.65; margin-bottom: 36px;
+  }
+  .ssub.light { color: rgba(255,255,255,0.5); }
+
+  .paths-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 1px; background: var(--stroke-green); border: 1px solid var(--stroke-green);
+  }
+  .path-card {
+    background: var(--white); padding: 30px 26px;
+    display: flex; flex-direction: column;
+    text-decoration: none; color: inherit; transition: background 0.15s;
+  }
+  .path-card:hover { background: var(--green-50); }
+  .path-card:hover .path-arrow { transform: translate(3px,-3px); }
+  .path-num {
+    font-family: 'DM Mono',monospace; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-tertiary); margin-bottom: 14px;
+  }
+  .path-icon {
+    width: 34px; height: 34px; background: var(--green-200);
+    border: 1px solid var(--stroke-green);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px; font-size: 15px;
+  }
+  .path-card h3 {
+    font-family: Georgia,serif; font-size: 22px; font-weight: 400;
+    color: var(--near-black); letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 8px;
+  }
+  .path-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; flex: 1; margin-bottom: 22px; }
+  .path-footer { display: flex; align-items: center; justify-content: space-between; }
+  .path-pill {
+    background: var(--accent-label); color: var(--near-black);
+    font-family: 'DM Mono',monospace; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 7px;
+  }
+  .path-arrow { font-size: 16px; color: var(--text-tertiary); transition: transform 0.2s; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; align-items: center; }
+
+  .cohort-ui { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); padding: 26px; }
+  .cohort-ui-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .cohort-ui-title { font-size: 13px; font-weight: 600; color: #fff; }
+  .live-badge { display: flex; align-items: center; gap: 5px; font-family: 'DM Mono',monospace; font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #7adba0; }
+  .live-dot { width: 5px; height: 5px; background: #7adba0; border-radius: 50%; animation: pulse 2s infinite; }
+  .sessions { display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
+  .sess-row { display: flex; align-items: center; gap: 9px; padding: 8px 11px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); }
+  .sess-wk { font-family: 'DM Mono',monospace; font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.28); flex-shrink: 0; width: 38px; }
+  .sess-name { font-size: 12px; color: rgba(255,255,255,0.7); flex: 1; }
+  .sess-tag { font-family: 'DM Mono',monospace; font-size: 8px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 6px; flex-shrink: 0; }
+  .t-strat { background: rgba(0,140,68,0.3); color: #7adba0; }
+  .t-build { background: rgba(238,255,140,0.15); color: #EEFF8C; }
+  .t-comm  { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.42); }
+  .seats-bar { background: rgba(122,219,160,0.08); border: 1px solid rgba(122,219,160,0.2); padding: 11px 13px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .seats-label { font-size: 12px; color: rgba(255,255,255,0.42); }
+  .seats-count { font-size: 12px; font-weight: 600; color: #7adba0; }
+  .cohort-btn { width: 100%; font-size: 13px; font-weight: 600; color: var(--near-black); background: #7adba0; border: none; padding: 12px; cursor: pointer; transition: opacity 0.15s; }
+  .cohort-btn:hover { opacity: 0.88; }
+  .features { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+  .feature { display: flex; gap: 13px; align-items: flex-start; }
+  .feature-icon { width: 26px; height: 26px; flex-shrink: 0; background: rgba(122,219,160,0.12); border: 1px solid rgba(122,219,160,0.25); display: flex; align-items: center; justify-content: center; font-size: 11px; }
+  .feature-title { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+  .feature-desc { font-size: 12px; color: rgba(255,255,255,0.42); line-height: 1.5; }
+
+  .cited-list { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--stroke-green); background: var(--stroke-green); }
+  .cited-row { background: var(--white); padding: 14px 18px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: background 0.12s; }
+  .cited-row:hover { background: var(--green-50); }
+  .cited-row.active { background: #edf8f1; }
+  .cited-n { font-family: 'DM Mono',monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-tertiary); width: 18px; flex-shrink: 0; }
+  .cited-ltr { width: 30px; height: 30px; flex-shrink: 0; background: var(--green-200); border: 1px solid var(--stroke-green); display: flex; align-items: center; justify-content: center; font-family: Georgia,serif; font-size: 16px; font-weight: 400; color: var(--green-500); }
+  .cited-row.active .cited-ltr { background: var(--green-500); color: #fff; }
+  .cited-info { flex: 1; }
+  .cited-t { font-size: 13px; font-weight: 600; color: var(--near-black); margin-bottom: 1px; }
+  .cited-s { font-size: 11px; color: var(--text-secondary); }
+  .cited-arr { font-size: 12px; color: var(--text-tertiary); }
+  .row-label { font-family: 'DM Mono',monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 13px; }
+  .meta-row { display: flex; gap: 18px; flex-wrap: wrap; }
+  .meta-item { font-size: 12px; color: var(--text-secondary); }
+  .meta-item strong { color: var(--near-black); font-weight: 600; }
+
+  .proof-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 28px; }
+  .tgrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--stroke-green); border: 1px solid var(--stroke-green); }
+  .tcard { background: var(--white); padding: 22px; display: flex; flex-direction: column; }
+  .tquote { font-family: Georgia,serif; font-size: 15px; font-weight: 400; color: var(--near-black); line-height: 1.55; letter-spacing: -0.01em; flex: 1; margin-bottom: 18px; }
+  .tauthor { display: flex; align-items: center; gap: 9px; }
+  .tavatar { width: 30px; height: 30px; background: var(--green-200); border: 1px solid var(--stroke-green); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: var(--green-500); flex-shrink: 0; }
+  .tname { font-size: 12px; font-weight: 600; color: var(--near-black); margin-bottom: 1px; }
+  .trole { font-size: 11px; color: var(--text-secondary); }
+
+  .tutorial-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--stroke-green); border: 1px solid var(--stroke-green); margin-bottom: 18px; }
+  .tut-card { background: var(--white); padding: 18px 16px; text-decoration: none; color: inherit; transition: background 0.12s; display: flex; flex-direction: column; gap: 7px; }
+  .tut-card:hover { background: var(--green-50); }
+  .tut-icon { width: 26px; height: 26px; background: var(--green-200); border: 1px solid var(--stroke-green); display: flex; align-items: center; justify-content: center; font-size: 11px; }
+  .tut-name { font-size: 13px; font-weight: 600; color: var(--near-black); }
+  .tut-count { font-family: 'DM Mono',monospace; font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-tertiary); margin-top: auto; }
+
+  .cert-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08); margin-bottom: 28px; }
+  .cert-card { background: rgba(255,255,255,0.03); padding: 22px 18px; display: flex; flex-direction: column; gap: 9px; }
+  .cert-card.flagship { background: rgba(122,219,160,0.07); border-left: 2px solid #7adba0; }
+  .cert-tier { font-family: 'DM Mono',monospace; font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+  .cert-card.flagship .cert-tier { color: #7adba0; }
+  .cert-name { font-family: Georgia,serif; font-size: 19px; font-weight: 400; color: #fff; letter-spacing: -0.01em; line-height: 1.2; }
+  .cert-desc { font-size: 12px; color: rgba(255,255,255,0.42); line-height: 1.55; flex: 1; }
+  .cert-link { font-size: 12px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.15s; }
+  .cert-card.flagship .cert-link { color: #7adba0; }
+  .cert-link:hover { color: #fff; }
+
+  .cta-wrap {
+    background: #eaf6ef; border-top: 1px solid var(--stroke-green);
+    padding: 80px 64px; text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-wrap::before {
+    content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 500px;
+    background: radial-gradient(ellipse at center, rgba(0,180,70,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .cta-inner { position: relative; z-index: 1; }
+  .cta-wrap .eyebrow { display: table; margin: 0 auto 18px; }
+  .cta-wrap .stitle { text-align: center; margin: 0 auto 10px; }
+  .cta-wrap .ssub { margin: 0 auto 30px; text-align: center; max-width: 380px; }
+  .cta-actions { display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .btn-ghost-cta {
+    font-size: 14px; font-weight: 500; color: var(--text-secondary);
+    background: transparent; border: 1px solid var(--stroke-green);
+    padding: 11px 26px; cursor: pointer; text-decoration: none;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .btn-ghost-cta:hover { border-color: var(--green-500); color: var(--near-black); }
+
+  footer {
+    background: #002910; border-top: 1px solid rgba(255,255,255,0.08); padding: 32px 64px;
+  }
+  .foot-inner { display: flex; align-items: center; justify-content: space-between; }
+  .foot-links { display: flex; gap: 18px; }
+  .foot-link { font-size: 12px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.15s; }
+  .foot-link:hover { color: #fff; }
+  .foot-copy { font-size: 12px; color: rgba(255,255,255,0.25); }
+  .link-muted { font-size: 13px; color: var(--text-secondary); text-decoration: none; }
+  .link-muted:hover { color: var(--text-primary); }
+
+  @media (max-width: 960px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .mobile-bar { display: flex !important; }
+    .hero, .section, .cta-wrap, footer { padding-left: 28px; padding-right: 28px; }
+    .hero { padding-top: 56px; padding-bottom: 48px; }
+    .section { padding-top: 52px; padding-bottom: 52px; }
+    .paths-grid { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; gap: 32px; }
+    .tgrid { grid-template-columns: 1fr; }
+    .tutorial-grid { grid-template-columns: repeat(2,1fr); }
+    .cert-grid { grid-template-columns: repeat(2,1fr); }
+    .hero-stats { flex-wrap: wrap; gap: 24px; }
+    .hero-stat+.hero-stat { border-left: none; padding-left: 0; }
+    .proof-head { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .cta-wrap, footer { padding-top: 52px; padding-bottom: 52px; }
+    .foot-inner { flex-direction: column; gap: 16px; text-align: center; }
+    .foot-links { flex-wrap: wrap; justify-content: center; }
+    .hero h1 { font-size: 38px; }
+  }
+  .mobile-bar {
+    display: none; position: sticky; top: 0; z-index: 99;
+    background: #002910; border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 13px 20px; align-items: center; justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <a class="sidebar-logo" href="#">
+    <svg width="96" height="31" viewBox="0 0 784 252" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M111.828 65.6415V88.4663C101.564 72.0112 85.627 61.9258 65.9084 61.9258C23.7703 61.9258 0 92.9782 0 134.647C0 176.581 24.0404 208.695 66.4487 208.695C86.1672 208.695 101.834 198.609 111.828 182.154V204.979H144.782V65.6415H111.828ZM72.9315 181.093C48.8911 181.093 35.1152 159.064 35.1152 134.647C35.1152 110.76 48.621 89.7933 73.4717 89.7933C94.0006 89.7933 111.558 104.391 111.558 134.116C111.558 163.31 94.8109 181.093 72.9315 181.093Z" fill="#ffffff"/>
+      <path d="M173.137 65.6494V204.987H208.252V65.6494H173.137Z" fill="#ffffff"/>
+      <path d="M272.998 100.141V65.6386H237.883V204.976H272.998V125.355C272.998 104.919 287.314 96.691 300.82 96.691C308.653 96.691 316.757 98.8143 321.079 100.407V63.25C298.119 63.25 279.211 76.7856 272.998 100.141Z" fill="#ffffff"/>
+      <path d="M329.629 108.115C329.629 151.377 359.882 182.163 403.371 182.163C447.13 182.163 477.115 151.377 477.115 108.115C477.115 65.6507 447.13 35.3945 403.371 35.3945C359.882 35.3945 329.629 65.6507 329.629 108.115ZM441.997 108.115C441.997 135.187 427.141 154.561 403.371 154.561C379.33 154.561 364.744 135.187 364.744 108.115C364.744 82.1058 379.33 63.2621 403.371 63.2621C427.141 63.2621 441.997 82.1058 441.997 108.115Z" fill="#ffffff"/>
+      <path d="M575.086 61.9258C554.557 61.9258 537.81 73.869 528.896 92.9782V65.6415H493.781V251.425H528.896V180.031C538.891 197.282 557.529 208.695 577.247 208.695C615.604 208.695 642.345 179.235 642.345 137.035C642.345 92.7128 614.523 61.9258 575.086 61.9258ZM568.874 182.685C545.374 182.685 528.896 163.31 528.896 135.708C528.896 107.31 545.374 87.4047 568.874 87.4047C591.293 87.4047 607.23 107.841 607.23 136.77C607.23 163.841 591.293 182.685 568.874 182.685Z" fill="#ffffff"/>
+      <path d="M653.555 156.675C653.555 181.889 676.244 208.695 721.624 208.695C767.274 208.695 783.751 182.42 783.751 161.983C783.751 130.666 746.205 125.092 721.084 120.315C704.066 117.395 693.262 115.007 693.262 105.452C693.262 94.5706 705.417 87.6701 718.383 87.6701C735.94 87.6701 742.693 99.6133 743.233 112.353H778.349C778.349 91.6511 763.492 61.9258 717.572 61.9258C677.865 61.9258 658.147 83.9544 658.147 107.575C658.147 141.282 696.233 144.732 721.354 149.509C735.94 152.163 748.636 155.348 748.636 165.699C748.636 176.05 736.21 182.95 722.975 182.95C710.549 182.95 688.67 176.05 688.67 156.675H653.555Z" fill="#ffffff"/>
+      <path d="M191.339 48.6576C176.921 48.6576 166.578 38.4949 166.578 24.6368C166.578 10.7786 176.921 0 191.339 0C205.13 0 216.1 10.7786 216.1 24.6368C216.1 38.4949 205.13 48.6576 191.339 48.6576Z" fill="#ffffff"/>
+    </svg>
+    <span class="sidebar-logo-sub">University</span>
+  </a>
+
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Learn</span>
+    <a href="#" class="sidebar-link active"><span class="sidebar-link-icon">⌂</span>Home</a>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">◎</span>Cohort<span class="sidebar-link-badge">Open</span></a>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">▷</span>Course</a>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">⊞</span>Tutorials</a>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">◈</span>Certifications</a>
+  </div>
+
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Community</span>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">⬡</span>Slack community</a>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">↗</span>airops.com</a>
+  </div>
+
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Account</span>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">○</span>Dashboard</a>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">◷</span>My progress</a>
+  </div>
+
+  <div class="sidebar-spacer"></div>
+
+  <div class="sidebar-cta">
+    <a href="#" class="sidebar-cta-btn">Apply for cohort →</a>
+    <a href="#" class="sidebar-signin">Sign in</a>
+  </div>
+</nav>
+
+<div class="mobile-bar">
+  <svg width="72" height="23" viewBox="0 0 784 252" fill="none">
+    <path d="M111.828 65.6415V88.4663C101.564 72.0112 85.627 61.9258 65.9084 61.9258C23.7703 61.9258 0 92.9782 0 134.647C0 176.581 24.0404 208.695 66.4487 208.695C86.1672 208.695 101.834 198.609 111.828 182.154V204.979H144.782V65.6415H111.828ZM72.9315 181.093C48.8911 181.093 35.1152 159.064 35.1152 134.647C35.1152 110.76 48.621 89.7933 73.4717 89.7933C94.0006 89.7933 111.558 104.391 111.558 134.116C111.558 163.31 94.8109 181.093 72.9315 181.093Z" fill="#ffffff"/>
+    <path d="M173.137 65.6494V204.987H208.252V65.6494H173.137Z" fill="#ffffff"/>
+    <path d="M272.998 100.141V65.6386H237.883V204.976H272.998V125.355C272.998 104.919 287.314 96.691 300.82 96.691C308.653 96.691 316.757 98.8143 321.079 100.407V63.25C298.119 63.25 279.211 76.7856 272.998 100.141Z" fill="#ffffff"/>
+    <path d="M329.629 108.115C329.629 151.377 359.882 182.163 403.371 182.163C447.13 182.163 477.115 151.377 477.115 108.115C477.115 65.6507 447.13 35.3945 403.371 35.3945C359.882 35.3945 329.629 65.6507 329.629 108.115ZM441.997 108.115C441.997 135.187 427.141 154.561 403.371 154.561C379.33 154.561 364.744 135.187 364.744 108.115C364.744 82.1058 379.33 63.2621 403.371 63.2621C427.141 63.2621 441.997 82.1058 441.997 108.115Z" fill="#ffffff"/>
+    <path d="M575.086 61.9258C554.557 61.9258 537.81 73.869 528.896 92.9782V65.6415H493.781V251.425H528.896V180.031C538.891 197.282 557.529 208.695 577.247 208.695C615.604 208.695 642.345 179.235 642.345 137.035C642.345 92.7128 614.523 61.9258 575.086 61.9258ZM568.874 182.685C545.374 182.685 528.896 163.31 528.896 135.708C528.896 107.31 545.374 87.4047 568.874 87.4047C591.293 87.4047 607.23 107.841 607.23 136.77C607.23 163.841 591.293 182.685 568.874 182.685Z" fill="#ffffff"/>
+    <path d="M653.555 156.675C653.555 181.889 676.244 208.695 721.624 208.695C767.274 208.695 783.751 182.42 783.751 161.983C783.751 130.666 746.205 125.092 721.084 120.315C704.066 117.395 693.262 115.007 693.262 105.452C693.262 94.5706 705.417 87.6701 718.383 87.6701C735.94 87.6701 742.693 99.6133 743.233 112.353H778.349C778.349 91.6511 763.492 61.9258 717.572 61.9258C677.865 61.9258 658.147 83.9544 658.147 107.575C658.147 141.282 696.233 144.732 721.354 149.509C735.94 152.163 748.636 155.348 748.636 165.699C748.636 176.05 736.21 182.95 722.975 182.95C710.549 182.95 688.67 176.05 688.67 156.675H653.555Z" fill="#ffffff"/>
+    <path d="M191.339 48.6576C176.921 48.6576 166.578 38.4949 166.578 24.6368C166.578 10.7786 176.921 0 191.339 0C205.13 0 216.1 10.7786 216.1 24.6368C216.1 38.4949 205.13 48.6576 191.339 48.6576Z" fill="#ffffff"/>
+  </svg>
+  <a href="#" style="font-size:13px;font-weight:600;color:#fff;background:var(--green-500);padding:7px 14px;text-decoration:none;">Apply →</a>
+</div>
+
+<div class="main">
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-pill">
+        <div class="hero-pill-dot"></div>
+        <span class="hero-pill-text">May 2026 cohort — now enrolling</span>
+      </div>
+      <h1>Become a <em>Content Engineer</em> — the most valuable person on your marketing team</h1>
+      <p class="hero-sub">Live cohorts, self-paced courses, tutorials, and certifications. Everything you need to master AEO and own AI search visibility for your brand.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn-primary">Apply for the cohort →</a>
+        <a href="#" class="btn-ghost">Start learning free</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-num"><em>500</em>+</div><div class="hero-stat-label">Content Engineers trained</div></div>
+        <div class="hero-stat"><div class="hero-stat-num"><em>72</em></div><div class="hero-stat-label">Cohort NPS score</div></div>
+        <div class="hero-stat"><div class="hero-stat-num"><em>85</em>%</div><div class="hero-stat-label">Cohort completion rate</div></div>
+        <div class="hero-stat"><div class="hero-stat-num"><em>4</em></div><div class="hero-stat-label">Professional certifications</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">Live cohort training<span class="mdot"></span></span>
+      <span class="marquee-item">Self-paced course<span class="mdot"></span></span>
+      <span class="marquee-item">58 on-demand tutorials<span class="mdot"></span></span>
+      <span class="marquee-item">4 certifications<span class="mdot"></span></span>
+      <span class="marquee-item">Private cohort community<span class="mdot"></span></span>
+      <span class="marquee-item">CITED framework<span class="mdot"></span></span>
+      <span class="marquee-item">AEO expertise<span class="mdot"></span></span>
+      <span class="marquee-item">Brand Kit mastery<span class="mdot"></span></span>
+      <span class="marquee-item">Live cohort training<span class="mdot"></span></span>
+      <span class="marquee-item">Self-paced course<span class="mdot"></span></span>
+      <span class="marquee-item">58 on-demand tutorials<span class="mdot"></span></span>
+      <span class="marquee-item">4 certifications<span class="mdot"></span></span>
+      <span class="marquee-item">Private cohort community<span class="mdot"></span></span>
+      <span class="marquee-item">CITED framework<span class="mdot"></span></span>
+      <span class="marquee-item">AEO expertise<span class="mdot"></span></span>
+      <span class="marquee-item">Brand Kit mastery<span class="mdot"></span></span>
+    </div>
+  </div>
+
+  <div class="section alt">
+    <span class="eyebrow">Learning paths</span>
+    <h2 class="stitle">Pick your path in.</h2>
+    <p class="ssub">Start wherever you are. Every path builds toward the same destination -- a production-ready AEO practice and the credential to prove it.</p>
+    <div class="paths-grid">
+      <a href="#" class="path-card"><div class="path-num">01</div><div class="path-icon">◎</div><h3>Live Cohort</h3><p>Three weeks, nine live sessions. Strategy, Build, Communicate. You'll leave with a production workflow and an internal pitch ready to ship.</p><div class="path-footer"><span class="path-pill">Application required</span><span class="path-arrow">↗</span></div></a>
+      <a href="#" class="path-card"><div class="path-num">02</div><div class="path-icon">▷</div><h3>Self-Paced Course</h3><p>The CITED framework across 7 sections and 35 videos. Guided, interactive, async -- for people who can't wait for the next cohort.</p><div class="path-footer"><span class="path-pill">Free with account</span><span class="path-arrow">↗</span></div></a>
+      <a href="#" class="path-card"><div class="path-num">03</div><div class="path-icon">⊞</div><h3>On-Demand Tutorials</h3><p>58 product guides across Brand Kits, Page360, MCP, Citations, and Workflows. Each one answers one question. Public, searchable, always current.</p><div class="path-footer"><span class="path-pill">Public · No login</span><span class="path-arrow">↗</span></div></a>
+    </div>
+  </div>
+
+  <div class="section dark">
+    <span class="eyebrow green">Live cohort</span>
+    <div class="two-col">
+      <div>
+        <h2 class="stitle light">Nine sessions. Real work. One production-ready workflow.</h2>
+        <p class="ssub light">Our most engaging offering by far. Cohort graduates refer colleagues, post on LinkedIn, and become active weekly users. Theory meets practice.</p>
+        <div class="features">
+          <div class="feature"><div class="feature-icon">◎</div><div><div class="feature-title">Three sessions per week</div><div class="feature-desc">Strategy, Build, Communicate -- with async homework and deliverables between each.</div></div></div>
+          <div class="feature"><div class="feature-icon">⬡</div><div><div class="feature-title">Private Slack community</div><div class="feature-desc">Peer feedback, facilitator support, and connections that outlast the three weeks.</div></div></div>
+          <div class="feature"><div class="feature-icon">◈</div><div><div class="feature-title">Trackable progress</div><div class="feature-desc">Session recordings, homework, and deliverable tracking in your private cohort hub.</div></div></div>
+        </div>
+      </div>
+      <div class="cohort-ui">
+        <div class="cohort-ui-head"><div class="cohort-ui-title">May 2026 Cohort</div><div class="live-badge"><div class="live-dot"></div>Enrolling now</div></div>
+        <div class="sessions">
+          <div class="sess-row"><span class="sess-wk">Wk 1</span><span class="sess-name">Understanding AEO</span><span class="sess-tag t-strat">Strategy</span></div>
+          <div class="sess-row"><span class="sess-wk">Wk 1</span><span class="sess-name">Build your first workflow</span><span class="sess-tag t-build">Build</span></div>
+          <div class="sess-row"><span class="sess-wk">Wk 1</span><span class="sess-name">Communicate to leadership</span><span class="sess-tag t-comm">Comms</span></div>
+          <div class="sess-row"><span class="sess-wk">Wk 2</span><span class="sess-name">Brand Kit mastery</span><span class="sess-tag t-strat">Strategy</span></div>
+          <div class="sess-row" style="opacity:0.38;"><span class="sess-wk">Wk 2–3</span><span class="sess-name">6 more sessions...</span><span class="sess-tag t-comm">+6</span></div>
+        </div>
+        <div class="seats-bar"><span class="seats-label">Seats remaining</span><span class="seats-count">12 of 30</span></div>
+        <button class="cohort-btn">Apply now →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section green-wash">
+    <div class="two-col" style="align-items:start;">
+      <div>
+        <span class="eyebrow">Self-paced course</span>
+        <h2 class="stitle">The CITED framework. Seven sections. 35 videos.</h2>
+        <p class="ssub">A guided, interactive async experience. Not a video library -- interactive walkthroughs, embedded exercises, and click-through modules built around the CITED framework.</p>
+        <div class="meta-row">
+          <div class="meta-item"><strong>7</strong> sections</div>
+          <div class="meta-item"><strong>~35</strong> videos</div>
+          <div class="meta-item"><strong>3.6 hrs</strong> total</div>
+          <div class="meta-item"><strong>Free</strong> with account</div>
+        </div>
+      </div>
+      <div>
+        <div class="row-label">Course structure</div>
+        <div class="cited-list">
+          <div class="cited-row active"><span class="cited-n">01</span><div class="cited-ltr">C</div><div class="cited-info"><div class="cited-t">Context</div><div class="cited-s">Understanding the AEO landscape</div></div><span class="cited-arr">→</span></div>
+          <div class="cited-row"><span class="cited-n">02</span><div class="cited-ltr">I</div><div class="cited-info"><div class="cited-t">Intelligence</div><div class="cited-s">How AI systems read and rank sources</div></div><span class="cited-arr">→</span></div>
+          <div class="cited-row"><span class="cited-n">03</span><div class="cited-ltr">T</div><div class="cited-info"><div class="cited-t">Take Action</div><div class="cited-s">Building your first workflow</div></div><span class="cited-arr">→</span></div>
+          <div class="cited-row"><span class="cited-n">04</span><div class="cited-ltr">E</div><div class="cited-info"><div class="cited-t">Evaluate</div><div class="cited-s">Measuring what's working</div></div><span class="cited-arr">→</span></div>
+          <div class="cited-row"><span class="cited-n">05</span><div class="cited-ltr">D</div><div class="cited-info"><div class="cited-t">Drive</div><div class="cited-s">Pitching internally, scaling up</div></div><span class="cited-arr">→</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="proof-head">
+      <div><span class="eyebrow">What graduates say</span><h2 class="stitle">Built for people who ship.</h2></div>
+      <a href="#" class="link-muted">See all →</a>
+    </div>
+    <div class="tgrid">
+      <div class="tcard"><p class="tquote">"I went from curious to shipping production AI workflows in three weeks. The cohort structure forces you to actually build, not just watch."</p><div class="tauthor"><div class="tavatar">NK</div><div><div class="tname">Nicole K.</div><div class="trole">CMO · Carta</div></div></div></div>
+      <div class="tcard"><p class="tquote">"The most useful professional development I've done in two years. I'm now the person on my team who can explain and act on AI search visibility."</p><div class="tauthor"><div class="tavatar">NF</div><div><div class="tname">Nick F.</div><div class="trole">VP Marketing · Chime</div></div></div></div>
+      <div class="tcard"><p class="tquote">"The CITED framework clicked for me in session two and I haven't looked at a content brief the same way since. This is a new function, not a new tool."</p><div class="tauthor"><div class="tavatar">SL</div><div><div class="tname">Sarah L.</div><div class="trole">Head of Content · HubSpot</div></div></div></div>
+    </div>
+  </div>
+
+  <div class="section alt">
+    <span class="eyebrow">Tutorials</span>
+    <h2 class="stitle">One question. One tutorial. Done.</h2>
+    <p class="ssub">58 on-demand product guides organized by feature area. Public and searchable -- good for you, good for your AEO score too.</p>
+    <div class="tutorial-grid">
+      <a href="#" class="tut-card"><div class="tut-icon">⬡</div><div class="tut-name">Brand Kits</div><div class="tut-count">12 tutorials</div></a>
+      <a href="#" class="tut-card"><div class="tut-icon">◈</div><div class="tut-name">Page360</div><div class="tut-count">8 tutorials</div></a>
+      <a href="#" class="tut-card"><div class="tut-icon">⊞</div><div class="tut-name">Workflows</div><div class="tut-count">10 tutorials</div></a>
+      <a href="#" class="tut-card"><div class="tut-icon">◎</div><div class="tut-name">Citations</div><div class="tut-count">7 tutorials</div></a>
+      <a href="#" class="tut-card"><div class="tut-icon">▷</div><div class="tut-name">Knowledge Bases</div><div class="tut-count">6 tutorials</div></a>
+      <a href="#" class="tut-card"><div class="tut-icon">⬡</div><div class="tut-name">MCP Connector</div><div class="tut-count">5 tutorials</div></a>
+      <a href="#" class="tut-card"><div class="tut-icon">◈</div><div class="tut-name">Insights</div><div class="tut-count">6 tutorials</div></a>
+      <a href="#" class="tut-card"><div class="tut-icon">⊞</div><div class="tut-name">Integrations</div><div class="tut-count">4 tutorials</div></a>
+    </div>
+    <div style="text-align:center;"><a href="#" class="link-muted">Browse all 58 tutorials →</a></div>
+  </div>
+
+  <div class="section dark">
+    <span class="eyebrow green">Certifications</span>
+    <h2 class="stitle light">Credentials built for the Content Engineering profession.</h2>
+    <p class="ssub light">Four tiered credentials. Designed to feel like a professional qualification -- something you earn, display, and carry forward.</p>
+    <div class="cert-grid">
+      <div class="cert-card"><div class="cert-tier">Tier 1</div><div class="cert-name">Strategy</div><div class="cert-desc">Validates understanding of the AEO landscape, information gain thesis, and strategic frameworks.</div><a href="#" class="cert-link">View requirements →</a></div>
+      <div class="cert-card"><div class="cert-tier">Tier 2</div><div class="cert-name">Communicate</div><div class="cert-desc">Validates ability to diagnose gaps, build Brand Kits, and pitch AI search strategy to leadership.</div><a href="#" class="cert-link">View requirements →</a></div>
+      <div class="cert-card"><div class="cert-tier">Tier 3</div><div class="cert-name">Cohort completion</div><div class="cert-desc">Awarded upon completing the live cohort program. Our most in-demand credential.</div><a href="#" class="cert-link">Apply for cohort →</a></div>
+      <div class="cert-card flagship"><div class="cert-tier">Flagship</div><div class="cert-name">Content Engineering Graduate</div><div class="cert-desc">End-to-end mastery: strategy, execution, measurement. The credential that proves you can do the work.</div><a href="#" class="cert-link">View requirements →</a></div>
+    </div>
+    <div style="padding:22px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;">
+      <div><div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:3px;">Content Engineers · airops.com/content-engineers</div><div style="font-size:12px;color:rgba(255,255,255,0.38);">Certified graduates listed publicly, connected to the jobs board and demo videos.</div></div>
+      <a href="#" style="font-size:12px;color:#7adba0;text-decoration:none;flex-shrink:0;margin-left:24px;">See directory →</a>
+    </div>
+  </div>
+
+  <div class="cta-wrap">
+    <div class="cta-inner">
+      <span class="eyebrow green">May 2026 · Now enrolling</span>
+      <h2 class="stitle">The next cohort starts May 5.</h2>
+      <p class="ssub">12 seats remaining. Applications close when they're gone.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn-primary">Apply for the cohort →</a>
+        <a href="#" class="btn-ghost-cta">Start with tutorials</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="foot-inner">
+      <div class="foot-links">
+        <a href="#" class="foot-link">Cohort</a>
+        <a href="#" class="foot-link">Course</a>
+        <a href="#" class="foot-link">Tutorials</a>
+        <a href="#" class="foot-link">Certifications</a>
+        <a href="#" class="foot-link">airops.com</a>
+      </div>
+      <div class="foot-copy">© 2026 AirOps, Inc.</div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
