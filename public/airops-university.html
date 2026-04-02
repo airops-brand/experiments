@@ -19,14 +19,14 @@
     --accent-label: #EEFF8C;
     --text-primary: #09090b;
     --text-secondary: #676c79;
-    --text-tertiary: #a5aab6;
+    --text-tertiary: #72787f;
     --stroke-green: #d4e8da;
 
     --sidebar-bg: #002910;
     --sidebar-border: rgba(255,255,255,0.08);
     --sidebar-active-bg: rgba(255,255,255,0.07);
-    --sidebar-label-color: rgba(255,255,255,0.28);
-    --sidebar-link-color: rgba(255,255,255,0.52);
+    --sidebar-label-color: rgba(255,255,255,0.55);
+    --sidebar-link-color: rgba(255,255,255,0.72);
     --sidebar-link-hover-bg: rgba(255,255,255,0.06);
     --sidebar-link-active-color: #ffffff;
 
@@ -83,7 +83,7 @@
   }
   .sidebar-section-label {
     font-family: 'DM Mono','Courier New',monospace;
-    font-size: 9px; font-weight: 500;
+    font-size: 10px; font-weight: 500;
     letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--sidebar-label-color);
     padding: 0 20px 6px; display: block;
@@ -111,7 +111,7 @@
   .sidebar-link-badge {
     margin-left: auto;
     font-family: 'DM Mono',monospace;
-    font-size: 9px; font-weight: 500;
+    font-size: 10px; font-weight: 500;
     letter-spacing: 0.06em; text-transform: uppercase;
     background: rgba(0,230,118,0.18); color: #7adba0;
     padding: 2px 6px; flex-shrink: 0;
@@ -135,7 +135,7 @@
   .sidebar-cta-btn:hover { background: #5fcc8a; }
   .sidebar-signin {
     display: block; font-size: 12px;
-    color: rgba(255,255,255,0.38); text-align: center;
+    color: rgba(255,255,255,0.58); text-align: center;
     text-decoration: none; transition: color 0.15s;
   }
   .sidebar-signin:hover { color: rgba(255,255,255,0.75); }
@@ -166,7 +166,7 @@
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
   .hero-pill-text {
     font-family: 'DM Mono','Courier New',monospace;
-    font-size: 11px; font-weight: 500;
+    font-size: 12px; font-weight: 500;
     letter-spacing: 0.08em; text-transform: uppercase;
     color: var(--green-500);
   }
@@ -232,12 +232,12 @@
   .eyebrow {
     display: inline-block;
     font-family: 'DM Mono',monospace;
-    font-size: 10px; font-weight: 500;
+    font-size: 11px; font-weight: 500;
     letter-spacing: 0.08em; text-transform: uppercase;
     background: var(--accent-label); color: var(--near-black);
-    padding: 3px 9px; margin-bottom: 16px;
+    padding: 4px 10px; margin-bottom: 16px;
   }
-  .eyebrow.green { background: #cceedd; color: var(--green-500); }
+  .eyebrow.green { background: #cceedd; color: #057a28; }
 
   .stitle {
     font-family: Georgia,serif; font-size: 42px; font-weight: 400;
@@ -246,10 +246,10 @@
   .stitle.light { color: #fff; }
 
   .ssub {
-    font-size: 15px; color: var(--text-secondary);
+    font-size: 16px; color: var(--text-secondary);
     max-width: 480px; line-height: 1.65; margin-bottom: 36px;
   }
-  .ssub.light { color: rgba(255,255,255,0.5); }
+  .ssub.light { color: rgba(255,255,255,0.68); }
 
   .paths-grid {
     display: grid; grid-template-columns: repeat(3,1fr);
@@ -298,14 +298,14 @@
   .live-dot { width: 5px; height: 5px; background: #7adba0; border-radius: 50%; animation: pulse 2s infinite; }
   .sessions { display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
   .sess-row { display: flex; align-items: center; gap: 9px; padding: 8px 11px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); }
-  .sess-wk { font-family: 'DM Mono',monospace; font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.28); flex-shrink: 0; width: 38px; }
+  .sess-wk { font-family: 'DM Mono',monospace; font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.55); flex-shrink: 0; width: 38px; }
   .sess-name { font-size: 12px; color: rgba(255,255,255,0.7); flex: 1; }
   .sess-tag { font-family: 'DM Mono',monospace; font-size: 8px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 6px; flex-shrink: 0; }
   .t-strat { background: rgba(0,140,68,0.3); color: #7adba0; }
   .t-build { background: rgba(238,255,140,0.15); color: #EEFF8C; }
-  .t-comm  { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.42); }
+  .t-comm  { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.62); }
   .seats-bar { background: rgba(122,219,160,0.08); border: 1px solid rgba(122,219,160,0.2); padding: 11px 13px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-  .seats-label { font-size: 12px; color: rgba(255,255,255,0.42); }
+  .seats-label { font-size: 12px; color: rgba(255,255,255,0.62); }
   .seats-count { font-size: 12px; font-weight: 600; color: #7adba0; }
   .cohort-btn { width: 100%; font-size: 13px; font-weight: 600; color: var(--near-black); background: #7adba0; border: none; padding: 12px; cursor: pointer; transition: opacity 0.15s; }
   .cohort-btn:hover { opacity: 0.88; }
@@ -313,7 +313,7 @@
   .feature { display: flex; gap: 13px; align-items: flex-start; }
   .feature-icon { width: 26px; height: 26px; flex-shrink: 0; background: rgba(122,219,160,0.12); border: 1px solid rgba(122,219,160,0.25); display: flex; align-items: center; justify-content: center; font-size: 11px; }
   .feature-title { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 2px; }
-  .feature-desc { font-size: 12px; color: rgba(255,255,255,0.42); line-height: 1.5; }
+  .feature-desc { font-size: 12px; color: rgba(255,255,255,0.62); line-height: 1.5; }
 
   .cited-list { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--stroke-green); background: var(--stroke-green); }
   .cited-row { background: var(--white); padding: 14px 18px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: background 0.12s; }
@@ -350,11 +350,11 @@
   .cert-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08); margin-bottom: 28px; }
   .cert-card { background: rgba(255,255,255,0.03); padding: 22px 18px; display: flex; flex-direction: column; gap: 9px; }
   .cert-card.flagship { background: rgba(122,219,160,0.07); border-left: 2px solid #7adba0; }
-  .cert-tier { font-family: 'DM Mono',monospace; font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+  .cert-tier { font-family: 'DM Mono',monospace; font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
   .cert-card.flagship .cert-tier { color: #7adba0; }
   .cert-name { font-family: Georgia,serif; font-size: 19px; font-weight: 400; color: #fff; letter-spacing: -0.01em; line-height: 1.2; }
-  .cert-desc { font-size: 12px; color: rgba(255,255,255,0.42); line-height: 1.55; flex: 1; }
-  .cert-link { font-size: 12px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.15s; }
+  .cert-desc { font-size: 12px; color: rgba(255,255,255,0.62); line-height: 1.55; flex: 1; }
+  .cert-link { font-size: 12px; color: rgba(255,255,255,0.65); text-decoration: none; transition: color 0.15s; }
   .cert-card.flagship .cert-link { color: #7adba0; }
   .cert-link:hover { color: #fff; }
 
@@ -386,9 +386,9 @@
   }
   .foot-inner { display: flex; align-items: center; justify-content: space-between; }
   .foot-links { display: flex; gap: 18px; }
-  .foot-link { font-size: 12px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.15s; }
+  .foot-link { font-size: 12px; color: rgba(255,255,255,0.65); text-decoration: none; transition: color 0.15s; }
   .foot-link:hover { color: #fff; }
-  .foot-copy { font-size: 12px; color: rgba(255,255,255,0.25); }
+  .foot-copy { font-size: 12px; color: rgba(255,255,255,0.5); }
   .link-muted { font-size: 13px; color: var(--text-secondary); text-decoration: none; }
   .link-muted:hover { color: var(--text-primary); }
 
@@ -411,6 +411,20 @@
     .foot-inner { flex-direction: column; gap: 16px; text-align: center; }
     .foot-links { flex-wrap: wrap; justify-content: center; }
     .hero h1 { font-size: 38px; }
+    .stitle { font-size: 28px; }
+    .cta-wrap .stitle { font-size: 32px; }
+    .cta-actions { flex-direction: column; width: 100%; }
+    .cta-actions .btn-primary, .cta-actions .btn-ghost, .cta-actions .btn-ghost-cta { width: 100%; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .hero, .section, .cta-wrap, footer { padding-left: 18px; padding-right: 18px; }
+    .hero h1 { font-size: 28px; }
+    .hero-stats { flex-direction: column; gap: 18px; }
+    .hero-stat { padding-right: 0; }
+    .hero-stat+.hero-stat { padding-left: 0; border-left: none; border-top: 1px solid var(--stroke-green); padding-top: 18px; }
+    .hero-stat-num { font-size: 28px; }
+    .stitle { font-size: 24px; }
+    .ssub { font-size: 14px; }
   }
   .mobile-bar {
     display: none; position: sticky; top: 0; z-index: 99;
@@ -440,7 +454,7 @@
     <a href="#" class="sidebar-link active"><span class="sidebar-link-icon">⌂</span>Home</a>
     <a href="#" class="sidebar-link"><span class="sidebar-link-icon">◎</span>Cohort<span class="sidebar-link-badge">Open</span></a>
     <a href="#" class="sidebar-link"><span class="sidebar-link-icon">▷</span>Course</a>
-    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">⊞</span>Tutorials</a>
+    <a href="airops-university-tutorials.html" class="sidebar-link"><span class="sidebar-link-icon">⊞</span>Tutorials</a>
     <a href="#" class="sidebar-link"><span class="sidebar-link-icon">◈</span>Certifications</a>
   </div>
 
@@ -625,7 +639,7 @@
       <div class="cert-card flagship"><div class="cert-tier">Flagship</div><div class="cert-name">Content Engineering Graduate</div><div class="cert-desc">End-to-end mastery: strategy, execution, measurement. The credential that proves you can do the work.</div><a href="#" class="cert-link">View requirements →</a></div>
     </div>
     <div style="padding:22px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;">
-      <div><div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:3px;">Content Engineers · airops.com/content-engineers</div><div style="font-size:12px;color:rgba(255,255,255,0.38);">Certified graduates listed publicly, connected to the jobs board and demo videos.</div></div>
+      <div><div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:3px;">Content Engineers · airops.com/content-engineers</div><div style="font-size:12px;color:rgba(255,255,255,0.58);">Certified graduates listed publicly, connected to the jobs board and demo videos.</div></div>
       <a href="#" style="font-size:12px;color:#7adba0;text-decoration:none;flex-shrink:0;margin-left:24px;">See directory →</a>
     </div>
   </div>
