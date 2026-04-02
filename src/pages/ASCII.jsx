@@ -220,7 +220,6 @@ export default function ASCII() {
   const cursorLinkRef = useRef({ x: 0, y: 0 })
   const [navOpen, setNavOpen] = useState(false)
   const [hoveredNav, setHoveredNav] = useState(null)
-  const [nextHovered, setNextHovered] = useState(false)
   const [viewAs, setViewAs] = useState('human')
   const canvasRef = useASCIICanvas(mousePosRef)
 
@@ -406,54 +405,35 @@ export default function ASCII() {
         </div>
 
         {/* "Next" headline — Ballet N + Cormorant ext */}
-        <div
-          style={{
-            position: 'absolute',
-            left: '50%',
-            top: '50%',
-            transform: 'translate(-46%, -50%)',
-            display: 'flex',
-            alignItems: 'flex-start',
-            lineHeight: 1,
-            userSelect: 'none',
-            cursor: 'none',
-            transition: 'filter 0.5s ease',
-            filter: nextHovered ? 'saturate(1)' : 'none',
-          }}
-          onMouseEnter={() => setNextHovered(true)}
-          onMouseLeave={() => setNextHovered(false)}
-        >
+        <div style={{
+          position: 'absolute',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-46%, -50%)',
+          display: 'flex',
+          alignItems: 'flex-start',
+          lineHeight: 1,
+          pointerEvents: 'none',
+          userSelect: 'none',
+        }}>
           {/* N in Ballet */}
           <span style={{
             fontFamily: "'Ballet', cursive",
             fontSize: 'clamp(300px, 42vw, 700px)',
             fontWeight: 400,
+            color: '#002910',
             lineHeight: 0.85,
             letterSpacing: '-0.02em',
-            background: nextHovered
-              ? 'linear-gradient(135deg, #002910 0%, #006630 35%, #00c94e 70%, #00ff64 100%)'
-              : 'none',
-            WebkitBackgroundClip: nextHovered ? 'text' : 'unset',
-            WebkitTextFillColor: nextHovered ? 'transparent' : '#002910',
-            backgroundClip: nextHovered ? 'text' : 'unset',
-            color: '#002910',
-            transition: 'WebkitTextFillColor 0.4s ease',
           }}>N</span>
           {/* ext in light serif, with CONF label inside */}
           <span style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontSize: 'clamp(260px, 37vw, 620px)',
             fontWeight: 300,
+            color: '#002910',
             lineHeight: 0.9,
             letterSpacing: '-0.04em',
             position: 'relative',
-            background: nextHovered
-              ? 'linear-gradient(135deg, #002910 0%, #006630 35%, #00c94e 70%, #00ff64 100%)'
-              : 'none',
-            WebkitBackgroundClip: nextHovered ? 'text' : 'unset',
-            WebkitTextFillColor: nextHovered ? 'transparent' : '#002910',
-            backgroundClip: nextHovered ? 'text' : 'unset',
-            color: '#002910',
           }}>
             ext
             {/* CONF — floats right, mid-height, just right of the "t" */}
