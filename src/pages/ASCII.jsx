@@ -436,14 +436,14 @@ export default function ASCII() {
             position: 'relative',
           }}>
             ext
-            {/* CONF floats above the "t" */}
+            {/* CONF — floats right, mid-height, just right of the "t" */}
             <span style={{
               position: 'absolute',
-              right: 0,
-              top: 0,
+              right: '-0.5em',
+              top: '42%',
               transform: 'translateY(-100%)',
               fontFamily: "'SF Mono', monospace",
-              fontSize: 'clamp(8px, 0.55vw, 11px)',
+              fontSize: 'clamp(10px, 0.9vw, 16px)',
               fontWeight: 500,
               color: '#008c44',
               letterSpacing: '0.3px',
@@ -503,11 +503,11 @@ export default function ASCII() {
           </div>
         </div>
 
-        {/* Event details — bottom left */}
+        {/* Event details — bottom left of spine */}
         <div style={{
           position: 'absolute',
-          left: 'calc(50% - 220px)',
-          bottom: 56,
+          left: 'calc(50% - 245px)',
+          bottom: 52,
           color: '#002910',
           lineHeight: 1.2,
         }}>
@@ -533,9 +533,9 @@ export default function ASCII() {
         {/* Description + CTA — bottom right of center */}
         <div style={{
           position: 'absolute',
-          left: 'calc(50% + 175px)',
-          bottom: 56,
-          width: 440,
+          left: 'calc(50% + 16px)',
+          bottom: 52,
+          width: 'min(560px, 39vw)',
           display: 'flex',
           flexDirection: 'column',
           gap: 20,
@@ -572,6 +572,129 @@ export default function ASCII() {
           </button>
         </div>
 
+      </div>
+
+      {/* ── Agent view overlay ── */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        zIndex: 20,
+        opacity: viewAs === 'agent' ? 1 : 0,
+        pointerEvents: viewAs === 'agent' ? 'auto' : 'none',
+        transition: 'opacity 0.4s ease',
+        background: 'rgba(255,255,255,0.97)',
+        overflow: 'hidden',
+      }}>
+        {/* Ghost "Next" behind the text */}
+        <div style={{
+          position: 'absolute',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-36%, -50%)',
+          display: 'flex',
+          alignItems: 'flex-start',
+          lineHeight: 1,
+          pointerEvents: 'none',
+          userSelect: 'none',
+          opacity: 0.04,
+        }}>
+          <span style={{
+            fontFamily: "'Ballet', cursive",
+            fontSize: 'clamp(300px, 42vw, 700px)',
+            fontWeight: 400,
+            color: '#002910',
+            lineHeight: 0.85,
+          }}>N</span>
+          <span style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: 'clamp(260px, 37vw, 620px)',
+            fontWeight: 300,
+            color: '#002910',
+            lineHeight: 0.9,
+          }}>ext</span>
+        </div>
+
+        {/* AirOps logo top-left */}
+        <div style={{ position: 'absolute', top: 36, left: 36 }}>
+          <img src="/logo-airops.svg" alt="AirOps" style={{ height: 22, width: 'auto' }} />
+        </div>
+
+        {/* VIEW AS toggle — top right, Agent selected */}
+        <div style={{
+          position: 'absolute',
+          top: 40,
+          right: 50,
+          background: '#f8fffa',
+          border: '1px solid #dfeae3',
+          borderRadius: 8,
+          padding: '8px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 8,
+          cursor: 'none',
+          zIndex: 2,
+        }}>
+          <div style={{
+            fontFamily: "'SF Mono', monospace",
+            fontSize: 10,
+            fontWeight: 500,
+            color: '#008c44',
+            letterSpacing: '0.42px',
+            textTransform: 'uppercase',
+          }}>VIEW AS:</div>
+          <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+            {['human', 'agent'].map((mode) => (
+              <button key={mode} onClick={() => setViewAs(mode)} style={{
+                display: 'flex', gap: 4, alignItems: 'center',
+                background: 'none', border: 'none', padding: 0, cursor: 'none',
+              }}>
+                <div style={{
+                  width: 14, height: 14, borderRadius: '50%',
+                  border: `1.5px solid ${viewAs === mode ? '#008c44' : '#002910'}`,
+                  background: viewAs === mode ? '#008c44' : 'transparent',
+                  flexShrink: 0,
+                }} />
+                <span style={{
+                  fontFamily: mode === 'agent' ? "'Cormorant Garamond', Georgia, serif" : "'Inter', sans-serif",
+                  fontSize: 14,
+                  color: '#002910',
+                  whiteSpace: 'nowrap',
+                }}>{mode.charAt(0).toUpperCase() + mode.slice(1)}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Metadata terminal content */}
+        <div style={{
+          position: 'absolute',
+          top: 80,
+          left: 160,
+          right: 60,
+          bottom: 40,
+          overflowY: 'auto',
+          fontFamily: "'SF Mono', 'Menlo', monospace",
+          fontSize: 11.5,
+          lineHeight: 1.6,
+          color: '#002910',
+          letterSpacing: '-0.02em',
+          zIndex: 2,
+        }}>
+          {META_LINES.map((line, i) => {
+            const isGreenLine = line.startsWith('@') || line.startsWith('url:') || line.startsWith('canonicalUrl') || line.startsWith('registrationUrl') || line.includes('https://') || line.startsWith('  -') || line.startsWith('    -')
+            const isLabel = /^[a-zA-Z][\w]+:/.test(line) && !line.startsWith(' ')
+            const isDivider = line.startsWith('====') || line.startsWith('---') || line.startsWith('```')
+            return (
+              <div key={i} style={{
+                color: isDivider ? 'rgba(0,41,16,0.25)' : isGreenLine ? '#008c44' : isLabel ? '#002910' : 'rgba(0,41,16,0.7)',
+                fontWeight: isLabel ? 500 : 400,
+                marginBottom: line === '' ? '0.4em' : 0,
+              }}>
+                {line || '\u00a0'}
+              </div>
+            )
+          })}
+        </div>
       </div>
 
       {/* ── Custom cursor ── */}
