@@ -258,7 +258,7 @@
   }
 
   .tutorial-card {
-    background: var(--card-bg, #fff);
+    background: #fff;
     border: 1.5px solid var(--card-border, #dfeae3);
     text-decoration: none;
     color: inherit;
@@ -269,7 +269,7 @@
     min-height: 280px;
     transition: background 0.15s;
   }
-  .tutorial-card:hover { background: #f8fffb; }
+  .tutorial-card:hover { background: var(--card-hover, #f8fffb); }
   .tutorial-card-title {
     font-family: 'Serrif VF', Georgia, serif;
     font-size: 32px; font-weight: 400;
@@ -285,7 +285,7 @@
   }
   .tutorial-card-footer {
     display: flex; align-items: center; justify-content: space-between;
-    border-top: 1.5px solid var(--card-border, #dfeae3);
+    border-top: 2px solid var(--card-accent, #008c44);
     padding-top: 16px; margin-top: 0;
   }
   .tutorial-card-format {
@@ -304,11 +304,11 @@
   }
 
   /* Category color themes - from the web design system palette */
-  .cat-green { --card-bg: #ffffff; --card-border: #dfeae3; --card-title: #000d05; --card-body: #002910; --card-accent: #008c44; }
-  .cat-pink { --card-bg: #fff7ff; --card-border: #fee7fd; --card-title: #0d020a; --card-body: #3a092c; --card-accent: #c54b9b; }
-  .cat-indigo { --card-bg: #f5f6ff; --card-border: #e5e5ff; --card-title: #0f0f57; --card-body: #0f0f57; --card-accent: #1b1b8f; }
-  .cat-yellow { --card-bg: #fdfff3; --card-border: #eeff8c; --card-title: #242603; --card-body: #242603; --card-accent: #586605; }
-  .cat-teal { --card-bg: #f2fcff; --card-border: #c9ebf2; --card-title: #0a3945; --card-body: #0a3945; --card-accent: #196c80; }
+  .cat-green { --card-border: #dfeae3; --card-title: #000d05; --card-body: #002910; --card-accent: #008c44; --card-hover: #eef9f3; }
+  .cat-pink { --card-border: #fee7fd; --card-title: #0d020a; --card-body: #3a092c; --card-accent: #c54b9b; --card-hover: #fff7ff; }
+  .cat-indigo { --card-border: #e5e5ff; --card-title: #0f0f57; --card-body: #0f0f57; --card-accent: #1b1b8f; --card-hover: #f5f6ff; }
+  .cat-yellow { --card-border: #eeff8c; --card-title: #242603; --card-body: #242603; --card-accent: #586605; --card-hover: #fdfff3; }
+  .cat-teal { --card-border: #c9ebf2; --card-title: #0a3945; --card-body: #0a3945; --card-accent: #196c80; --card-hover: #f2fcff; }
 
   .btn-primary {
     font-size: 16px; font-weight: 500; color: #002910;
@@ -503,28 +503,28 @@
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tutorial-card-duration">~1 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-pink">
         <div>
           <div class="tutorial-card-title">How to Add Prompts</div>
           <div class="tutorial-card-desc">Step-by-step guide to adding the search prompts you want to monitor for AI visibility.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tutorial-card-duration">~1 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-indigo">
         <div>
           <div class="tutorial-card-title">How to Add Topics</div>
           <div class="tutorial-card-desc">Group related prompts into topics to organize your tracking and spot patterns faster.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tutorial-card-duration">~1 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-yellow">
         <div>
           <div class="tutorial-card-title">How to Delete Prompts</div>
           <div class="tutorial-card-desc">Remove prompts you no longer need to track and keep your dashboard focused.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tutorial-card-duration">~1 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-teal">
         <div>
           <div class="tutorial-card-title">How to Delete Topics</div>
           <div class="tutorial-card-desc">Clean up your topic structure by removing groups that are no longer relevant.</div>
@@ -538,28 +538,28 @@
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-pink">
         <div>
           <div class="tutorial-card-title">How Recommended Prompts are Populated</div>
           <div class="tutorial-card-desc">Learn how AirOps surfaces prompt recommendations based on your brand and competitor landscape.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-indigo">
         <div>
           <div class="tutorial-card-title">How to Refine &amp; Expand Beyond Recommendations</div>
           <div class="tutorial-card-desc">Go beyond the defaults by crafting custom prompts that match your specific market positioning.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-yellow">
         <div>
           <div class="tutorial-card-title">View Who's Getting Cited in a Prompt</div>
           <div class="tutorial-card-desc">See which brands and domains are being referenced in AI responses to your tracked prompts.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-teal">
         <div>
           <div class="tutorial-card-title">Query Fan-Outs</div>
           <div class="tutorial-card-desc">Understand how a single prompt generates multiple queries across different AI engines and contexts.</div>
@@ -575,7 +575,7 @@
     <h2 class="stitle">Insights Layer &mdash; Analytics &amp; Interpretation</h2>
     <p class="ssub">Understand your AI search metrics and what they mean for your brand.</p>
     <div class="tutorials-grid">
-      <a href="#" class="tutorial-card cat-pink">
+      <a href="#" class="tutorial-card cat-green">
         <div>
           <div class="tutorial-card-title">Which Answer Engines Are Tracked &amp; How Trend Data Works</div>
           <div class="tutorial-card-desc">See which AI platforms AirOps monitors and how historical trend data is collected and displayed.</div>
@@ -589,28 +589,28 @@
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-pink">
+      <a href="#" class="tutorial-card cat-indigo">
         <div>
           <div class="tutorial-card-title">The 5 Metrics That Tell You Where You Stand in AI Search</div>
           <div class="tutorial-card-desc">The key indicators that reveal your brand's current position in AI-generated answers.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-pink">
+      <a href="#" class="tutorial-card cat-yellow">
         <div>
           <div class="tutorial-card-title">Is Your AI Presence Getting Better or Worse?</div>
           <div class="tutorial-card-desc">How to read trend lines and determine whether your AI visibility is improving over time.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-pink">
+      <a href="#" class="tutorial-card cat-teal">
         <div>
           <div class="tutorial-card-title">Mentions vs. Citations: What's the Difference?</div>
           <div class="tutorial-card-desc">Understand the critical distinction between being mentioned and being cited as a source.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-pink">
+      <a href="#" class="tutorial-card cat-green">
         <div>
           <div class="tutorial-card-title">Competitive Visibility Insights</div>
           <div class="tutorial-card-desc">Compare your AI search presence against competitors to find gaps and opportunities.</div>
@@ -633,14 +633,14 @@
     <h2 class="stitle">Page 360</h2>
     <p class="ssub">Three data sources in one screen. Learn to analyze, filter, and act on page-level intelligence.</p>
     <div class="tutorials-grid">
-      <a href="#" class="tutorial-card cat-indigo">
+      <a href="#" class="tutorial-card cat-green">
         <div>
           <div class="tutorial-card-title">What Is Page 360? Three Data Sources in One Screen</div>
           <div class="tutorial-card-desc">An overview of how Page 360 combines AI visibility, GSC, and GA4 data for each URL.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-indigo">
+      <a href="#" class="tutorial-card cat-pink">
         <div>
           <div class="tutorial-card-title">How Pages Are Added to Page 360</div>
           <div class="tutorial-card-desc">Set up your pages for tracking by connecting them to the Page 360 dashboard.</div>
@@ -654,28 +654,28 @@
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tutorial-card-duration">~1 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-indigo">
+      <a href="#" class="tutorial-card cat-yellow">
         <div>
           <div class="tutorial-card-title">How to Add GA4 to Page 360</div>
           <div class="tutorial-card-desc">Link Google Analytics 4 to see traffic and engagement alongside AI visibility metrics.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tutorial-card-duration">~1 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-indigo">
+      <a href="#" class="tutorial-card cat-teal">
         <div>
           <div class="tutorial-card-title">Smart Filters: What Each Filter Signals</div>
           <div class="tutorial-card-desc">Use filters to surface the pages that need attention based on performance signals.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-indigo">
+      <a href="#" class="tutorial-card cat-green">
         <div>
           <div class="tutorial-card-title">Bridging Insights to Action: Pages to Grid to Power Agents</div>
           <div class="tutorial-card-desc">Move from page-level insights to automated workflows that act on the data.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-indigo">
+      <a href="#" class="tutorial-card cat-pink">
         <div>
           <div class="tutorial-card-title">Analyzing Pages Using Page 360 in the MCP</div>
           <div class="tutorial-card-desc">Query your Page 360 data directly in Claude for deeper analysis and reporting.</div>
@@ -698,21 +698,21 @@
     <h2 class="stitle">Citations &amp; Community</h2>
     <p class="ssub">Map what AI trusts, prioritize outreach, and understand competitive adjacency.</p>
     <div class="tutorials-grid">
-      <a href="#" class="tutorial-card cat-yellow">
+      <a href="#" class="tutorial-card cat-green">
         <div>
           <div class="tutorial-card-title">The Citations View: The Complete Map of What AI Trusts</div>
           <div class="tutorial-card-desc">Explore which sources AI engines rely on when generating answers in your space.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-yellow">
+      <a href="#" class="tutorial-card cat-pink">
         <div>
           <div class="tutorial-card-title">Using Citation Data to Prioritize Outreach</div>
           <div class="tutorial-card-desc">Turn citation intelligence into an outreach strategy focused on the domains that matter.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-yellow">
+      <a href="#" class="tutorial-card cat-indigo">
         <div>
           <div class="tutorial-card-title">How Customers Use This View: Influence Score</div>
           <div class="tutorial-card-desc">See how influence scoring ranks cited domains by their impact on AI responses.</div>
@@ -726,21 +726,21 @@
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-yellow">
+      <a href="#" class="tutorial-card cat-teal">
         <div>
           <div class="tutorial-card-title">How Customers Use This View: Topic x Platform Matrix</div>
           <div class="tutorial-card-desc">Cross-reference topics with AI platforms to find where you're strong and where you're absent.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-yellow">
+      <a href="#" class="tutorial-card cat-green">
         <div>
           <div class="tutorial-card-title">How Customers Use This View: Domain Type Filter</div>
           <div class="tutorial-card-desc">Filter citations by domain type to focus on editorial, academic, or commercial sources.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-yellow">
+      <a href="#" class="tutorial-card cat-pink">
         <div>
           <div class="tutorial-card-title">How Customers Use This View: Top-Cited URLs</div>
           <div class="tutorial-card-desc">Identify the specific URLs that AI engines cite most frequently in your category.</div>
@@ -756,28 +756,28 @@
     <h2 class="stitle">Brand Kit</h2>
     <p class="ssub">Configure your brand identity for AI-powered content generation and optimization.</p>
     <div class="tutorials-grid">
-      <a href="#" class="tutorial-card cat-teal">
+      <a href="#" class="tutorial-card cat-green">
         <div>
           <div class="tutorial-card-title">Brand Kit: Foundations</div>
           <div class="tutorial-card-desc">Set up your brand's core identity: mission, voice, tone, and positioning guidelines.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-hexagon-line"></i> HYBRID</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-teal">
+      <a href="#" class="tutorial-card cat-pink">
         <div>
           <div class="tutorial-card-title">Brand Kit: Audiences</div>
           <div class="tutorial-card-desc">Define your target audiences so AI-generated content speaks to the right people.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-hexagon-line"></i> HYBRID</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-teal">
+      <a href="#" class="tutorial-card cat-indigo">
         <div>
           <div class="tutorial-card-title">Brand Kit: Regions</div>
           <div class="tutorial-card-desc">Configure regional variations for brands that operate across different markets.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tutorial-card-duration">~1 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-teal">
+      <a href="#" class="tutorial-card cat-yellow">
         <div>
           <div class="tutorial-card-title">Brand Kit: Product Lines</div>
           <div class="tutorial-card-desc">Organize distinct product lines with their own messaging and positioning.</div>
@@ -791,28 +791,28 @@
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tutorial-card-duration">~1 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-teal">
+      <a href="#" class="tutorial-card cat-green">
         <div>
           <div class="tutorial-card-title">Brand Kit: Adding a Brand Kit</div>
           <div class="tutorial-card-desc">Create a new brand kit from scratch and configure its initial settings.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tutorial-card-duration">~1 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-teal">
+      <a href="#" class="tutorial-card cat-pink">
         <div>
           <div class="tutorial-card-title">Brand Kit Pattern: Single Brand</div>
           <div class="tutorial-card-desc">Best practices for companies with one brand identity and unified messaging.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-teal">
+      <a href="#" class="tutorial-card cat-indigo">
         <div>
           <div class="tutorial-card-title">Brand Kit Pattern: Multi-Brand Enterprise</div>
           <div class="tutorial-card-desc">How to structure brand kits when managing multiple brands under one organization.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-teal">
+      <a href="#" class="tutorial-card cat-yellow">
         <div>
           <div class="tutorial-card-title">Brand Kit Pattern: Agency</div>
           <div class="tutorial-card-desc">Set up brand kits for agency teams managing content across multiple clients.</div>
@@ -842,28 +842,28 @@
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-pink">
         <div>
           <div class="tutorial-card-title">What Types of Information Should You Add?</div>
           <div class="tutorial-card-desc">Guidance on which internal data sources will have the biggest impact on output quality.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-indigo">
         <div>
           <div class="tutorial-card-title">Where to Find Knowledge Bases</div>
           <div class="tutorial-card-desc">Navigate to your knowledge bases and understand how they're organized in the platform.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tutorial-card-duration">~1 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-yellow">
         <div>
           <div class="tutorial-card-title">One vs. Multiple Knowledge Bases: When &amp; Why</div>
           <div class="tutorial-card-desc">Decide whether to centralize or split your knowledge bases based on your use case.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-teal">
         <div>
           <div class="tutorial-card-title">How to Add Information: File Upload</div>
           <div class="tutorial-card-desc">Upload documents, PDFs, and files directly to populate your knowledge base.</div>
@@ -877,28 +877,28 @@
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tutorial-card-duration">~1 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-pink">
         <div>
           <div class="tutorial-card-title">How to Add Information: Web Scraping &amp; Sitemaps</div>
           <div class="tutorial-card-desc">Pull content from websites and sitemaps to build your knowledge base at scale.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tutorial-card-duration">~1 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-indigo">
         <div>
           <div class="tutorial-card-title">How to Add Information: SQL Databases</div>
           <div class="tutorial-card-desc">Connect SQL databases to feed structured data into your knowledge base.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tutorial-card-duration">~1 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-yellow">
         <div>
           <div class="tutorial-card-title">How Knowledge Bases Work Inside the Workflow Builder</div>
           <div class="tutorial-card-desc">Understand how workflows reference and query your knowledge bases during execution.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-teal">
         <div>
           <div class="tutorial-card-title">Use Case: Product Catalogs</div>
           <div class="tutorial-card-desc">Structure product information for accurate, on-brand AI-generated product content.</div>
@@ -912,14 +912,14 @@
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-pink">
         <div>
           <div class="tutorial-card-title">Use Case: Competitor Research</div>
           <div class="tutorial-card-desc">Feed competitive intelligence into your knowledge base to sharpen AI outputs.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-green">
+      <a href="#" class="tutorial-card cat-indigo">
         <div>
           <div class="tutorial-card-title">Use Case: Customer Support Materials</div>
           <div class="tutorial-card-desc">Organize support content so AI can generate accurate, helpful customer responses.</div>
@@ -935,7 +935,7 @@
     <h2 class="stitle">Context-to-Action Pipeline &amp; Workflows</h2>
     <p class="ssub">Move between workflows and grids to operationalize your content strategy.</p>
     <div class="tutorials-grid">
-      <a href="#" class="tutorial-card cat-pink">
+      <a href="#" class="tutorial-card cat-green">
         <div>
           <div class="tutorial-card-title">How to Go from Workflow to Grid</div>
           <div class="tutorial-card-desc">Export workflow outputs into a grid for bulk review, editing, and publishing.</div>
@@ -958,14 +958,14 @@
     <h2 class="stitle">MCP (Model Context Protocol)</h2>
     <p class="ssub">Connect AirOps to Claude and other LLMs to query data and drive strategy.</p>
     <div class="tutorials-grid">
-      <a href="#" class="tutorial-card cat-indigo">
+      <a href="#" class="tutorial-card cat-green">
         <div>
           <div class="tutorial-card-title">Connecting the AirOps MCP in Claude</div>
           <div class="tutorial-card-desc">Step-by-step setup to connect AirOps as an MCP server in Claude Desktop.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tutorial-card-duration">~1 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-indigo">
+      <a href="#" class="tutorial-card cat-pink">
         <div>
           <div class="tutorial-card-title">Key Questions You Can Ask via the MCP</div>
           <div class="tutorial-card-desc">A starter list of high-value questions to ask Claude with your AirOps data connected.</div>
@@ -979,28 +979,28 @@
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-indigo">
+      <a href="#" class="tutorial-card cat-yellow">
         <div>
           <div class="tutorial-card-title">MCP Use Case: Knowledge Base Read</div>
           <div class="tutorial-card-desc">Query your knowledge bases directly in Claude for research and content creation.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-indigo">
+      <a href="#" class="tutorial-card cat-teal">
         <div>
           <div class="tutorial-card-title">MCP Use Case: Question Creation (e.g., Pulling from Gong)</div>
           <div class="tutorial-card-desc">Generate tracking prompts from sales call transcripts and customer conversations.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-chat-3-line"></i> CONVERSATIONAL</span><span class="tutorial-card-duration">~2 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-indigo">
+      <a href="#" class="tutorial-card cat-green">
         <div>
           <div class="tutorial-card-title">Connecting Other MCPs in LLM Steps in AirOps</div>
           <div class="tutorial-card-desc">Add external MCP servers to your AirOps workflow steps for expanded capabilities.</div>
         </div>
         <div class="tutorial-card-footer"><span class="tutorial-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tutorial-card-duration">~1 MIN</span></div>
       </a>
-      <a href="#" class="tutorial-card cat-indigo">
+      <a href="#" class="tutorial-card cat-pink">
         <div>
           <div class="tutorial-card-title">Using the MCP to Query AirOps Data &amp; Think Through Strategy</div>
           <div class="tutorial-card-desc">Combine AirOps data with Claude's reasoning to develop AI visibility strategies.</div>
