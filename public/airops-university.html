@@ -151,44 +151,57 @@
   .main { margin-left: var(--sidebar-width); flex: 1; min-width: 0; }
 
   .hero {
-    background: var(--hero-bg);
+    background: var(--green-50);
+    background-image: radial-gradient(#d4e8da 1px, transparent 1px);
+    background-size: 24px 24px;
     border-bottom: 1px solid var(--hero-border);
-    padding: 80px 64px 72px;
+    padding: 0 0 72px;
     position: relative; overflow: hidden;
+    text-align: center;
   }
-  .hero::before {
-    display: none;
+  .hero-inner {
+    position: relative; z-index: 2;
+    max-width: 920px; margin: 0 auto;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 80px 48px 0;
   }
-  .hero-inner { position: relative; z-index: 1; max-width: 840px; }
 
   .hero-pill {
     display: inline-flex; align-items: center; gap: 8px;
-    background: #eef9f3; border: 1px solid #057a28;
-    padding: 8px 16px; border-radius: 5px; margin-bottom: 26px;
+    background: #fee7fd; border: 1px solid #852952;
+    padding: 8px 16px; border-radius: 5px; margin-bottom: 36px;
   }
-  .hero-pill-dot { width: 6px; height: 6px; background: var(--green-500); border-radius: 50%; animation: pulse 2s infinite; }
+  .hero-pill-dot { width: 6px; height: 6px; background: #852952; border-radius: 50%; animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
   .hero-pill-text {
     font-family: 'Saans Mono', 'DM Mono', monospace;
     font-size: 14px; font-weight: 500;
     letter-spacing: 0.06em; text-transform: uppercase;
-    color: #057a28;
+    color: #852952;
   }
 
-  .hero h1 {
+  .hero-headline { margin-bottom: 24px; }
+  .hero-headline .line-serif {
     font-family: 'Serrif VF', Georgia, serif;
     font-size: 72px; font-weight: 400;
-    color: var(--near-black); line-height: 1.0;
-    letter-spacing: -0.03em; max-width: 800px; margin-bottom: 20px;
+    color: #002910; line-height: 1.0;
+    letter-spacing: -0.03em; display: block;
   }
-  .hero h1 em { font-style: normal; color: var(--green-500); }
+  .hero-headline .line-sans {
+    font-family: 'Saans', 'Helvetica Neue', sans-serif;
+    font-size: 72px; font-weight: 400;
+    color: #002910; line-height: 1.0;
+    letter-spacing: -0.02em; display: block;
+  }
+  .hero-headline .line-serif em,
+  .hero-headline .line-sans em { font-style: normal; color: var(--green-500); }
 
   .hero-sub {
-    font-size: 18px; color: var(--text-secondary);
-    max-width: 500px; line-height: 1.5; letter-spacing: 0.01em; margin-bottom: 34px;
+    font-size: 16px; color: var(--text-secondary);
+    max-width: 694px; line-height: 1.3; margin-bottom: 34px;
   }
 
-  .hero-actions { display: flex; align-items: center; gap: 12px; margin-bottom: 52px; }
+  .hero-actions { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 52px; }
   .btn-primary {
     font-size: 16px; font-weight: 500; color: #002910;
     background: #00ff64; border: none;
@@ -203,8 +216,11 @@
   }
   .btn-ghost:hover { background: #ccffe0; }
 
-  .hero-stats { display: flex; border-top: 1px solid var(--stroke-green); padding-top: 34px; }
-  .hero-stat { flex: 1; padding-right: 32px; }
+  .hero-stats {
+    display: flex; border-top: 1px solid var(--stroke-green);
+    padding-top: 34px; width: 100%; max-width: 840px;
+  }
+  .hero-stat { flex: 1; padding-right: 32px; text-align: left; }
   .hero-stat+.hero-stat { border-left: 1px solid var(--stroke-green); padding-left: 32px; }
   .hero-stat-num {
     font-family: 'Serrif VF', Georgia, serif; font-size: 34px; font-weight: 400;
@@ -212,6 +228,28 @@
   }
   .hero-stat-num em { font-style: normal; color: var(--green-500); }
   .hero-stat-label { font-size: 12px; color: var(--text-tertiary); }
+
+  /* Headshot circles */
+  .hero-headshots { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+  .hero-headshot {
+    position: absolute;
+    border-radius: 50%;
+    background: #001408;
+    border: 4px solid #00ff64;
+    overflow: hidden;
+  }
+  .hero-headshot img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    mix-blend-mode: plus-lighter;
+    filter: grayscale(1);
+  }
+  .hero-headshot:nth-child(1) { width: 120px; height: 120px; top: 48px; left: 4%; }
+  .hero-headshot:nth-child(2) { width: 100px; height: 100px; top: 16px; left: 22%; }
+  .hero-headshot:nth-child(3) { width: 110px; height: 110px; top: 24px; right: 8%; }
+  .hero-headshot:nth-child(4) { width: 130px; height: 130px; top: 100px; right: 2%; }
+  .hero-headshot:nth-child(5) { width: 120px; height: 120px; bottom: 80px; right: 10%; }
+  .hero-headshot:nth-child(6) { width: 120px; height: 120px; bottom: 80px; left: 10%; }
 
   .marquee-wrap {
     background: var(--green-100);
@@ -398,7 +436,10 @@
     .main { margin-left: 0; }
     .mobile-bar { display: flex !important; }
     .hero, .section, .cta-wrap, footer { padding-left: 28px; padding-right: 28px; }
-    .hero { padding-top: 56px; padding-bottom: 48px; }
+    .hero { padding-top: 0; padding-bottom: 48px; }
+    .hero-inner { padding-top: 56px; }
+    .hero-headshots { display: none; }
+    .hero-headline .line-serif, .hero-headline .line-sans { font-size: 48px; }
     .section { padding-top: 52px; padding-bottom: 52px; }
     .paths-grid { grid-template-columns: 1fr; }
     .two-col { grid-template-columns: 1fr; gap: 32px; }
@@ -411,7 +452,7 @@
     .cta-wrap, footer { padding-top: 52px; padding-bottom: 52px; }
     .foot-inner { flex-direction: column; gap: 16px; text-align: center; }
     .foot-links { flex-wrap: wrap; justify-content: center; }
-    .hero h1 { font-size: 38px; }
+    .hero-headline .line-serif, .hero-headline .line-sans { font-size: 40px; }
     .stitle { font-size: 28px; }
     .cta-wrap .stitle { font-size: 32px; }
     .cta-actions { flex-direction: column; width: 100%; }
@@ -419,7 +460,7 @@
   }
   @media (max-width: 480px) {
     .hero, .section, .cta-wrap, footer { padding-left: 18px; padding-right: 18px; }
-    .hero h1 { font-size: 28px; }
+    .hero-headline .line-serif, .hero-headline .line-sans { font-size: 32px; }
     .hero-stats { flex-direction: column; gap: 18px; }
     .hero-stat { padding-right: 0; }
     .hero-stat+.hero-stat { padding-left: 0; border-left: none; border-top: 1px solid var(--stroke-green); padding-top: 18px; }
@@ -495,12 +536,23 @@
 <div class="main">
 
   <div class="hero">
+    <div class="hero-headshots">
+      <div class="hero-headshot"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face" alt=""></div>
+      <div class="hero-headshot"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=face" alt=""></div>
+      <div class="hero-headshot"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face" alt=""></div>
+      <div class="hero-headshot"><img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=200&h=200&fit=crop&crop=face" alt=""></div>
+      <div class="hero-headshot"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face" alt=""></div>
+      <div class="hero-headshot"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face" alt=""></div>
+    </div>
     <div class="hero-inner">
       <div class="hero-pill">
         <div class="hero-pill-dot"></div>
-        <span class="hero-pill-text">May 2026 cohort — now enrolling</span>
+        <span class="hero-pill-text">May 2026 cohort - now enrolling</span>
       </div>
-      <h1>Become a <em>Content Engineer</em> — the most valuable person on your marketing team</h1>
+      <div class="hero-headline">
+        <span class="line-serif">Become a <em>Content</em></span>
+        <span class="line-sans"><em>Engineer</em> - master AEO</span>
+      </div>
       <p class="hero-sub">Live cohorts, self-paced courses, tutorials, and certifications. Everything you need to master AEO and own AI search visibility for your brand.</p>
       <div class="hero-actions">
         <a href="#" class="btn-primary">Apply for the cohort →</a>
