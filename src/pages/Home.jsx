@@ -78,6 +78,18 @@ const experiments = [
     description: 'Generative ASCII canvas with cursor-distortion and noise-driven typography displacement.',
     tag: 'canvas / generative',
   },
+  {
+    slug: '/new-nav',
+    title: 'New Nav',
+    description: 'Navigation pattern exploration with sticky scroll behavior, surface-aware transitions, and brand-consistent interaction states.',
+    tag: 'navigation / interaction',
+  },
+  {
+    slug: '/brand-team',
+    title: 'Brand Team',
+    description: 'Meet the AirOps brand team. Principles, people, and recent work from the group shaping visual identity and design systems.',
+    tag: 'brand / team',
+  },
 ]
 
 export default function Home() {

@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tutorials — AirOps University</title>
 <style>
+  @font-face { font-family: 'Serrif VF'; src: url('fonts-local/SerrifVF.ttf') format('truetype'); font-weight: 400; }
+  @font-face { font-family: 'Saans'; src: url('fonts-local/Saans-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'Saans'; src: url('fonts-local/Saans-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; }
+  @font-face { font-family: 'Saans'; src: url('fonts-local/Saans-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; }
+  @font-face { font-family: 'Saans Mono'; src: url('fonts-local/SaansMono-Medium.ttf') format('truetype'); font-weight: 500; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -39,7 +46,7 @@
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Saans', 'Helvetica Neue', sans-serif;
     background: var(--white);
     color: var(--text-primary);
     line-height: 1.5;
@@ -69,7 +76,7 @@
     flex-shrink: 0;
   }
   .sidebar-logo-sub {
-    font-family: 'DM Mono','Courier New',monospace;
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
     font-size: 10px; font-weight: 500;
     letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--sidebar-label-color);
@@ -82,7 +89,7 @@
     flex-shrink: 0;
   }
   .sidebar-section-label {
-    font-family: 'DM Mono','Courier New',monospace;
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
     font-size: 10px; font-weight: 500;
     letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--sidebar-label-color);
@@ -110,7 +117,7 @@
 
   .sidebar-link-badge {
     margin-left: auto;
-    font-family: 'DM Mono',monospace;
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
     font-size: 10px; font-weight: 500;
     letter-spacing: 0.06em; text-transform: uppercase;
     background: rgba(0,230,118,0.18); color: #7adba0;
@@ -165,14 +172,14 @@
   .hero-pill-dot { width: 6px; height: 6px; background: var(--green-500); border-radius: 50%; animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
   .hero-pill-text {
-    font-family: 'DM Mono','Courier New',monospace;
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
     font-size: 12px; font-weight: 500;
     letter-spacing: 0.08em; text-transform: uppercase;
     color: var(--green-500);
   }
 
   .hero h1 {
-    font-family: Georgia,'Times New Roman',serif;
+    font-family: 'Serrif VF', Georgia, serif;
     font-size: 52px; font-weight: 400;
     color: var(--near-black); line-height: 1.08;
     letter-spacing: -0.03em; max-width: 800px; margin-bottom: 18px;
@@ -188,7 +195,7 @@
   .hero-stat { flex: 1; padding-right: 32px; }
   .hero-stat+.hero-stat { border-left: 1px solid var(--stroke-green); padding-left: 32px; }
   .hero-stat-num {
-    font-family: Georgia,serif; font-size: 34px; font-weight: 400;
+    font-family: 'Serrif VF', Georgia, serif; font-size: 34px; font-weight: 400;
     color: var(--near-black); letter-spacing: -0.02em; line-height: 1; margin-bottom: 5px;
   }
   .hero-stat-num em { font-style: normal; color: var(--green-500); }
@@ -201,7 +208,7 @@
     display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
   }
   .format-legend-label {
-    font-family: 'DM Mono','Courier New',monospace;
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
     font-size: 10px; font-weight: 500;
     letter-spacing: 0.08em; text-transform: uppercase;
     color: var(--text-tertiary);
@@ -214,7 +221,7 @@
 
   .format-badge {
     display: inline-flex; align-items: center; gap: 5px;
-    font-family: 'DM Mono','Courier New',monospace;
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
     font-size: 10px; font-weight: 500;
     letter-spacing: 0.06em; text-transform: uppercase;
     padding: 4px 10px; flex-shrink: 0;
@@ -228,7 +235,7 @@
 
   .eyebrow {
     display: inline-block;
-    font-family: 'DM Mono',monospace;
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
     font-size: 11px; font-weight: 500;
     letter-spacing: 0.08em; text-transform: uppercase;
     background: var(--accent-label); color: var(--near-black);
@@ -237,7 +244,7 @@
   .eyebrow.green { background: #cceedd; color: #057a28; }
 
   .stitle {
-    font-family: Georgia,serif; font-size: 40px; font-weight: 400;
+    font-family: 'Serrif VF', Georgia, serif; font-size: 40px; font-weight: 400;
     color: var(--near-black); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 12px;
   }
 
@@ -307,7 +314,7 @@
     border-top: 1px solid var(--stroke-green);
   }
   .tutorial-card-duration {
-    font-family: 'DM Mono', monospace;
+    font-family: 'Saans Mono', 'DM Mono', monospace;
     font-size: 10px;
     font-weight: 500;
     letter-spacing: 0.06em;
