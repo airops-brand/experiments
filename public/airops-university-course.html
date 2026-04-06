@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course - AirOps University</title>
+<style>
+  @font-face { font-family: 'Serrif VF'; src: url('fonts-local/SerrifVF.ttf') format('truetype'); font-weight: 400; }
+  @font-face { font-family: 'Saans'; src: url('fonts-local/Saans-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'Saans'; src: url('fonts-local/Saans-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; }
+  @font-face { font-family: 'Saans'; src: url('fonts-local/Saans-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; }
+  @font-face { font-family: 'Saans Mono'; src: url('fonts-local/SaansMono-Medium.ttf') format('truetype'); font-weight: 500; }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --white: #ffffff;
+    --off-white: #F8FFFA;
+    --near-black: #000d05;
+    --green-50: #f8fffb;
+    --green-100: #dfeae3;
+    --green-200: #CCFFE0;
+    --green-500: #008c44;
+    --green-600: #002910;
+    --accent-label: #EEFF8C;
+    --text-primary: #09090b;
+    --text-secondary: #676c79;
+    --text-tertiary: #72787f;
+    --stroke-green: #d4e8da;
+
+    --sidebar-bg: #002910;
+    --sidebar-border: rgba(255,255,255,0.08);
+    --sidebar-active-bg: rgba(255,255,255,0.07);
+    --sidebar-label-color: rgba(255,255,255,0.55);
+    --sidebar-link-color: rgba(255,255,255,0.72);
+    --sidebar-link-hover-bg: rgba(255,255,255,0.06);
+    --sidebar-link-active-color: #ffffff;
+
+    --hero-bg: #ffffff;
+    --hero-border: #e8f0eb;
+
+    --sidebar-width: 220px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Saans', 'Helvetica Neue', sans-serif;
+    background: var(--white);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    width: var(--sidebar-width);
+    min-height: 100vh;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--sidebar-border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+  }
+
+  .sidebar-logo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--sidebar-border);
+    text-decoration: none;
+    display: block;
+    flex-shrink: 0;
+  }
+  .sidebar-logo-sub {
+    font-family: 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--sidebar-label-color);
+    display: block; margin-top: 7px;
+  }
+
+  .sidebar-section {
+    padding: 18px 0 6px;
+    border-bottom: 1px solid var(--sidebar-border);
+    flex-shrink: 0;
+  }
+  .sidebar-section-label {
+    font-family: 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--sidebar-label-color);
+    padding: 0 20px 6px; display: block;
+  }
+
+  .sidebar-link {
+    display: flex; align-items: center; gap: 9px;
+    padding: 8px 20px;
+    font-size: 13px; color: var(--sidebar-link-color);
+    text-decoration: none;
+    transition: color 0.15s, background 0.15s;
+    position: relative;
+  }
+  .sidebar-link:hover { color: var(--sidebar-link-active-color); background: var(--sidebar-link-hover-bg); }
+  .sidebar-link.active { color: #ffffff; background: rgba(255,255,255,0.07); font-weight: 500; }
+  .sidebar-link.active::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px; background: var(--green-500);
+  }
+
+  .sidebar-link-icon { font-size: 12px; flex-shrink: 0; width: 16px; text-align: center; opacity: 0.55; }
+  .sidebar-link.active .sidebar-link-icon { opacity: 1; }
+
+  .sidebar-link-badge {
+    margin-left: auto;
+    font-family: 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    background: rgba(0,230,118,0.18); color: #7adba0;
+    padding: 2px 6px; flex-shrink: 0;
+  }
+
+  .sidebar-spacer { flex: 1; }
+
+  .sidebar-cta {
+    padding: 18px 20px;
+    border-top: 1px solid var(--sidebar-border);
+    flex-shrink: 0;
+  }
+  .sidebar-cta-btn {
+    display: block; width: 100%;
+    font-size: 13px; font-weight: 500;
+    color: #002910; background: #00ff64;
+    border: none; border-radius: 58px; padding: 10px;
+    cursor: pointer; text-align: center; text-decoration: none;
+    transition: background 0.15s; margin-bottom: 8px;
+  }
+  .sidebar-cta-btn:hover { background: #00cc50; }
+  .sidebar-signin {
+    display: block; font-size: 12px;
+    color: rgba(255,255,255,0.58); text-align: center;
+    text-decoration: none; transition: color 0.15s;
+  }
+  .sidebar-signin:hover { color: rgba(255,255,255,0.85); }
+
+  .main { margin-left: var(--sidebar-width); flex: 1; min-width: 0; }
+
+  .hero {
+    background: var(--hero-bg);
+    border-bottom: 1px solid var(--hero-border);
+    padding: 68px 64px 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 840px; }
+
+  .hero-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #eef9f3; border: 1px solid #057a28;
+    padding: 8px 16px; margin-bottom: 26px; border-radius: 5px;
+  }
+  .hero-pill-dot { width: 6px; height: 6px; background: var(--green-500); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .hero-pill-text {
+    font-family: 'Saans Mono', 'DM Mono', monospace;
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: #057a28;
+  }
+
+  .hero h1 {
+    font-family: 'Serrif VF', Georgia, serif;
+    font-size: 52px; font-weight: 400;
+    color: var(--near-black); line-height: 1.08;
+    letter-spacing: -0.03em; max-width: 800px; margin-bottom: 18px;
+  }
+  .hero h1 em { font-style: normal; color: var(--green-500); }
+
+  .hero-sub {
+    font-size: 16px; color: var(--text-secondary);
+    max-width: 560px; line-height: 1.65; margin-bottom: 34px;
+  }
+
+  .hero-stats { display: flex; border-top: 1px solid var(--stroke-green); padding-top: 34px; }
+  .hero-stat { flex: 1; padding-right: 32px; }
+  .hero-stat+.hero-stat { border-left: 1px solid var(--stroke-green); padding-left: 32px; }
+  .hero-stat-num {
+    font-family: 'Serrif VF', Georgia, serif; font-size: 34px; font-weight: 400;
+    color: var(--near-black); letter-spacing: -0.02em; line-height: 1; margin-bottom: 5px;
+  }
+  .hero-stat-num em { font-style: normal; color: var(--green-500); }
+  .hero-stat-label { font-size: 12px; color: var(--text-tertiary); }
+
+  .section { padding: 72px 64px; }
+  .section.alt { background: var(--off-white); }
+  .section.green-wash { background: #eef9f3; }
+
+  .eyebrow {
+    display: inline-block;
+    font-family: 'Saans Mono', 'DM Mono', monospace;
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    background: #EEFF8C; color: #000d05;
+    padding: 8px 16px; margin-bottom: 16px;
+    border: 1px solid #d4e87a; border-radius: 5px;
+  }
+  .eyebrow.green { background: #eef9f3; border-color: #057a28; color: #057a28; }
+
+  .stitle {
+    font-family: 'Serrif VF', Georgia, serif; font-size: 40px; font-weight: 400;
+    color: var(--near-black); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 12px;
+  }
+
+  .ssub {
+    font-size: 16px; color: var(--text-secondary);
+    max-width: 480px; line-height: 1.65; margin-bottom: 36px;
+  }
+
+  .row-label { font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 13px; }
+
+  .cited-list { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--stroke-green); background: var(--stroke-green); }
+  .cited-row { background: var(--white); padding: 14px 18px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: background 0.12s; }
+  .cited-row:hover { background: var(--green-50); }
+  .cited-row.active { background: #edf8f1; }
+  .cited-n { font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); width: 18px; flex-shrink: 0; }
+  .cited-ltr { width: 30px; height: 30px; flex-shrink: 0; background: var(--green-200); border: 1px solid var(--stroke-green); display: flex; align-items: center; justify-content: center; font-family: 'Serrif VF', Georgia, serif; font-size: 16px; font-weight: 400; color: var(--green-500); }
+  .cited-row.active .cited-ltr { background: var(--green-500); color: #fff; }
+  .cited-info { flex: 1; }
+  .cited-t { font-size: 13px; font-weight: 500; color: var(--near-black); margin-bottom: 1px; }
+  .cited-s { font-size: 11px; color: var(--text-secondary); }
+  .cited-meta { display: flex; gap: 12px; align-items: center; flex-shrink: 0; }
+  .cited-meta-item {
+    font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+  .cited-arr { font-size: 12px; color: var(--text-tertiary); transition: transform 0.2s; }
+  .cited-row:hover .cited-arr { transform: translateX(2px); }
+
+  /* Accordion expand */
+  .cited-row-detail {
+    background: var(--green-50);
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+  .cited-row-detail.open {
+    max-height: 400px;
+    padding: 16px 18px;
+  }
+  .detail-videos {
+    display: flex; flex-direction: column; gap: 6px;
+    padding-left: 62px;
+  }
+  .detail-video {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px; color: var(--text-secondary);
+    padding: 6px 0;
+  }
+  .detail-video-icon { font-size: 10px; color: var(--green-500); flex-shrink: 0; }
+  .detail-video-dur {
+    font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-tertiary); margin-left: auto; flex-shrink: 0;
+  }
+
+  .meta-row { display: flex; gap: 18px; flex-wrap: wrap; }
+  .meta-item { font-size: 12px; color: var(--text-secondary); }
+  .meta-item strong { color: var(--near-black); font-weight: 500; }
+
+  .diff-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 1px; background: var(--stroke-green); border: 1px solid var(--stroke-green);
+  }
+  .diff-card {
+    background: var(--white); padding: 28px 24px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .diff-icon {
+    width: 34px; height: 34px; background: var(--green-200);
+    border: 1px solid var(--stroke-green);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; margin-bottom: 4px;
+  }
+  .diff-card h3 {
+    font-family: 'Serrif VF', Georgia, serif; font-size: 20px; font-weight: 400;
+    color: var(--near-black); letter-spacing: -0.01em; line-height: 1.2;
+  }
+  .diff-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+  .btn-primary {
+    font-size: 16px; font-weight: 500; color: #002910;
+    background: #00ff64; border: none; border-radius: 58px;
+    padding: 12px 24px; cursor: pointer; text-decoration: none; transition: background 0.15s;
+  }
+  .btn-primary:hover { background: #00cc50; }
+  .btn-ghost {
+    font-size: 14px; font-weight: 500; color: #002910;
+    background: #eef9f3; border: none; border-radius: 0;
+    padding: 11px 24px; cursor: pointer; text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn-ghost:hover { background: #ccffe0; color: #002910; }
+
+  .cta-wrap {
+    background: #eef9f3; border-top: 1px solid var(--stroke-green);
+    padding: 80px 64px; text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-inner { position: relative; z-index: 1; }
+  .cta-wrap .eyebrow { display: table; margin: 0 auto 18px; }
+  .cta-wrap .stitle { text-align: center; margin: 0 auto 10px; font-size: 42px; }
+  .cta-wrap .ssub { margin: 0 auto 30px; text-align: center; max-width: 380px; }
+  .cta-actions { display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .btn-ghost-cta {
+    font-size: 14px; font-weight: 500; color: #002910;
+    background: #eef9f3; border: none; border-radius: 0;
+    padding: 11px 26px; cursor: pointer; text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn-ghost-cta:hover { background: #ccffe0; color: #002910; }
+
+  footer {
+    background: #002910; border-top: 1px solid rgba(255,255,255,0.08); padding: 32px 64px;
+  }
+  .foot-inner { display: flex; align-items: center; justify-content: space-between; }
+  .foot-links { display: flex; gap: 18px; }
+  .foot-link { font-size: 12px; color: rgba(255,255,255,0.65); text-decoration: none; transition: color 0.15s; }
+  .foot-link:hover { color: #fff; }
+  .foot-copy { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+  @media (max-width: 960px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .mobile-bar { display: flex !important; }
+    .hero, .section, .cta-wrap, footer { padding-left: 28px; padding-right: 28px; }
+    .hero { padding-top: 56px; padding-bottom: 48px; }
+    .section { padding-top: 52px; padding-bottom: 52px; }
+    .diff-grid { grid-template-columns: 1fr; }
+    .hero-stats { flex-wrap: wrap; gap: 24px; }
+    .hero-stat+.hero-stat { border-left: none; padding-left: 0; }
+    .cta-wrap, footer { padding-top: 52px; padding-bottom: 52px; }
+    .foot-inner { flex-direction: column; gap: 16px; text-align: center; }
+    .foot-links { flex-wrap: wrap; justify-content: center; }
+    .hero h1 { font-size: 34px; }
+    .stitle { font-size: 28px; }
+    .cta-wrap .stitle { font-size: 32px; }
+    .cta-actions { flex-direction: column; width: 100%; }
+    .cta-actions .btn-primary,
+    .cta-actions .btn-ghost-cta { width: 100%; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .hero, .section, .cta-wrap, footer { padding-left: 18px; padding-right: 18px; }
+    .hero h1 { font-size: 28px; }
+    .hero-stats { flex-direction: column; gap: 18px; }
+    .hero-stat { padding-right: 0; }
+    .hero-stat+.hero-stat { padding-left: 0; border-left: none; border-top: 1px solid var(--stroke-green); padding-top: 18px; }
+    .hero-stat-num { font-size: 28px; }
+    .stitle { font-size: 24px; }
+    .ssub { font-size: 14px; }
+  }
+  .mobile-bar {
+    display: none; position: sticky; top: 0; z-index: 99;
+    background: #002910; border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 13px 20px; align-items: center; justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <a class="sidebar-logo" href="airops-university.html">
+    <svg width="96" height="31" viewBox="0 0 784 252" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M111.828 65.6415V88.4663C101.564 72.0112 85.627 61.9258 65.9084 61.9258C23.7703 61.9258 0 92.9782 0 134.647C0 176.581 24.0404 208.695 66.4487 208.695C86.1672 208.695 101.834 198.609 111.828 182.154V204.979H144.782V65.6415H111.828ZM72.9315 181.093C48.8911 181.093 35.1152 159.064 35.1152 134.647C35.1152 110.76 48.621 89.7933 73.4717 89.7933C94.0006 89.7933 111.558 104.391 111.558 134.116C111.558 163.31 94.8109 181.093 72.9315 181.093Z" fill="#ffffff"/>
+      <path d="M173.137 65.6494V204.987H208.252V65.6494H173.137Z" fill="#ffffff"/>
+      <path d="M272.998 100.141V65.6386H237.883V204.976H272.998V125.355C272.998 104.919 287.314 96.691 300.82 96.691C308.653 96.691 316.757 98.8143 321.079 100.407V63.25C298.119 63.25 279.211 76.7856 272.998 100.141Z" fill="#ffffff"/>
+      <path d="M329.629 108.115C329.629 151.377 359.882 182.163 403.371 182.163C447.13 182.163 477.115 151.377 477.115 108.115C477.115 65.6507 447.13 35.3945 403.371 35.3945C359.882 35.3945 329.629 65.6507 329.629 108.115ZM441.997 108.115C441.997 135.187 427.141 154.561 403.371 154.561C379.33 154.561 364.744 135.187 364.744 108.115C364.744 82.1058 379.33 63.2621 403.371 63.2621C427.141 63.2621 441.997 82.1058 441.997 108.115Z" fill="#ffffff"/>
+      <path d="M575.086 61.9258C554.557 61.9258 537.81 73.869 528.896 92.9782V65.6415H493.781V251.425H528.896V180.031C538.891 197.282 557.529 208.695 577.247 208.695C615.604 208.695 642.345 179.235 642.345 137.035C642.345 92.7128 614.523 61.9258 575.086 61.9258ZM568.874 182.685C545.374 182.685 528.896 163.31 528.896 135.708C528.896 107.31 545.374 87.4047 568.874 87.4047C591.293 87.4047 607.23 107.841 607.23 136.77C607.23 163.841 591.293 182.685 568.874 182.685Z" fill="#ffffff"/>
+      <path d="M653.555 156.675C653.555 181.889 676.244 208.695 721.624 208.695C767.274 208.695 783.751 182.42 783.751 161.983C783.751 130.666 746.205 125.092 721.084 120.315C704.066 117.395 693.262 115.007 693.262 105.452C693.262 94.5706 705.417 87.6701 718.383 87.6701C735.94 87.6701 742.693 99.6133 743.233 112.353H778.349C778.349 91.6511 763.492 61.9258 717.572 61.9258C677.865 61.9258 658.147 83.9544 658.147 107.575C658.147 141.282 696.233 144.732 721.354 149.509C735.94 152.163 748.636 155.348 748.636 165.699C748.636 176.05 736.21 182.95 722.975 182.95C710.549 182.95 688.67 176.05 688.67 156.675H653.555Z" fill="#ffffff"/>
+      <path d="M191.339 48.6576C176.921 48.6576 166.578 38.4949 166.578 24.6368C166.578 10.7786 176.921 0 191.339 0C205.13 0 216.1 10.7786 216.1 24.6368C216.1 38.4949 205.13 48.6576 191.339 48.6576Z" fill="#ffffff"/>
+    </svg>
+    <span class="sidebar-logo-sub">University</span>
+  </a>
+
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Learn</span>
+    <a href="airops-university.html" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-home-4-line"></i></span>Home</a>
+    <a href="airops-university-cohort.html" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-group-line"></i></span>Cohort<span class="sidebar-link-badge">Open</span></a>
+    <a href="airops-university-course.html" class="sidebar-link active"><span class="sidebar-link-icon"><i class="ri-play-circle-line"></i></span>Course</a>
+    <a href="airops-university-tutorials.html" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-book-open-line"></i></span>Tutorials</a>
+    <a href="airops-university-certifications.html" class="sidebar-link"><span class="sidebar-link-icon">&#9672;</span>Certifications</a>
+  </div>
+
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Community</span>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">&#11041;</span>Slack community</a>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">&#8599;</span>airops.com</a>
+  </div>
+
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Account</span>
+    <a href="airops-university-dashboard.html" class="sidebar-link"><span class="sidebar-link-icon">&#9675;</span>Dashboard</a>
+    <a href="airops-university-progress.html" class="sidebar-link"><span class="sidebar-link-icon">&#9719;</span>My progress</a>
+  </div>
+
+  <div class="sidebar-spacer"></div>
+
+  <div class="sidebar-cta">
+    <a href="#" class="sidebar-cta-btn">Apply for cohort &rarr;</a>
+    <a href="#" class="sidebar-signin">Sign in</a>
+  </div>
+</nav>
+
+<div class="mobile-bar">
+  <svg width="72" height="23" viewBox="0 0 784 252" fill="none">
+    <path d="M111.828 65.6415V88.4663C101.564 72.0112 85.627 61.9258 65.9084 61.9258C23.7703 61.9258 0 92.9782 0 134.647C0 176.581 24.0404 208.695 66.4487 208.695C86.1672 208.695 101.834 198.609 111.828 182.154V204.979H144.782V65.6415H111.828ZM72.9315 181.093C48.8911 181.093 35.1152 159.064 35.1152 134.647C35.1152 110.76 48.621 89.7933 73.4717 89.7933C94.0006 89.7933 111.558 104.391 111.558 134.116C111.558 163.31 94.8109 181.093 72.9315 181.093Z" fill="#ffffff"/>
+    <path d="M173.137 65.6494V204.987H208.252V65.6494H173.137Z" fill="#ffffff"/>
+    <path d="M272.998 100.141V65.6386H237.883V204.976H272.998V125.355C272.998 104.919 287.314 96.691 300.82 96.691C308.653 96.691 316.757 98.8143 321.079 100.407V63.25C298.119 63.25 279.211 76.7856 272.998 100.141Z" fill="#ffffff"/>
+    <path d="M329.629 108.115C329.629 151.377 359.882 182.163 403.371 182.163C447.13 182.163 477.115 151.377 477.115 108.115C477.115 65.6507 447.13 35.3945 403.371 35.3945C359.882 35.3945 329.629 65.6507 329.629 108.115ZM441.997 108.115C441.997 135.187 427.141 154.561 403.371 154.561C379.33 154.561 364.744 135.187 364.744 108.115C364.744 82.1058 379.33 63.2621 403.371 63.2621C427.141 63.2621 441.997 82.1058 441.997 108.115Z" fill="#ffffff"/>
+    <path d="M575.086 61.9258C554.557 61.9258 537.81 73.869 528.896 92.9782V65.6415H493.781V251.425H528.896V180.031C538.891 197.282 557.529 208.695 577.247 208.695C615.604 208.695 642.345 179.235 642.345 137.035C642.345 92.7128 614.523 61.9258 575.086 61.9258ZM568.874 182.685C545.374 182.685 528.896 163.31 528.896 135.708C528.896 107.31 545.374 87.4047 568.874 87.4047C591.293 87.4047 607.23 107.841 607.23 136.77C607.23 163.841 591.293 182.685 568.874 182.685Z" fill="#ffffff"/>
+    <path d="M653.555 156.675C653.555 181.889 676.244 208.695 721.624 208.695C767.274 208.695 783.751 182.42 783.751 161.983C783.751 130.666 746.205 125.092 721.084 120.315C704.066 117.395 693.262 115.007 693.262 105.452C693.262 94.5706 705.417 87.6701 718.383 87.6701C735.94 87.6701 742.693 99.6133 743.233 112.353H778.349C778.349 91.6511 763.492 61.9258 717.572 61.9258C677.865 61.9258 658.147 83.9544 658.147 107.575C658.147 141.282 696.233 144.732 721.354 149.509C735.94 152.163 748.636 155.348 748.636 165.699C748.636 176.05 736.21 182.95 722.975 182.95C710.549 182.95 688.67 176.05 688.67 156.675H653.555Z" fill="#ffffff"/>
+    <path d="M191.339 48.6576C176.921 48.6576 166.578 38.4949 166.578 24.6368C166.578 10.7786 176.921 0 191.339 0C205.13 0 216.1 10.7786 216.1 24.6368C216.1 38.4949 205.13 48.6576 191.339 48.6576Z" fill="#ffffff"/>
+  </svg>
+  <a href="#" style="font-size:13px;font-weight:500;color:#002910;background:#00ff64;padding:7px 14px;border-radius:58px;text-decoration:none;">Apply &rarr;</a>
+</div>
+
+<div class="main">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-pill">
+        <div class="hero-pill-dot"></div>
+        <span class="hero-pill-text">Self-Paced</span>
+      </div>
+      <h1>The <em>CITED</em> framework. Seven sections. Your pace.</h1>
+      <p class="hero-sub">A guided, interactive async experience. Not a video library -- interactive walkthroughs, embedded exercises, and click-through modules built around the CITED framework.</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-num"><em>7</em></div><div class="hero-stat-label">Sections</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">~<em>35</em></div><div class="hero-stat-label">Videos</div></div>
+        <div class="hero-stat"><div class="hero-stat-num"><em>3.6</em> hrs</div><div class="hero-stat-label">Total runtime</div></div>
+        <div class="hero-stat"><div class="hero-stat-num"><em>Free</em></div><div class="hero-stat-label">With account</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Course Structure -->
+  <div class="section green-wash">
+    <span class="eyebrow">Course Structure</span>
+    <h2 class="stitle">The CITED framework, section by section.</h2>
+    <p class="ssub">Each section builds on the last. Start at Context, finish at Drive -- or jump to the section you need most right now.</p>
+
+    <div class="row-label">CITED Framework</div>
+    <div class="cited-list" id="course-list">
+      <div class="cited-row active" onclick="toggleSection(this)">
+        <span class="cited-n">01</span>
+        <div class="cited-ltr">C</div>
+        <div class="cited-info">
+          <div class="cited-t">Context</div>
+          <div class="cited-s">Understanding the AEO landscape</div>
+        </div>
+        <div class="cited-meta">
+          <span class="cited-meta-item">6 videos</span>
+          <span class="cited-meta-item">32 min</span>
+        </div>
+        <span class="cited-arr">&darr;</span>
+      </div>
+      <div class="cited-row-detail open">
+        <div class="detail-videos">
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>What is AEO and why it matters now<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>The shift from SEO to answer engines<span class="detail-video-dur">5 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>How AI models consume and cite content<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>The information gain thesis<span class="detail-video-dur">5 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Mapping the AI search ecosystem<span class="detail-video-dur">5 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Where your brand fits today<span class="detail-video-dur">5 min</span></div>
+        </div>
+      </div>
+
+      <div class="cited-row" onclick="toggleSection(this)">
+        <span class="cited-n">02</span>
+        <div class="cited-ltr">I</div>
+        <div class="cited-info">
+          <div class="cited-t">Intelligence</div>
+          <div class="cited-s">How AI systems read and rank sources</div>
+        </div>
+        <div class="cited-meta">
+          <span class="cited-meta-item">5 videos</span>
+          <span class="cited-meta-item">28 min</span>
+        </div>
+        <span class="cited-arr">&darr;</span>
+      </div>
+      <div class="cited-row-detail">
+        <div class="detail-videos">
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>How LLMs select and rank sources<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Citation mechanics across platforms<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>The role of structured data<span class="detail-video-dur">5 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Competitive intelligence in AI search<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Reading your AirOps analytics dashboard<span class="detail-video-dur">5 min</span></div>
+        </div>
+      </div>
+
+      <div class="cited-row" onclick="toggleSection(this)">
+        <span class="cited-n">03</span>
+        <div class="cited-ltr">T</div>
+        <div class="cited-info">
+          <div class="cited-t">Take Action</div>
+          <div class="cited-s">Building your first workflow</div>
+        </div>
+        <div class="cited-meta">
+          <span class="cited-meta-item">7 videos</span>
+          <span class="cited-meta-item">42 min</span>
+        </div>
+        <span class="cited-arr">&darr;</span>
+      </div>
+      <div class="cited-row-detail">
+        <div class="detail-videos">
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Setting up your Brand Kit<span class="detail-video-dur">7 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Creating your first workflow<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Knowledge bases and grounding<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Page 360 setup and configuration<span class="detail-video-dur">5 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Building content at scale<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Grid workflows and batch operations<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Publishing and review cycles<span class="detail-video-dur">6 min</span></div>
+        </div>
+      </div>
+
+      <div class="cited-row" onclick="toggleSection(this)">
+        <span class="cited-n">04</span>
+        <div class="cited-ltr">E</div>
+        <div class="cited-info">
+          <div class="cited-t">Evaluate</div>
+          <div class="cited-s">Measuring what's working</div>
+        </div>
+        <div class="cited-meta">
+          <span class="cited-meta-item">5 videos</span>
+          <span class="cited-meta-item">30 min</span>
+        </div>
+        <span class="cited-arr">&darr;</span>
+      </div>
+      <div class="cited-row-detail">
+        <div class="detail-videos">
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>The five metrics that matter<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Visibility trends and what they mean<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Mentions vs. citations deep dive<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Sentiment analysis and brand perception<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Building your weekly review cadence<span class="detail-video-dur">6 min</span></div>
+        </div>
+      </div>
+
+      <div class="cited-row" onclick="toggleSection(this)">
+        <span class="cited-n">05</span>
+        <div class="cited-ltr">D</div>
+        <div class="cited-info">
+          <div class="cited-t">Drive</div>
+          <div class="cited-s">Pitching internally, scaling up</div>
+        </div>
+        <div class="cited-meta">
+          <span class="cited-meta-item">6 videos</span>
+          <span class="cited-meta-item">34 min</span>
+        </div>
+        <span class="cited-arr">&darr;</span>
+      </div>
+      <div class="cited-row-detail">
+        <div class="detail-videos">
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Building the business case for AEO<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Presenting to leadership<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Cross-functional alignment<span class="detail-video-dur">5 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Scaling from pilot to program<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Budget and resource planning<span class="detail-video-dur">5 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Long-term AEO roadmap<span class="detail-video-dur">6 min</span></div>
+        </div>
+      </div>
+
+      <div class="cited-row" onclick="toggleSection(this)">
+        <span class="cited-n">06</span>
+        <div class="cited-ltr" style="font-family:'Saans', 'Helvetica Neue', sans-serif;font-size:11px;font-weight:500;">BK</div>
+        <div class="cited-info">
+          <div class="cited-t">Brand Kit Deep Dive</div>
+          <div class="cited-s">Configuring voice, audiences, and content rules</div>
+        </div>
+        <div class="cited-meta">
+          <span class="cited-meta-item">4 videos</span>
+          <span class="cited-meta-item">22 min</span>
+        </div>
+        <span class="cited-arr">&darr;</span>
+      </div>
+      <div class="cited-row-detail">
+        <div class="detail-videos">
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Brand Kit anatomy and best practices<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Defining audiences and personas<span class="detail-video-dur">5 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Writing rules and content samples<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Publishing and version management<span class="detail-video-dur">5 min</span></div>
+        </div>
+      </div>
+
+      <div class="cited-row" onclick="toggleSection(this)">
+        <span class="cited-n">07</span>
+        <div class="cited-ltr" style="font-family:'Saans', 'Helvetica Neue', sans-serif;font-size:11px;font-weight:500;">AW</div>
+        <div class="cited-info">
+          <div class="cited-t">Advanced Workflows</div>
+          <div class="cited-s">Multi-step automations and integrations</div>
+        </div>
+        <div class="cited-meta">
+          <span class="cited-meta-item">3 videos</span>
+          <span class="cited-meta-item">18 min</span>
+        </div>
+        <span class="cited-arr">&darr;</span>
+      </div>
+      <div class="cited-row-detail">
+        <div class="detail-videos">
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Multi-step workflow architecture<span class="detail-video-dur">7 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>MCP connector and external integrations<span class="detail-video-dur">6 min</span></div>
+          <div class="detail-video"><span class="detail-video-icon">&#9655;</span>Advanced grid patterns and automation<span class="detail-video-dur">5 min</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 28px;">
+      <div class="meta-row">
+        <div class="meta-item"><strong>36</strong> videos total</div>
+        <div class="meta-item"><strong>3 hrs 26 min</strong> runtime</div>
+        <div class="meta-item"><strong>7</strong> sections</div>
+        <div class="meta-item"><strong>Free</strong> with account</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- What makes this different -->
+  <div class="section alt">
+    <span class="eyebrow">What makes this different</span>
+    <h2 class="stitle">Not a video library.</h2>
+    <p class="ssub">Every section is built to make you do something, not just watch something. Three formats keep you engaged throughout.</p>
+    <div class="diff-grid">
+      <div class="diff-card">
+        <div class="diff-icon">&#9655;</div>
+        <h3>Interactive walkthroughs</h3>
+        <p>Step-by-step screen recordings that walk you through real product flows. Pause, follow along, and build as you learn.</p>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">&#9998;</div>
+        <h3>Embedded exercises</h3>
+        <p>Each section includes hands-on tasks inside your own AirOps workspace. Theory turns into practice before you move on.</p>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">&#8862;</div>
+        <h3>Click-through modules</h3>
+        <p>Interactive decision trees and guided prompts that teach you to think through AEO strategy, not just execute steps.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-wrap">
+    <div class="cta-inner">
+      <span class="eyebrow green">Free with account</span>
+      <h2 class="stitle">Start learning at your own pace.</h2>
+      <p class="ssub">Create a free account to access all 7 sections and 35 videos of the CITED framework course.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn-primary">Start the course &rarr;</a>
+        <a href="airops-university.html" class="btn-ghost-cta">Back to University home</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="foot-inner">
+      <div class="foot-links">
+        <a href="airops-university-cohort.html" class="foot-link">Cohort</a>
+        <a href="airops-university-course.html" class="foot-link">Course</a>
+        <a href="airops-university-tutorials.html" class="foot-link">Tutorials</a>
+        <a href="airops-university-certifications.html" class="foot-link">Certifications</a>
+        <a href="#" class="foot-link">airops.com</a>
+      </div>
+      <div class="foot-copy">&copy; 2026 AirOps, Inc.</div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+function toggleSection(row) {
+  const detail = row.nextElementSibling;
+  const isOpen = detail.classList.contains('open');
+
+  // Close all
+  document.querySelectorAll('.cited-row-detail').forEach(d => d.classList.remove('open'));
+  document.querySelectorAll('.cited-row').forEach(r => r.classList.remove('active'));
+
+  // Open clicked if it was closed
+  if (!isOpen) {
+    detail.classList.add('open');
+    row.classList.add('active');
+  }
+}
+</script>
+<script src="quill-widget.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cohort - AirOps University</title>
+<style>
+  @font-face { font-family: 'Serrif VF'; src: url('fonts-local/SerrifVF.ttf') format('truetype'); font-weight: 400; }
+  @font-face { font-family: 'Saans'; src: url('fonts-local/Saans-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'Saans'; src: url('fonts-local/Saans-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; }
+  @font-face { font-family: 'Saans'; src: url('fonts-local/Saans-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; }
+  @font-face { font-family: 'Saans Mono'; src: url('fonts-local/SaansMono-Medium.ttf') format('truetype'); font-weight: 500; }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --white: #ffffff;
+    --off-white: #F8FFFA;
+    --near-black: #000d05;
+    --green-50: #f8fffb;
+    --green-100: #dfeae3;
+    --green-200: #CCFFE0;
+    --green-500: #008c44;
+    --green-600: #002910;
+    --accent-label: #EEFF8C;
+    --text-primary: #09090b;
+    --text-secondary: #676c79;
+    --text-tertiary: #72787f;
+    --stroke-green: #d4e8da;
+
+    --sidebar-bg: #002910;
+    --sidebar-border: rgba(255,255,255,0.08);
+    --sidebar-active-bg: rgba(255,255,255,0.07);
+    --sidebar-label-color: rgba(255,255,255,0.55);
+    --sidebar-link-color: rgba(255,255,255,0.72);
+    --sidebar-link-hover-bg: rgba(255,255,255,0.06);
+    --sidebar-link-active-color: #ffffff;
+
+    --hero-bg: #ffffff;
+    --hero-border: #e8f0eb;
+
+    --sidebar-width: 220px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Saans', 'Helvetica Neue', sans-serif;
+    background: var(--white);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    width: var(--sidebar-width);
+    min-height: 100vh;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--sidebar-border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+  }
+
+  .sidebar-logo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--sidebar-border);
+    text-decoration: none;
+    display: block;
+    flex-shrink: 0;
+  }
+  .sidebar-logo-sub {
+    font-family: 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--sidebar-label-color);
+    display: block; margin-top: 7px;
+  }
+
+  .sidebar-section {
+    padding: 18px 0 6px;
+    border-bottom: 1px solid var(--sidebar-border);
+    flex-shrink: 0;
+  }
+  .sidebar-section-label {
+    font-family: 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--sidebar-label-color);
+    padding: 0 20px 6px; display: block;
+  }
+
+  .sidebar-link {
+    display: flex; align-items: center; gap: 9px;
+    padding: 8px 20px;
+    font-size: 13px; color: var(--sidebar-link-color);
+    text-decoration: none;
+    transition: color 0.15s, background 0.15s;
+    position: relative;
+  }
+  .sidebar-link:hover { color: var(--sidebar-link-active-color); background: var(--sidebar-link-hover-bg); }
+  .sidebar-link.active { color: #ffffff; background: rgba(255,255,255,0.07); font-weight: 500; }
+  .sidebar-link.active::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px; background: var(--green-500);
+  }
+
+  .sidebar-link-icon { font-size: 12px; flex-shrink: 0; width: 16px; text-align: center; opacity: 0.55; }
+  .sidebar-link.active .sidebar-link-icon { opacity: 1; }
+
+  .sidebar-link-badge {
+    margin-left: auto;
+    font-family: 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    background: rgba(0,230,118,0.18); color: #7adba0;
+    padding: 2px 6px; flex-shrink: 0;
+  }
+
+  .sidebar-spacer { flex: 1; }
+
+  .sidebar-cta {
+    padding: 18px 20px;
+    border-top: 1px solid var(--sidebar-border);
+    flex-shrink: 0;
+  }
+  .sidebar-cta-btn {
+    display: block; width: 100%;
+    font-size: 13px; font-weight: 500;
+    color: var(--white); background: var(--green-500);
+    border: none; padding: 10px;
+    cursor: pointer; text-align: center; text-decoration: none;
+    transition: background 0.15s; margin-bottom: 8px;
+  }
+  .sidebar-cta-btn:hover { background: #5fcc8a; }
+  .sidebar-signin {
+    display: block; font-size: 12px;
+    color: rgba(255,255,255,0.58); text-align: center;
+    text-decoration: none; transition: color 0.15s;
+  }
+  .sidebar-signin:hover { color: rgba(255,255,255,0.85); }
+
+  .main { margin-left: var(--sidebar-width); flex: 1; min-width: 0; }
+
+  .hero {
+    background: var(--hero-bg);
+    border-bottom: 1px solid var(--hero-border);
+    padding: 68px 64px 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    display: none;
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 840px; }
+
+  .hero-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #eef9f3; border: 1px solid #057a28;
+    padding: 8px 16px; margin-bottom: 26px; border-radius: 5px;
+  }
+  .hero-pill-dot { width: 6px; height: 6px; background: var(--green-500); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .hero-pill-text {
+    font-family: 'Saans Mono', 'DM Mono', monospace;
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: #057a28;
+  }
+
+  .hero h1 {
+    font-family: 'Serrif VF', Georgia, serif;
+    font-size: 52px; font-weight: 400;
+    color: var(--near-black); line-height: 1.08;
+    letter-spacing: -0.03em; max-width: 800px; margin-bottom: 18px;
+  }
+  .hero h1 em { font-style: normal; color: var(--green-500); }
+
+  .hero-sub {
+    font-size: 16px; color: var(--text-secondary);
+    max-width: 560px; line-height: 1.65; margin-bottom: 34px;
+  }
+
+  .hero-actions { display: flex; align-items: center; gap: 12px; margin-bottom: 52px; }
+
+  .hero-stats { display: flex; border-top: 1px solid var(--stroke-green); padding-top: 34px; }
+  .hero-stat { flex: 1; padding-right: 32px; }
+  .hero-stat+.hero-stat { border-left: 1px solid var(--stroke-green); padding-left: 32px; }
+  .hero-stat-num {
+    font-family: 'Serrif VF', Georgia, serif; font-size: 34px; font-weight: 400;
+    color: var(--near-black); letter-spacing: -0.02em; line-height: 1; margin-bottom: 5px;
+  }
+  .hero-stat-num em { font-style: normal; color: var(--green-500); }
+  .hero-stat-label { font-size: 12px; color: var(--text-tertiary); }
+
+  .btn-primary {
+    font-size: 16px; font-weight: 500; color: #002910;
+    background: #00ff64; border: none; border-radius: 58px;
+    padding: 12px 24px; cursor: pointer; text-decoration: none; transition: background 0.15s;
+  }
+  .btn-primary:hover { background: #00cc50; }
+  .btn-ghost {
+    font-size: 16px; font-weight: 500; color: #002910;
+    background: #eef9f3; border: none; border-radius: 0;
+    padding: 12px 24px; cursor: pointer; text-decoration: none;
+    transition: background 0.15s;
+  }
+  .btn-ghost:hover { background: #ccffe0; }
+
+  .section { padding: 72px 64px; }
+  .section.alt { background: var(--off-white); }
+  .section.dark { background: #00250e; }
+
+  .eyebrow {
+    display: inline-block;
+    font-family: 'Saans Mono', 'DM Mono', monospace;
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    background: #EEFF8C; color: #000d05;
+    padding: 8px 16px; margin-bottom: 16px;
+    border: 1px solid #d4e87a; border-radius: 5px;
+  }
+  .eyebrow.green { background: #eef9f3; border-color: #057a28; color: #057a28; }
+
+  .stitle {
+    font-family: 'Serrif VF', Georgia, serif; font-size: 40px; font-weight: 400;
+    color: var(--near-black); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 12px;
+  }
+  .stitle.light { color: #fff; }
+
+  .ssub {
+    font-size: 16px; color: var(--text-secondary);
+    max-width: 480px; line-height: 1.65; margin-bottom: 36px;
+  }
+  .ssub.light { color: rgba(255,255,255,0.68); }
+
+  /* Week grid */
+  .weeks-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 1px; background: var(--stroke-green); border: 1px solid var(--stroke-green);
+  }
+  .week-card {
+    background: var(--white); padding: 30px 26px;
+    display: flex; flex-direction: column;
+  }
+  .week-card:hover { background: var(--green-50); }
+  .week-num {
+    font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-tertiary); margin-bottom: 14px;
+  }
+  .week-icon {
+    width: 34px; height: 34px; background: var(--green-200);
+    border: 1px solid var(--stroke-green);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px; font-size: 15px;
+  }
+  .week-card h3 {
+    font-family: 'Serrif VF', Georgia, serif; font-size: 22px; font-weight: 400;
+    color: var(--near-black); letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 8px;
+  }
+  .week-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; flex: 1; margin-bottom: 16px; }
+  .week-sessions { display: flex; flex-direction: column; gap: 6px; }
+  .week-sess {
+    font-size: 12px; color: var(--text-secondary); line-height: 1.4;
+    padding-left: 14px; position: relative;
+  }
+  .week-sess::before {
+    content: '';
+    position: absolute; left: 0; top: 6px;
+    width: 5px; height: 5px; background: var(--green-500); border-radius: 50%;
+  }
+
+  /* Schedule table (dark) */
+  .schedule-grid {
+    display: flex; flex-direction: column; gap: 1px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08);
+  }
+  .schedule-row {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 20px;
+    background: rgba(255,255,255,0.03);
+  }
+  .schedule-row.header {
+    background: rgba(255,255,255,0.06);
+  }
+  .schedule-num {
+    font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45); width: 28px; flex-shrink: 0;
+  }
+  .schedule-name {
+    font-size: 13px; color: rgba(255,255,255,0.85); flex: 1;
+  }
+  .schedule-tag {
+    font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 3px 8px; flex-shrink: 0;
+  }
+  .t-strat { background: rgba(0,140,68,0.3); color: #7adba0; }
+  .t-build { background: rgba(238,255,140,0.15); color: #EEFF8C; }
+  .t-comm  { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.62); }
+  .schedule-date {
+    font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 11px; font-weight: 500;
+    color: rgba(255,255,255,0.45); width: 80px; flex-shrink: 0; text-align: right;
+  }
+  .schedule-week-label {
+    font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: #7adba0; padding: 10px 20px;
+    background: rgba(122,219,160,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* Deliverables */
+  .deliverables-grid {
+    display: grid; grid-template-columns: repeat(2,1fr);
+    gap: 1px; background: var(--stroke-green); border: 1px solid var(--stroke-green);
+  }
+  .deliverable-card {
+    background: var(--white); padding: 26px 24px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .deliverable-card:hover { background: var(--green-50); }
+  .deliverable-icon {
+    width: 34px; height: 34px; background: var(--green-200);
+    border: 1px solid var(--stroke-green);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; margin-bottom: 4px;
+  }
+  .deliverable-card h3 {
+    font-size: 14px; font-weight: 500; color: var(--near-black); line-height: 1.35;
+  }
+  .deliverable-card p {
+    font-size: 13px; color: var(--text-secondary); line-height: 1.55;
+  }
+  .deliverable-week {
+    font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-tertiary); margin-top: auto; padding-top: 8px;
+  }
+
+  /* Personas */
+  .personas-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 1px; background: var(--stroke-green); border: 1px solid var(--stroke-green);
+  }
+  .persona-card {
+    background: var(--white); padding: 30px 26px;
+    display: flex; flex-direction: column;
+  }
+  .persona-card:hover { background: var(--green-50); }
+  .persona-icon {
+    width: 34px; height: 34px; background: var(--green-200);
+    border: 1px solid var(--stroke-green);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; margin-bottom: 14px;
+  }
+  .persona-card h3 {
+    font-family: 'Serrif VF', Georgia, serif; font-size: 20px; font-weight: 400;
+    color: var(--near-black); letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 8px;
+  }
+  .persona-card p {
+    font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+  }
+
+  /* CTA */
+  .cta-wrap {
+    background: #eef9f3; border-top: 1px solid var(--stroke-green);
+    padding: 80px 64px; text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-wrap::before {
+    display: none;
+  }
+  .cta-inner { position: relative; z-index: 1; }
+  .cta-wrap .eyebrow { display: table; margin: 0 auto 18px; }
+  .cta-wrap .stitle { text-align: center; margin: 0 auto 10px; font-size: 42px; }
+  .cta-wrap .ssub { margin: 0 auto 30px; text-align: center; max-width: 380px; }
+  .cta-actions { display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .btn-ghost-cta {
+    font-size: 16px; font-weight: 500; color: #002910;
+    background: #eef9f3; border: none; border-radius: 0;
+    padding: 12px 26px; cursor: pointer; text-decoration: none;
+    transition: background 0.15s;
+  }
+  .btn-ghost-cta:hover { background: #ccffe0; }
+
+  footer {
+    background: #002910; border-top: 1px solid rgba(255,255,255,0.08); padding: 32px 64px;
+  }
+  .foot-inner { display: flex; align-items: center; justify-content: space-between; }
+  .foot-links { display: flex; gap: 18px; }
+  .foot-link { font-size: 12px; color: rgba(255,255,255,0.65); text-decoration: none; transition: color 0.15s; }
+  .foot-link:hover { color: #fff; }
+  .foot-copy { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+  @media (max-width: 960px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .mobile-bar { display: flex !important; }
+    .hero, .section, .cta-wrap, footer { padding-left: 28px; padding-right: 28px; }
+    .hero { padding-top: 56px; padding-bottom: 48px; }
+    .section { padding-top: 52px; padding-bottom: 52px; }
+    .weeks-grid { grid-template-columns: 1fr; }
+    .personas-grid { grid-template-columns: 1fr; }
+    .deliverables-grid { grid-template-columns: 1fr; }
+    .hero-stats { flex-wrap: wrap; gap: 24px; }
+    .hero-stat+.hero-stat { border-left: none; padding-left: 0; }
+    .cta-wrap, footer { padding-top: 52px; padding-bottom: 52px; }
+    .foot-inner { flex-direction: column; gap: 16px; text-align: center; }
+    .foot-links { flex-wrap: wrap; justify-content: center; }
+    .hero h1 { font-size: 34px; }
+    .stitle { font-size: 28px; }
+    .cta-wrap .stitle { font-size: 32px; }
+    .cta-actions { flex-direction: column; width: 100%; }
+    .cta-actions .btn-primary,
+    .cta-actions .btn-ghost-cta { width: 100%; text-align: center; }
+    .schedule-date { display: none; }
+  }
+  @media (max-width: 480px) {
+    .hero, .section, .cta-wrap, footer { padding-left: 18px; padding-right: 18px; }
+    .hero h1 { font-size: 28px; }
+    .hero-stats { flex-direction: column; gap: 18px; }
+    .hero-stat { padding-right: 0; }
+    .hero-stat+.hero-stat { padding-left: 0; border-left: none; border-top: 1px solid var(--stroke-green); padding-top: 18px; }
+    .hero-stat-num { font-size: 28px; }
+    .stitle { font-size: 24px; }
+    .ssub { font-size: 14px; }
+  }
+  .mobile-bar {
+    display: none; position: sticky; top: 0; z-index: 99;
+    background: #002910; border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 13px 20px; align-items: center; justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <a class="sidebar-logo" href="airops-university.html">
+    <svg width="96" height="31" viewBox="0 0 784 252" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M111.828 65.6415V88.4663C101.564 72.0112 85.627 61.9258 65.9084 61.9258C23.7703 61.9258 0 92.9782 0 134.647C0 176.581 24.0404 208.695 66.4487 208.695C86.1672 208.695 101.834 198.609 111.828 182.154V204.979H144.782V65.6415H111.828ZM72.9315 181.093C48.8911 181.093 35.1152 159.064 35.1152 134.647C35.1152 110.76 48.621 89.7933 73.4717 89.7933C94.0006 89.7933 111.558 104.391 111.558 134.116C111.558 163.31 94.8109 181.093 72.9315 181.093Z" fill="#ffffff"/>
+      <path d="M173.137 65.6494V204.987H208.252V65.6494H173.137Z" fill="#ffffff"/>
+      <path d="M272.998 100.141V65.6386H237.883V204.976H272.998V125.355C272.998 104.919 287.314 96.691 300.82 96.691C308.653 96.691 316.757 98.8143 321.079 100.407V63.25C298.119 63.25 279.211 76.7856 272.998 100.141Z" fill="#ffffff"/>
+      <path d="M329.629 108.115C329.629 151.377 359.882 182.163 403.371 182.163C447.13 182.163 477.115 151.377 477.115 108.115C477.115 65.6507 447.13 35.3945 403.371 35.3945C359.882 35.3945 329.629 65.6507 329.629 108.115ZM441.997 108.115C441.997 135.187 427.141 154.561 403.371 154.561C379.33 154.561 364.744 135.187 364.744 108.115C364.744 82.1058 379.33 63.2621 403.371 63.2621C427.141 63.2621 441.997 82.1058 441.997 108.115Z" fill="#ffffff"/>
+      <path d="M575.086 61.9258C554.557 61.9258 537.81 73.869 528.896 92.9782V65.6415H493.781V251.425H528.896V180.031C538.891 197.282 557.529 208.695 577.247 208.695C615.604 208.695 642.345 179.235 642.345 137.035C642.345 92.7128 614.523 61.9258 575.086 61.9258ZM568.874 182.685C545.374 182.685 528.896 163.31 528.896 135.708C528.896 107.31 545.374 87.4047 568.874 87.4047C591.293 87.4047 607.23 107.841 607.23 136.77C607.23 163.841 591.293 182.685 568.874 182.685Z" fill="#ffffff"/>
+      <path d="M653.555 156.675C653.555 181.889 676.244 208.695 721.624 208.695C767.274 208.695 783.751 182.42 783.751 161.983C783.751 130.666 746.205 125.092 721.084 120.315C704.066 117.395 693.262 115.007 693.262 105.452C693.262 94.5706 705.417 87.6701 718.383 87.6701C735.94 87.6701 742.693 99.6133 743.233 112.353H778.349C778.349 91.6511 763.492 61.9258 717.572 61.9258C677.865 61.9258 658.147 83.9544 658.147 107.575C658.147 141.282 696.233 144.732 721.354 149.509C735.94 152.163 748.636 155.348 748.636 165.699C748.636 176.05 736.21 182.95 722.975 182.95C710.549 182.95 688.67 176.05 688.67 156.675H653.555Z" fill="#ffffff"/>
+      <path d="M191.339 48.6576C176.921 48.6576 166.578 38.4949 166.578 24.6368C166.578 10.7786 176.921 0 191.339 0C205.13 0 216.1 10.7786 216.1 24.6368C216.1 38.4949 205.13 48.6576 191.339 48.6576Z" fill="#ffffff"/>
+    </svg>
+    <span class="sidebar-logo-sub">University</span>
+  </a>
+
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Learn</span>
+    <a href="airops-university.html" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-home-4-line"></i></span>Home</a>
+    <a href="airops-university-cohort.html" class="sidebar-link active"><span class="sidebar-link-icon"><i class="ri-focus-3-line"></i></span>Cohort<span class="sidebar-link-badge">Open</span></a>
+    <a href="airops-university-course.html" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-play-circle-line"></i></span>Course</a>
+    <a href="airops-university-tutorials.html" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-grid-line"></i></span>Tutorials</a>
+    <a href="airops-university-certifications.html" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-award-line"></i></span>Certifications</a>
+  </div>
+
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Community</span>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-slack-line"></i></span>Slack community</a>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-external-link-line"></i></span>airops.com</a>
+  </div>
+
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Account</span>
+    <a href="airops-university-dashboard.html" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-dashboard-line"></i></span>Dashboard</a>
+    <a href="airops-university-progress.html" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-line-chart-line"></i></span>My progress</a>
+  </div>
+
+  <div class="sidebar-spacer"></div>
+
+  <div class="sidebar-cta">
+    <a href="#" class="sidebar-cta-btn">Apply for cohort &rarr;</a>
+    <a href="#" class="sidebar-signin">Sign in</a>
+  </div>
+</nav>
+
+<div class="mobile-bar">
+  <svg width="72" height="23" viewBox="0 0 784 252" fill="none">
+    <path d="M111.828 65.6415V88.4663C101.564 72.0112 85.627 61.9258 65.9084 61.9258C23.7703 61.9258 0 92.9782 0 134.647C0 176.581 24.0404 208.695 66.4487 208.695C86.1672 208.695 101.834 198.609 111.828 182.154V204.979H144.782V65.6415H111.828ZM72.9315 181.093C48.8911 181.093 35.1152 159.064 35.1152 134.647C35.1152 110.76 48.621 89.7933 73.4717 89.7933C94.0006 89.7933 111.558 104.391 111.558 134.116C111.558 163.31 94.8109 181.093 72.9315 181.093Z" fill="#ffffff"/>
+    <path d="M173.137 65.6494V204.987H208.252V65.6494H173.137Z" fill="#ffffff"/>
+    <path d="M272.998 100.141V65.6386H237.883V204.976H272.998V125.355C272.998 104.919 287.314 96.691 300.82 96.691C308.653 96.691 316.757 98.8143 321.079 100.407V63.25C298.119 63.25 279.211 76.7856 272.998 100.141Z" fill="#ffffff"/>
+    <path d="M329.629 108.115C329.629 151.377 359.882 182.163 403.371 182.163C447.13 182.163 477.115 151.377 477.115 108.115C477.115 65.6507 447.13 35.3945 403.371 35.3945C359.882 35.3945 329.629 65.6507 329.629 108.115ZM441.997 108.115C441.997 135.187 427.141 154.561 403.371 154.561C379.33 154.561 364.744 135.187 364.744 108.115C364.744 82.1058 379.33 63.2621 403.371 63.2621C427.141 63.2621 441.997 82.1058 441.997 108.115Z" fill="#ffffff"/>
+    <path d="M575.086 61.9258C554.557 61.9258 537.81 73.869 528.896 92.9782V65.6415H493.781V251.425H528.896V180.031C538.891 197.282 557.529 208.695 577.247 208.695C615.604 208.695 642.345 179.235 642.345 137.035C642.345 92.7128 614.523 61.9258 575.086 61.9258ZM568.874 182.685C545.374 182.685 528.896 163.31 528.896 135.708C528.896 107.31 545.374 87.4047 568.874 87.4047C591.293 87.4047 607.23 107.841 607.23 136.77C607.23 163.841 591.293 182.685 568.874 182.685Z" fill="#ffffff"/>
+    <path d="M653.555 156.675C653.555 181.889 676.244 208.695 721.624 208.695C767.274 208.695 783.751 182.42 783.751 161.983C783.751 130.666 746.205 125.092 721.084 120.315C704.066 117.395 693.262 115.007 693.262 105.452C693.262 94.5706 705.417 87.6701 718.383 87.6701C735.94 87.6701 742.693 99.6133 743.233 112.353H778.349C778.349 91.6511 763.492 61.9258 717.572 61.9258C677.865 61.9258 658.147 83.9544 658.147 107.575C658.147 141.282 696.233 144.732 721.354 149.509C735.94 152.163 748.636 155.348 748.636 165.699C748.636 176.05 736.21 182.95 722.975 182.95C710.549 182.95 688.67 176.05 688.67 156.675H653.555Z" fill="#ffffff"/>
+    <path d="M191.339 48.6576C176.921 48.6576 166.578 38.4949 166.578 24.6368C166.578 10.7786 176.921 0 191.339 0C205.13 0 216.1 10.7786 216.1 24.6368C216.1 38.4949 205.13 48.6576 191.339 48.6576Z" fill="#ffffff"/>
+  </svg>
+  <a href="#" style="font-size:13px;font-weight:600;color:#fff;background:var(--green-500);padding:7px 14px;text-decoration:none;">Apply &rarr;</a>
+</div>
+
+<div class="main">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-pill">
+        <div class="hero-pill-dot"></div>
+        <span class="hero-pill-text">May 2026 Cohort - Now Enrolling</span>
+      </div>
+      <h1>Nine sessions. Three weeks. One <em>production-ready</em> workflow.</h1>
+      <p class="hero-sub">The live cohort is our most engaging offering. Graduates refer colleagues, post on LinkedIn, and become active weekly users. Theory meets practice in every session.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn-primary">Apply for the cohort &rarr;</a>
+        <a href="#" class="btn-ghost">View full schedule</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-num"><em>72</em></div><div class="hero-stat-label">NPS score</div></div>
+        <div class="hero-stat"><div class="hero-stat-num"><em>85</em>%</div><div class="hero-stat-label">Completion rate</div></div>
+        <div class="hero-stat"><div class="hero-stat-num"><em>30</em></div><div class="hero-stat-label">Seats per cohort</div></div>
+        <div class="hero-stat"><div class="hero-stat-num"><em>3</em> wks</div><div class="hero-stat-label">Duration</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="section alt">
+    <span class="eyebrow">How it works</span>
+    <h2 class="stitle">Three weeks. Three phases. Nine sessions.</h2>
+    <p class="ssub">Each week builds on the last. You start with strategy, move to building, and finish by learning to communicate results to leadership.</p>
+    <div class="weeks-grid">
+      <div class="week-card">
+        <div class="week-num">Week 1</div>
+        <div class="week-icon"><i class="ri-focus-3-line"></i></div>
+        <h3>Strategy</h3>
+        <p>Understand the AEO landscape, audit your current position, and define your content engineering strategy.</p>
+        <div class="week-sessions">
+          <div class="week-sess">Understanding AEO</div>
+          <div class="week-sess">The information gain thesis</div>
+          <div class="week-sess">Running your first AEO audit</div>
+        </div>
+      </div>
+      <div class="week-card">
+        <div class="week-num">Week 2</div>
+        <div class="week-icon"><i class="ri-play-circle-line"></i></div>
+        <h3>Build</h3>
+        <p>Hands-on sessions to configure Brand Kits, build workflows, and create production-ready content pipelines.</p>
+        <div class="week-sessions">
+          <div class="week-sess">Brand Kit mastery</div>
+          <div class="week-sess">Build your first workflow</div>
+          <div class="week-sess">Knowledge bases and grounding</div>
+        </div>
+      </div>
+      <div class="week-card">
+        <div class="week-num">Week 3</div>
+        <div class="week-icon"><i class="ri-award-line"></i></div>
+        <h3>Communicate</h3>
+        <p>Learn to measure results, build dashboards, and pitch AI search strategy to leadership with confidence.</p>
+        <div class="week-sessions">
+          <div class="week-sess">Measuring what matters</div>
+          <div class="week-sess">Building your leadership pitch</div>
+          <div class="week-sess">Graduation and next steps</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full schedule (dark) -->
+  <div class="section dark">
+    <span class="eyebrow green">Full schedule</span>
+    <h2 class="stitle light">All nine sessions. May 5 - May 23, 2026.</h2>
+    <p class="ssub light">Three sessions per week. Each runs 60-90 minutes with async homework and deliverables between sessions.</p>
+
+    <div class="schedule-grid">
+      <div class="schedule-week-label">Week 1 - Strategy</div>
+      <div class="schedule-row">
+        <span class="schedule-num">01</span>
+        <span class="schedule-name">Understanding AEO</span>
+        <span class="schedule-tag t-strat">Strategy</span>
+        <span class="schedule-date">May 5</span>
+      </div>
+      <div class="schedule-row">
+        <span class="schedule-num">02</span>
+        <span class="schedule-name">The information gain thesis</span>
+        <span class="schedule-tag t-strat">Strategy</span>
+        <span class="schedule-date">May 7</span>
+      </div>
+      <div class="schedule-row">
+        <span class="schedule-num">03</span>
+        <span class="schedule-name">Running your first AEO audit</span>
+        <span class="schedule-tag t-strat">Strategy</span>
+        <span class="schedule-date">May 9</span>
+      </div>
+
+      <div class="schedule-week-label">Week 2 - Build</div>
+      <div class="schedule-row">
+        <span class="schedule-num">04</span>
+        <span class="schedule-name">Brand Kit mastery</span>
+        <span class="schedule-tag t-build">Build</span>
+        <span class="schedule-date">May 12</span>
+      </div>
+      <div class="schedule-row">
+        <span class="schedule-num">05</span>
+        <span class="schedule-name">Build your first workflow</span>
+        <span class="schedule-tag t-build">Build</span>
+        <span class="schedule-date">May 14</span>
+      </div>
+      <div class="schedule-row">
+        <span class="schedule-num">06</span>
+        <span class="schedule-name">Knowledge bases and grounding</span>
+        <span class="schedule-tag t-build">Build</span>
+        <span class="schedule-date">May 16</span>
+      </div>
+
+      <div class="schedule-week-label">Week 3 - Communicate</div>
+      <div class="schedule-row">
+        <span class="schedule-num">07</span>
+        <span class="schedule-name">Measuring what matters</span>
+        <span class="schedule-tag t-comm">Comms</span>
+        <span class="schedule-date">May 19</span>
+      </div>
+      <div class="schedule-row">
+        <span class="schedule-num">08</span>
+        <span class="schedule-name">Building your leadership pitch</span>
+        <span class="schedule-tag t-comm">Comms</span>
+        <span class="schedule-date">May 21</span>
+      </div>
+      <div class="schedule-row">
+        <span class="schedule-num">09</span>
+        <span class="schedule-name">Graduation and next steps</span>
+        <span class="schedule-tag t-comm">Comms</span>
+        <span class="schedule-date">May 23</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- What you'll build -->
+  <div class="section">
+    <span class="eyebrow">What you'll build</span>
+    <h2 class="stitle">Four deliverables. All production-ready.</h2>
+    <p class="ssub">You won't just learn concepts. You'll leave the cohort with real artifacts you can use immediately in your role.</p>
+    <div class="deliverables-grid">
+      <div class="deliverable-card">
+        <div class="deliverable-icon"><i class="ri-focus-3-line"></i></div>
+        <h3>AEO audit report</h3>
+        <p>A full analysis of your brand's current AI search visibility, competitive gaps, and priority prompts to target.</p>
+        <div class="deliverable-week">Completed in Week 1</div>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-icon"><i class="ri-slack-line"></i></div>
+        <h3>Brand Kit configuration</h3>
+        <p>A production-ready Brand Kit with voice, style, audiences, and content types configured for your organization.</p>
+        <div class="deliverable-week">Completed in Week 2</div>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-icon"><i class="ri-play-circle-line"></i></div>
+        <h3>Content workflow</h3>
+        <p>An end-to-end content generation workflow grounded in your knowledge base and producing on-brand outputs at scale.</p>
+        <div class="deliverable-week">Completed in Week 2</div>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-icon">&#9672;</div>
+        <h3>Leadership pitch deck</h3>
+        <p>A presentation-ready deck that frames AEO strategy, shows ROI potential, and makes the case for continued investment.</p>
+        <div class="deliverable-week">Completed in Week 3</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Who it's for -->
+  <div class="section alt">
+    <span class="eyebrow">Who it's for</span>
+    <h2 class="stitle">Built for the people doing the work.</h2>
+    <p class="ssub">The cohort is designed for practitioners who want to add content engineering to their skill set and drive AI search visibility for their brand.</p>
+    <div class="personas-grid">
+      <div class="persona-card">
+        <div class="persona-icon">&#9998;</div>
+        <h3>Content leads</h3>
+        <p>You manage a content team and need a framework for AI-optimized content at scale. You want to move from experimenting to operating.</p>
+      </div>
+      <div class="persona-card">
+        <div class="persona-icon">&#9776;</div>
+        <h3>SEO managers</h3>
+        <p>Traditional SEO is evolving. You need to understand how AI answer engines cite sources and how to optimize for that new surface area.</p>
+      </div>
+      <div class="persona-card">
+        <div class="persona-icon">&#9881;</div>
+        <h3>Marketing ops</h3>
+        <p>You build systems and workflows. The cohort teaches you how to configure and operationalize AI content pipelines using AirOps.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-wrap">
+    <div class="cta-inner">
+      <span class="eyebrow green">Applications open</span>
+      <h2 class="stitle">Ready to become a Content Engineer?</h2>
+      <p class="ssub">12 seats remaining. The May 2026 cohort starts May 5.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn-primary">Apply for the cohort &rarr;</a>
+        <a href="airops-university.html" class="btn-ghost-cta">Back to University home</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="foot-inner">
+      <div class="foot-links">
+        <a href="airops-university-cohort.html" class="foot-link">Cohort</a>
+        <a href="airops-university-course.html" class="foot-link">Course</a>
+        <a href="airops-university-tutorials.html" class="foot-link">Tutorials</a>
+        <a href="airops-university-certifications.html" class="foot-link">Certifications</a>
+        <a href="#" class="foot-link">airops.com</a>
+      </div>
+      <div class="foot-copy">&copy; 2026 AirOps, Inc.</div>
+    </div>
+  </footer>
+
+</div>
+<script src="quill-widget.js" defer></script>
+</body>
+</html>

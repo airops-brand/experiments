@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+<title>Dashboard - AirOps University</title>
+<style>
+  @font-face { font-family: 'Serrif VF'; src: url('fonts-local/SerrifVF.ttf') format('truetype'); font-weight: 400; }
+  @font-face { font-family: 'Saans'; src: url('fonts-local/Saans-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'Saans'; src: url('fonts-local/Saans-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; }
+  @font-face { font-family: 'Saans'; src: url('fonts-local/Saans-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; }
+  @font-face { font-family: 'Saans Mono'; src: url('fonts-local/SaansMono-Medium.ttf') format('truetype'); font-weight: 500; }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --white: #ffffff;
+    --off-white: #F8FFFA;
+    --near-black: #000d05;
+    --green-50: #f8fffb;
+    --green-100: #dfeae3;
+    --green-200: #CCFFE0;
+    --green-500: #008c44;
+    --green-600: #002910;
+    --accent-label: #EEFF8C;
+    --text-primary: #09090b;
+    --text-secondary: #676c79;
+    --text-tertiary: #72787f;
+    --stroke-green: #d4e8da;
+
+    --sidebar-bg: #002910;
+    --sidebar-border: rgba(255,255,255,0.08);
+    --sidebar-active-bg: rgba(255,255,255,0.07);
+    --sidebar-label-color: rgba(255,255,255,0.55);
+    --sidebar-link-color: rgba(255,255,255,0.72);
+    --sidebar-link-hover-bg: rgba(255,255,255,0.06);
+    --sidebar-link-active-color: #ffffff;
+
+    --hero-bg: #ffffff;
+    --hero-border: #e8f0eb;
+
+    --sidebar-width: 220px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Saans', 'Helvetica Neue', sans-serif;
+    background: var(--white);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    width: var(--sidebar-width);
+    min-height: 100vh;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--sidebar-border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+  }
+
+  .sidebar-logo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--sidebar-border);
+    text-decoration: none;
+    display: block;
+    flex-shrink: 0;
+  }
+  .sidebar-logo-sub {
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--sidebar-label-color);
+    display: block; margin-top: 7px;
+  }
+
+  .sidebar-section {
+    padding: 18px 0 6px;
+    border-bottom: 1px solid var(--sidebar-border);
+    flex-shrink: 0;
+  }
+  .sidebar-section-label {
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--sidebar-label-color);
+    padding: 0 20px 6px; display: block;
+  }
+
+  .sidebar-link {
+    display: flex; align-items: center; gap: 9px;
+    padding: 8px 20px;
+    font-size: 13px; color: var(--sidebar-link-color);
+    text-decoration: none;
+    transition: color 0.15s, background 0.15s;
+    position: relative;
+  }
+  .sidebar-link:hover { color: var(--sidebar-link-active-color); background: var(--sidebar-link-hover-bg); }
+  .sidebar-link.active { color: #ffffff; background: rgba(255,255,255,0.07); font-weight: 500; }
+  .sidebar-link.active::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px; background: var(--green-500);
+  }
+
+  .sidebar-link-icon { font-size: 12px; flex-shrink: 0; width: 16px; text-align: center; opacity: 0.55; }
+  .sidebar-link.active .sidebar-link-icon { opacity: 1; }
+
+  .sidebar-link-badge {
+    margin-left: auto;
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    background: rgba(0,230,118,0.18); color: #7adba0;
+    padding: 2px 6px; flex-shrink: 0;
+  }
+
+  .sidebar-spacer { flex: 1; }
+
+  .sidebar-cta {
+    padding: 18px 20px;
+    border-top: 1px solid var(--sidebar-border);
+    flex-shrink: 0;
+  }
+  .sidebar-cta-btn {
+    display: block; width: 100%;
+    font-size: 13px; font-weight: 500;
+    color: var(--white); background: var(--green-500);
+    border: none; padding: 10px;
+    cursor: pointer; text-align: center; text-decoration: none;
+    transition: background 0.15s; margin-bottom: 8px;
+  }
+  .sidebar-cta-btn:hover { background: #5fcc8a; }
+  .sidebar-signin {
+    display: block; font-size: 12px;
+    color: rgba(255,255,255,0.58); text-align: center;
+    text-decoration: none; transition: color 0.15s;
+  }
+  .sidebar-signin:hover { color: rgba(255,255,255,0.85); }
+
+  .main { margin-left: var(--sidebar-width); flex: 1; min-width: 0; }
+
+  /* Top bar (replaces hero) */
+  .top-bar {
+    background: var(--hero-bg);
+    border-bottom: 1px solid var(--hero-border);
+    padding: 32px 64px 28px;
+  }
+  .top-bar-breadcrumb {
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+  }
+  .top-bar-breadcrumb a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .top-bar-breadcrumb a:hover { color: var(--green-500); }
+  .top-bar-breadcrumb span { color: var(--text-tertiary); margin: 0 6px; }
+  .top-bar-greeting {
+    font-family: 'Serrif VF', Georgia, serif;
+    font-size: 34px; font-weight: 400;
+    color: var(--near-black);
+    letter-spacing: -0.02em; line-height: 1.1;
+  }
+  .top-bar-greeting em { font-style: normal; color: var(--green-500); }
+
+  .section { padding: 72px 64px; }
+  .section.alt { background: var(--off-white); }
+  .section.dark { background: #00250e; }
+  .section.compact { padding: 48px 64px; }
+
+  .eyebrow {
+    display: inline-block;
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    background: #EEFF8C; color: #000d05;
+    padding: 8px 16px; border: 1px solid #d4e87a; border-radius: 5px; margin-bottom: 16px;
+  }
+  .eyebrow.green { background: #eef9f3; border-color: #057a28; color: #057a28; }
+
+  .stitle {
+    font-family: 'Serrif VF', Georgia, serif; font-size: 40px; font-weight: 400;
+    color: var(--near-black); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 12px;
+  }
+  .stitle.light { color: #fff; }
+
+  .ssub {
+    font-size: 16px; color: var(--text-secondary);
+    max-width: 480px; line-height: 1.65; margin-bottom: 36px;
+  }
+  .ssub.light { color: rgba(255,255,255,0.68); }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--stroke-green);
+    border: 1px solid var(--stroke-green);
+  }
+  .stat-card {
+    background: var(--white);
+    padding: 24px 22px;
+  }
+  .stat-card-label {
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 10px;
+  }
+  .stat-card-value {
+    font-family: 'Serrif VF', Georgia, serif;
+    font-size: 34px; font-weight: 400;
+    color: var(--near-black);
+    letter-spacing: -0.02em; line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-card-value em { font-style: normal; color: var(--green-500); }
+  .stat-card-detail {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+  .stat-card-progress-track {
+    margin-top: 10px;
+    height: 4px;
+    background: var(--green-100);
+    position: relative;
+  }
+  .stat-card-progress-fill {
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    background: var(--green-500);
+  }
+
+  /* Continue learning cards */
+  .continue-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--stroke-green);
+    border: 1px solid var(--stroke-green);
+  }
+  .continue-card {
+    background: var(--white);
+    padding: 24px 22px;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.12s;
+  }
+  .continue-card:hover { background: var(--green-50); }
+  .continue-card-type {
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 10px;
+  }
+  .continue-card-icon {
+    width: 34px; height: 34px;
+    background: var(--green-200);
+    border: 1px solid var(--stroke-green);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 12px; font-size: 15px;
+  }
+  .continue-card h3 {
+    font-size: 14px; font-weight: 500;
+    color: var(--near-black); line-height: 1.35;
+    margin-bottom: 8px;
+  }
+  .continue-card p {
+    font-size: 13px; color: var(--text-secondary);
+    line-height: 1.5; flex: 1; margin-bottom: 14px;
+  }
+  .continue-card-status {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid var(--stroke-green);
+  }
+  .continue-card-status-text {
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--green-500);
+  }
+  .continue-card-status-text.not-started { color: var(--text-tertiary); }
+  .continue-card-status-text.ready { color: #1b1b8f; }
+  .continue-card-arrow {
+    font-size: 14px;
+    color: var(--text-tertiary);
+    transition: transform 0.2s;
+  }
+  .continue-card:hover .continue-card-arrow { transform: translate(2px, -2px); }
+  .continue-card-progress {
+    height: 3px;
+    background: var(--green-100);
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .continue-card-progress-fill {
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    background: var(--green-500);
+  }
+
+  /* Tutorial cards (matching tutorials page) */
+  .tutorials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .tutorial-card {
+    background: var(--white);
+    border: 1px solid var(--stroke-green);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s, box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .tutorial-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,13,5,0.08);
+  }
+  .tutorial-card-thumb {
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 28px;
+  }
+  .tutorial-card-body {
+    padding: 16px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .tutorial-card-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--near-black);
+    line-height: 1.35;
+    margin-bottom: 6px;
+  }
+  .tutorial-card-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    flex: 1;
+  }
+  .tutorial-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--stroke-green);
+  }
+  .tutorial-card-duration {
+    font-family: 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+  .tutorial-card-arrow {
+    font-size: 14px;
+    color: var(--text-tertiary);
+    transition: transform 0.2s;
+  }
+  .tutorial-card:hover .tutorial-card-arrow { transform: translate(2px, -2px); }
+
+  .format-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 4px 10px; flex-shrink: 0;
+  }
+  .format-badge.conversational { background: rgba(0,140,68,0.08); border: 1px solid #008c44; color: #008c44; }
+  .format-badge.point-and-click { background: #fee7fd; border: 1px solid #c54b9b; color: #3a092c; }
+  .format-badge.hybrid { background: #e5e5ff; border: 1px solid #1b1b8f; color: #0f0f57; }
+
+  .tutorial-card-thumb .format-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  /* Certifications display */
+  .cert-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--stroke-green);
+    border: 1px solid var(--stroke-green);
+  }
+  .cert-badge {
+    background: var(--white);
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+  }
+  .cert-badge.earned {
+    background: #edf8f1;
+    border-left: 2px solid var(--green-500);
+  }
+  .cert-badge.locked { opacity: 0.55; }
+  .cert-badge-tier {
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+  .cert-badge.earned .cert-badge-tier { color: var(--green-500); }
+  .cert-badge-name {
+    font-family: 'Serrif VF', Georgia, serif;
+    font-size: 18px; font-weight: 400;
+    color: var(--near-black);
+    letter-spacing: -0.01em; line-height: 1.2;
+  }
+  .cert-badge-status {
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-top: auto;
+  }
+  .cert-badge-status.earned-text { color: var(--green-500); }
+  .cert-badge-status.locked-text { color: var(--text-tertiary); }
+  .cert-badge-icon {
+    position: absolute;
+    top: 18px; right: 18px;
+    font-size: 18px;
+  }
+
+  /* Events table */
+  .events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--stroke-green);
+    border: 1px solid var(--stroke-green);
+  }
+  .event-row {
+    background: var(--white);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: background 0.12s;
+  }
+  .event-row:hover { background: var(--green-50); }
+  .event-date {
+    width: 64px; flex-shrink: 0;
+    text-align: center;
+    border-right: 1px solid var(--stroke-green);
+    padding-right: 16px;
+  }
+  .event-date-month {
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--green-500);
+  }
+  .event-date-day {
+    font-family: 'Serrif VF', Georgia, serif;
+    font-size: 24px; font-weight: 400;
+    color: var(--near-black);
+    letter-spacing: -0.02em; line-height: 1.2;
+  }
+  .event-info { flex: 1; }
+  .event-title {
+    font-size: 14px; font-weight: 500;
+    color: var(--near-black);
+    margin-bottom: 2px;
+  }
+  .event-detail {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .event-tag {
+    font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 3px 8px;
+    flex-shrink: 0;
+  }
+  .event-tag.cohort { background: rgba(0,140,68,0.08); color: var(--green-500); border: 1px solid var(--green-500); }
+  .event-tag.webinar { background: #e5e5ff; color: #1b1b8f; border: 1px solid #1b1b8f; }
+  .event-tag.office-hours { background: #fee7fd; color: #3a092c; border: 1px solid #c54b9b; }
+
+  .btn-primary {
+    font-size: 16px; font-weight: 500; color: #002910;
+    background: #00ff64; border: none; border-radius: 58px;
+    padding: 12px 24px; cursor: pointer; text-decoration: none; transition: background 0.15s;
+  }
+  .btn-primary:hover { background: #00cc50; }
+  .btn-ghost {
+    font-size: 16px; font-weight: 500; color: #002910;
+    background: #eef9f3; border: none; border-radius: 0;
+    padding: 12px 24px; cursor: pointer; text-decoration: none;
+    transition: background 0.15s;
+  }
+  .btn-ghost:hover { background: #ccffe0; }
+
+  .section-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 28px;
+  }
+  .section-head .stitle { margin-bottom: 0; }
+  .link-muted { font-size: 13px; color: var(--text-secondary); text-decoration: none; }
+  .link-muted:hover { color: var(--text-primary); }
+
+  .cta-wrap {
+    background: #eef9f3; border-top: 1px solid var(--stroke-green);
+    padding: 80px 64px; text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-wrap::before {
+    content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 500px;
+    background: none;
+    pointer-events: none;
+  }
+  .cta-inner { position: relative; z-index: 1; }
+  .cta-wrap .eyebrow { display: table; margin: 0 auto 18px; }
+  .cta-wrap .stitle { text-align: center; margin: 0 auto 10px; font-size: 42px; }
+  .cta-wrap .ssub { margin: 0 auto 30px; text-align: center; max-width: 380px; }
+  .cta-actions { display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .btn-ghost-cta {
+    font-size: 16px; font-weight: 500; color: #002910;
+    background: #eef9f3; border: none; border-radius: 0;
+    padding: 12px 24px; cursor: pointer; text-decoration: none;
+    transition: background 0.15s;
+  }
+  .btn-ghost-cta:hover { background: #ccffe0; }
+
+  footer {
+    background: #002910; border-top: 1px solid rgba(255,255,255,0.08); padding: 32px 64px;
+  }
+  .foot-inner { display: flex; align-items: center; justify-content: space-between; }
+  .foot-links { display: flex; gap: 18px; }
+  .foot-link { font-size: 12px; color: rgba(255,255,255,0.65); text-decoration: none; transition: color 0.15s; }
+  .foot-link:hover { color: #fff; }
+  .foot-copy { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+  @media (max-width: 960px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .mobile-bar { display: flex !important; }
+    .top-bar, .section, .cta-wrap, footer { padding-left: 28px; padding-right: 28px; }
+    .top-bar { padding-top: 24px; padding-bottom: 20px; }
+    .section { padding-top: 52px; padding-bottom: 52px; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .continue-grid { grid-template-columns: 1fr; }
+    .tutorials-grid { grid-template-columns: repeat(2, 1fr); }
+    .cert-row { grid-template-columns: repeat(2, 1fr); }
+    .cta-wrap, footer { padding-top: 52px; padding-bottom: 52px; }
+    .foot-inner { flex-direction: column; gap: 16px; text-align: center; }
+    .foot-links { flex-wrap: wrap; justify-content: center; }
+    .top-bar-greeting { font-size: 28px; }
+    .stitle { font-size: 28px; }
+    .cta-wrap .stitle { font-size: 32px; }
+    .cta-actions { flex-direction: column; width: 100%; }
+    .cta-actions .btn-primary,
+    .cta-actions .btn-ghost-cta { width: 100%; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .top-bar, .section, .cta-wrap, footer { padding-left: 18px; padding-right: 18px; }
+    .top-bar-greeting { font-size: 24px; }
+    .stats-row { grid-template-columns: 1fr; }
+    .cert-row { grid-template-columns: 1fr; }
+    .tutorials-grid { grid-template-columns: 1fr; }
+    .stitle { font-size: 24px; }
+    .ssub { font-size: 14px; }
+    .stat-card-value { font-size: 28px; }
+  }
+  .mobile-bar {
+    display: none; position: sticky; top: 0; z-index: 99;
+    background: #002910; border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 13px 20px; align-items: center; justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <a class="sidebar-logo" href="airops-university.html">
+    <svg width="96" height="31" viewBox="0 0 784 252" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M111.828 65.6415V88.4663C101.564 72.0112 85.627 61.9258 65.9084 61.9258C23.7703 61.9258 0 92.9782 0 134.647C0 176.581 24.0404 208.695 66.4487 208.695C86.1672 208.695 101.834 198.609 111.828 182.154V204.979H144.782V65.6415H111.828ZM72.9315 181.093C48.8911 181.093 35.1152 159.064 35.1152 134.647C35.1152 110.76 48.621 89.7933 73.4717 89.7933C94.0006 89.7933 111.558 104.391 111.558 134.116C111.558 163.31 94.8109 181.093 72.9315 181.093Z" fill="#ffffff"/>
+      <path d="M173.137 65.6494V204.987H208.252V65.6494H173.137Z" fill="#ffffff"/>
+      <path d="M272.998 100.141V65.6386H237.883V204.976H272.998V125.355C272.998 104.919 287.314 96.691 300.82 96.691C308.653 96.691 316.757 98.8143 321.079 100.407V63.25C298.119 63.25 279.211 76.7856 272.998 100.141Z" fill="#ffffff"/>
+      <path d="M329.629 108.115C329.629 151.377 359.882 182.163 403.371 182.163C447.13 182.163 477.115 151.377 477.115 108.115C477.115 65.6507 447.13 35.3945 403.371 35.3945C359.882 35.3945 329.629 65.6507 329.629 108.115ZM441.997 108.115C441.997 135.187 427.141 154.561 403.371 154.561C379.33 154.561 364.744 135.187 364.744 108.115C364.744 82.1058 379.33 63.2621 403.371 63.2621C427.141 63.2621 441.997 82.1058 441.997 108.115Z" fill="#ffffff"/>
+      <path d="M575.086 61.9258C554.557 61.9258 537.81 73.869 528.896 92.9782V65.6415H493.781V251.425H528.896V180.031C538.891 197.282 557.529 208.695 577.247 208.695C615.604 208.695 642.345 179.235 642.345 137.035C642.345 92.7128 614.523 61.9258 575.086 61.9258ZM568.874 182.685C545.374 182.685 528.896 163.31 528.896 135.708C528.896 107.31 545.374 87.4047 568.874 87.4047C591.293 87.4047 607.23 107.841 607.23 136.77C607.23 163.841 591.293 182.685 568.874 182.685Z" fill="#ffffff"/>
+      <path d="M653.555 156.675C653.555 181.889 676.244 208.695 721.624 208.695C767.274 208.695 783.751 182.42 783.751 161.983C783.751 130.666 746.205 125.092 721.084 120.315C704.066 117.395 693.262 115.007 693.262 105.452C693.262 94.5706 705.417 87.6701 718.383 87.6701C735.94 87.6701 742.693 99.6133 743.233 112.353H778.349C778.349 91.6511 763.492 61.9258 717.572 61.9258C677.865 61.9258 658.147 83.9544 658.147 107.575C658.147 141.282 696.233 144.732 721.354 149.509C735.94 152.163 748.636 155.348 748.636 165.699C748.636 176.05 736.21 182.95 722.975 182.95C710.549 182.95 688.67 176.05 688.67 156.675H653.555Z" fill="#ffffff"/>
+      <path d="M191.339 48.6576C176.921 48.6576 166.578 38.4949 166.578 24.6368C166.578 10.7786 176.921 0 191.339 0C205.13 0 216.1 10.7786 216.1 24.6368C216.1 38.4949 205.13 48.6576 191.339 48.6576Z" fill="#ffffff"/>
+    </svg>
+    <span class="sidebar-logo-sub">University</span>
+  </a>
+
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Learn</span>
+    <a href="airops-university.html" class="sidebar-link"><span class="sidebar-link-icon">&#8962;</span>Home</a>
+    <a href="airops-university-cohort.html" class="sidebar-link"><span class="sidebar-link-icon">&#9678;</span>Cohort<span class="sidebar-link-badge">Open</span></a>
+    <a href="airops-university-course.html" class="sidebar-link"><span class="sidebar-link-icon">&#9655;</span>Course</a>
+    <a href="airops-university-tutorials.html" class="sidebar-link"><span class="sidebar-link-icon">&#8862;</span>Tutorials</a>
+    <a href="airops-university-certifications.html" class="sidebar-link"><span class="sidebar-link-icon">&#9672;</span>Certifications</a>
+  </div>
+
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Community</span>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">&#11041;</span>Slack community</a>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">&#8599;</span>airops.com</a>
+  </div>
+
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Account</span>
+    <a href="airops-university-dashboard.html" class="sidebar-link active"><span class="sidebar-link-icon">&#9675;</span>Dashboard</a>
+    <a href="airops-university-progress.html" class="sidebar-link"><span class="sidebar-link-icon">&#9719;</span>My progress</a>
+  </div>
+
+  <div class="sidebar-spacer"></div>
+
+  <div class="sidebar-cta">
+    <a href="#" class="sidebar-cta-btn">Apply for cohort &rarr;</a>
+    <a href="#" class="sidebar-signin">Sign in</a>
+  </div>
+</nav>
+
+<div class="mobile-bar">
+  <svg width="72" height="23" viewBox="0 0 784 252" fill="none">
+    <path d="M111.828 65.6415V88.4663C101.564 72.0112 85.627 61.9258 65.9084 61.9258C23.7703 61.9258 0 92.9782 0 134.647C0 176.581 24.0404 208.695 66.4487 208.695C86.1672 208.695 101.834 198.609 111.828 182.154V204.979H144.782V65.6415H111.828ZM72.9315 181.093C48.8911 181.093 35.1152 159.064 35.1152 134.647C35.1152 110.76 48.621 89.7933 73.4717 89.7933C94.0006 89.7933 111.558 104.391 111.558 134.116C111.558 163.31 94.8109 181.093 72.9315 181.093Z" fill="#ffffff"/>
+    <path d="M173.137 65.6494V204.987H208.252V65.6494H173.137Z" fill="#ffffff"/>
+    <path d="M272.998 100.141V65.6386H237.883V204.976H272.998V125.355C272.998 104.919 287.314 96.691 300.82 96.691C308.653 96.691 316.757 98.8143 321.079 100.407V63.25C298.119 63.25 279.211 76.7856 272.998 100.141Z" fill="#ffffff"/>
+    <path d="M329.629 108.115C329.629 151.377 359.882 182.163 403.371 182.163C447.13 182.163 477.115 151.377 477.115 108.115C477.115 65.6507 447.13 35.3945 403.371 35.3945C359.882 35.3945 329.629 65.6507 329.629 108.115ZM441.997 108.115C441.997 135.187 427.141 154.561 403.371 154.561C379.33 154.561 364.744 135.187 364.744 108.115C364.744 82.1058 379.33 63.2621 403.371 63.2621C427.141 63.2621 441.997 82.1058 441.997 108.115Z" fill="#ffffff"/>
+    <path d="M575.086 61.9258C554.557 61.9258 537.81 73.869 528.896 92.9782V65.6415H493.781V251.425H528.896V180.031C538.891 197.282 557.529 208.695 577.247 208.695C615.604 208.695 642.345 179.235 642.345 137.035C642.345 92.7128 614.523 61.9258 575.086 61.9258ZM568.874 182.685C545.374 182.685 528.896 163.31 528.896 135.708C528.896 107.31 545.374 87.4047 568.874 87.4047C591.293 87.4047 607.23 107.841 607.23 136.77C607.23 163.841 591.293 182.685 568.874 182.685Z" fill="#ffffff"/>
+    <path d="M653.555 156.675C653.555 181.889 676.244 208.695 721.624 208.695C767.274 208.695 783.751 182.42 783.751 161.983C783.751 130.666 746.205 125.092 721.084 120.315C704.066 117.395 693.262 115.007 693.262 105.452C693.262 94.5706 705.417 87.6701 718.383 87.6701C735.94 87.6701 742.693 99.6133 743.233 112.353H778.349C778.349 91.6511 763.492 61.9258 717.572 61.9258C677.865 61.9258 658.147 83.9544 658.147 107.575C658.147 141.282 696.233 144.732 721.354 149.509C735.94 152.163 748.636 155.348 748.636 165.699C748.636 176.05 736.21 182.95 722.975 182.95C710.549 182.95 688.67 176.05 688.67 156.675H653.555Z" fill="#ffffff"/>
+    <path d="M191.339 48.6576C176.921 48.6576 166.578 38.4949 166.578 24.6368C166.578 10.7786 176.921 0 191.339 0C205.13 0 216.1 10.7786 216.1 24.6368C216.1 38.4949 205.13 48.6576 191.339 48.6576Z" fill="#ffffff"/>
+  </svg>
+  <a href="#" style="font-size:13px;font-weight:500;color:#fff;background:var(--green-500);padding:7px 14px;text-decoration:none;">Apply &rarr;</a>
+</div>
+
+<div class="main">
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-breadcrumb">
+      <a href="airops-university.html">University</a>
+      <span>/</span>
+      Dashboard
+    </div>
+    <h1 class="top-bar-greeting">Welcome back, <em>Sarah</em></h1>
+  </div>
+
+  <!-- Stats Row -->
+  <div class="section compact">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-card-label">COURSE PROGRESS</div>
+        <div class="stat-card-value"><em>64</em>%</div>
+        <div class="stat-card-detail">4 of 7 sections complete</div>
+        <div class="stat-card-progress-track"><div class="stat-card-progress-fill" style="width:64%;"></div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">TUTORIALS COMPLETED</div>
+        <div class="stat-card-value"><em>23</em>/58</div>
+        <div class="stat-card-detail">35 remaining</div>
+        <div class="stat-card-progress-track"><div class="stat-card-progress-fill" style="width:39.6%;"></div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">CERTIFICATIONS EARNED</div>
+        <div class="stat-card-value"><em>1</em>/4</div>
+        <div class="stat-card-detail">Strategy certified</div>
+        <div class="stat-card-progress-track"><div class="stat-card-progress-fill" style="width:25%;"></div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">COHORT STATUS</div>
+        <div class="stat-card-value"><em>Alumni</em></div>
+        <div class="stat-card-detail">March 2026 cohort graduate</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Continue Learning -->
+  <div class="section alt">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">PICK UP WHERE YOU LEFT OFF</span>
+        <h2 class="stitle">Continue learning</h2>
+      </div>
+      <a href="airops-university-progress.html" class="link-muted">View all progress &rarr;</a>
+    </div>
+    <div class="continue-grid">
+      <a href="#" class="continue-card">
+        <div class="continue-card-type">COURSE</div>
+        <div class="continue-card-icon">&#9655;</div>
+        <h3>CITED Section 3: Take Action</h3>
+        <p>Building your first workflow - from prompt to production-ready content pipeline.</p>
+        <div class="continue-card-progress"><div class="continue-card-progress-fill" style="width:40%;"></div></div>
+        <div class="continue-card-status">
+          <span class="continue-card-status-text">40% complete</span>
+          <span class="continue-card-arrow">&nearr;</span>
+        </div>
+      </a>
+      <a href="#" class="continue-card">
+        <div class="continue-card-type">TUTORIAL</div>
+        <div class="continue-card-icon">&#8862;</div>
+        <h3>Setting up Brand Kit</h3>
+        <p>Configure your brand identity, voice, and style guidelines inside AirOps.</p>
+        <div class="continue-card-status">
+          <span class="continue-card-status-text not-started">Not started</span>
+          <span class="continue-card-arrow">&nearr;</span>
+        </div>
+      </a>
+      <a href="#" class="continue-card">
+        <div class="continue-card-type">CERTIFICATION</div>
+        <div class="continue-card-icon">&#9672;</div>
+        <h3>Brand Kit Specialist</h3>
+        <p>Demonstrate proficiency in building and managing Brand Kits for production use.</p>
+        <div class="continue-card-status">
+          <span class="continue-card-status-text ready">Ready to attempt</span>
+          <span class="continue-card-arrow">&nearr;</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Recommended For You -->
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow green">PERSONALIZED</span>
+        <h2 class="stitle">Recommended for you</h2>
+      </div>
+      <a href="airops-university-tutorials.html" class="link-muted">Browse all tutorials &rarr;</a>
+    </div>
+    <div class="tutorials-grid">
+      <a href="#" class="tutorial-card">
+        <div class="tutorial-card-thumb" style="background:linear-gradient(135deg,#e0f5ea,#ccffe0);color:#008c44;">&#9654;<span class="format-badge point-and-click">Point-and-Click</span></div>
+        <div class="tutorial-card-body">
+          <div class="tutorial-card-title">How to Build a Brand Kit from Scratch</div>
+          <div class="tutorial-card-desc">Set up your brand identity, voice guidelines, and content rules in one structured walkthrough.</div>
+          <div class="tutorial-card-footer"><span class="tutorial-card-duration">~2 Min</span><span class="tutorial-card-arrow">&nearr;</span></div>
+        </div>
+      </a>
+      <a href="#" class="tutorial-card">
+        <div class="tutorial-card-thumb" style="background:linear-gradient(135deg,#e5e5ff,#d0d0ff);color:#1b1b8f;">&#9678;<span class="format-badge conversational">Conversational</span></div>
+        <div class="tutorial-card-body">
+          <div class="tutorial-card-title">The 5 Metrics That Tell You Where You Stand in AI Search</div>
+          <div class="tutorial-card-desc">The key indicators that reveal your brand's current position in AI-generated answers.</div>
+          <div class="tutorial-card-footer"><span class="tutorial-card-duration">~2 Min</span><span class="tutorial-card-arrow">&nearr;</span></div>
+        </div>
+      </a>
+      <a href="#" class="tutorial-card">
+        <div class="tutorial-card-thumb" style="background:linear-gradient(135deg,#c9ebf2,#a8dce8);color:#196c80;">&#9678;<span class="format-badge hybrid">Hybrid</span></div>
+        <div class="tutorial-card-body">
+          <div class="tutorial-card-title">How Knowledge Bases Work Inside the Workflow Builder</div>
+          <div class="tutorial-card-desc">Understand how workflows reference and query your knowledge bases during execution.</div>
+          <div class="tutorial-card-footer"><span class="tutorial-card-duration">~2 Min</span><span class="tutorial-card-arrow">&nearr;</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Your Certifications -->
+  <div class="section alt">
+    <span class="eyebrow">YOUR CERTIFICATIONS</span>
+    <h2 class="stitle" style="margin-bottom:28px;">Credentials earned</h2>
+    <div class="cert-row">
+      <div class="cert-badge earned">
+        <div class="cert-badge-tier">TIER 1 - EARNED</div>
+        <div class="cert-badge-name">Strategy</div>
+        <div class="cert-badge-status earned-text">Earned Mar 2026</div>
+        <div class="cert-badge-icon">&#10003;</div>
+      </div>
+      <div class="cert-badge locked">
+        <div class="cert-badge-tier">TIER 2 - LOCKED</div>
+        <div class="cert-badge-name">Communicate</div>
+        <div class="cert-badge-status locked-text">Complete course section 5</div>
+        <div class="cert-badge-icon">&#9711;</div>
+      </div>
+      <div class="cert-badge earned">
+        <div class="cert-badge-tier">TIER 3 - EARNED</div>
+        <div class="cert-badge-name">Cohort Completion</div>
+        <div class="cert-badge-status earned-text">Earned Mar 2026</div>
+        <div class="cert-badge-icon">&#10003;</div>
+      </div>
+      <div class="cert-badge locked">
+        <div class="cert-badge-tier">FLAGSHIP - LOCKED</div>
+        <div class="cert-badge-name">Content Engineering Graduate</div>
+        <div class="cert-badge-status locked-text">Requires all 3 tiers</div>
+        <div class="cert-badge-icon">&#9711;</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upcoming Events -->
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">SCHEDULE</span>
+        <h2 class="stitle">Upcoming events</h2>
+      </div>
+      <a href="#" class="link-muted">View full calendar &rarr;</a>
+    </div>
+    <div class="events-list">
+      <div class="event-row">
+        <div class="event-date">
+          <div class="event-date-month">Apr</div>
+          <div class="event-date-day">10</div>
+        </div>
+        <div class="event-info">
+          <div class="event-title">AEO Strategy Deep Dive</div>
+          <div class="event-detail">Live webinar with the AirOps research team - 11:00 AM ET</div>
+        </div>
+        <span class="event-tag webinar">Webinar</span>
+      </div>
+      <div class="event-row">
+        <div class="event-date">
+          <div class="event-date-month">Apr</div>
+          <div class="event-date-day">15</div>
+        </div>
+        <div class="event-info">
+          <div class="event-title">Alumni Office Hours</div>
+          <div class="event-detail">Open Q&amp;A for cohort graduates - 2:00 PM ET</div>
+        </div>
+        <span class="event-tag office-hours">Office Hours</span>
+      </div>
+      <div class="event-row">
+        <div class="event-date">
+          <div class="event-date-month">May</div>
+          <div class="event-date-day">5</div>
+        </div>
+        <div class="event-info">
+          <div class="event-title">May 2026 Cohort Kickoff</div>
+          <div class="event-detail">Session 1: Understanding AEO - 10:00 AM ET</div>
+        </div>
+        <span class="event-tag cohort">Cohort</span>
+      </div>
+      <div class="event-row">
+        <div class="event-date">
+          <div class="event-date-month">May</div>
+          <div class="event-date-day">12</div>
+        </div>
+        <div class="event-info">
+          <div class="event-title">Brand Kit Masterclass</div>
+          <div class="event-detail">Advanced techniques for multi-brand setups - 11:00 AM ET</div>
+        </div>
+        <span class="event-tag webinar">Webinar</span>
+      </div>
+      <div class="event-row">
+        <div class="event-date">
+          <div class="event-date-month">May</div>
+          <div class="event-date-day">22</div>
+        </div>
+        <div class="event-info">
+          <div class="event-title">Content Engineering Showcase</div>
+          <div class="event-detail">Graduates present their production workflows - 1:00 PM ET</div>
+        </div>
+        <span class="event-tag cohort">Cohort</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-wrap">
+    <div class="cta-inner">
+      <span class="eyebrow green">Keep going</span>
+      <h2 class="stitle">You're 64% through the course.</h2>
+      <p class="ssub">Finish 3 more sections to unlock the Communicate certification.</p>
+      <div class="cta-actions">
+        <a href="airops-university-course.html" class="btn-primary">Continue course &rarr;</a>
+        <a href="airops-university-tutorials.html" class="btn-ghost-cta">Browse tutorials</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="foot-inner">
+      <div class="foot-links">
+        <a href="airops-university-cohort.html" class="foot-link">Cohort</a>
+        <a href="airops-university-course.html" class="foot-link">Course</a>
+        <a href="airops-university-tutorials.html" class="foot-link">Tutorials</a>
+        <a href="airops-university-certifications.html" class="foot-link">Certifications</a>
+        <a href="#" class="foot-link">airops.com</a>
+      </div>
+      <div class="foot-copy">&copy; 2026 AirOps, Inc.</div>
+    </div>
+  </footer>
+
+</div>
+<script src="quill-widget.js" defer></script>
+</body>
+</html>

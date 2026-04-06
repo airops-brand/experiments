@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+<title>My Progress - AirOps University</title>
+<style>
+  @font-face { font-family: 'Serrif VF'; src: url('fonts-local/SerrifVF.ttf') format('truetype'); font-weight: 400; }
+  @font-face { font-family: 'Saans'; src: url('fonts-local/Saans-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'Saans'; src: url('fonts-local/Saans-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; }
+  @font-face { font-family: 'Saans'; src: url('fonts-local/Saans-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; }
+  @font-face { font-family: 'Saans Mono'; src: url('fonts-local/SaansMono-Medium.ttf') format('truetype'); font-weight: 500; }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --white: #ffffff;
+    --off-white: #F8FFFA;
+    --near-black: #000d05;
+    --green-50: #f8fffb;
+    --green-100: #dfeae3;
+    --green-200: #CCFFE0;
+    --green-500: #008c44;
+    --green-600: #002910;
+    --accent-label: #EEFF8C;
+    --text-primary: #09090b;
+    --text-secondary: #676c79;
+    --text-tertiary: #72787f;
+    --stroke-green: #d4e8da;
+
+    --sidebar-bg: #002910;
+    --sidebar-border: rgba(255,255,255,0.08);
+    --sidebar-active-bg: rgba(255,255,255,0.07);
+    --sidebar-label-color: rgba(255,255,255,0.55);
+    --sidebar-link-color: rgba(255,255,255,0.72);
+    --sidebar-link-hover-bg: rgba(255,255,255,0.06);
+    --sidebar-link-active-color: #ffffff;
+
+    --hero-bg: #ffffff;
+    --hero-border: #e8f0eb;
+
+    --sidebar-width: 220px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Saans', 'Helvetica Neue', sans-serif;
+    background: var(--white);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    width: var(--sidebar-width);
+    min-height: 100vh;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--sidebar-border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+  }
+
+  .sidebar-logo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--sidebar-border);
+    text-decoration: none;
+    display: block;
+    flex-shrink: 0;
+  }
+  .sidebar-logo-sub {
+    font-family: 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--sidebar-label-color);
+    display: block; margin-top: 7px;
+  }
+
+  .sidebar-section {
+    padding: 18px 0 6px;
+    border-bottom: 1px solid var(--sidebar-border);
+    flex-shrink: 0;
+  }
+  .sidebar-section-label {
+    font-family: 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--sidebar-label-color);
+    padding: 0 20px 6px; display: block;
+  }
+
+  .sidebar-link {
+    display: flex; align-items: center; gap: 9px;
+    padding: 8px 20px;
+    font-size: 13px; color: var(--sidebar-link-color);
+    text-decoration: none;
+    transition: color 0.15s, background 0.15s;
+    position: relative;
+  }
+  .sidebar-link:hover { color: var(--sidebar-link-active-color); background: var(--sidebar-link-hover-bg); }
+  .sidebar-link.active { color: #ffffff; background: rgba(255,255,255,0.07); font-weight: 500; }
+  .sidebar-link.active::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px; background: var(--green-500);
+  }
+
+  .sidebar-link-icon { font-size: 12px; flex-shrink: 0; width: 16px; text-align: center; opacity: 0.55; }
+  .sidebar-link.active .sidebar-link-icon { opacity: 1; }
+
+  .sidebar-link-badge {
+    margin-left: auto;
+    font-family: 'Saans Mono', 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    background: rgba(0,230,118,0.18); color: #7adba0;
+    padding: 2px 6px; flex-shrink: 0;
+  }
+
+  .sidebar-spacer { flex: 1; }
+
+  .sidebar-cta {
+    padding: 18px 20px;
+    border-top: 1px solid var(--sidebar-border);
+    flex-shrink: 0;
+  }
+  .sidebar-cta-btn {
+    display: block; width: 100%;
+    font-size: 13px; font-weight: 500;
+    color: var(--white); background: var(--green-500);
+    border: none; padding: 10px;
+    cursor: pointer; text-align: center; text-decoration: none;
+    transition: background 0.15s; margin-bottom: 8px;
+  }
+  .sidebar-cta-btn:hover { background: #5fcc8a; }
+  .sidebar-signin {
+    display: block; font-size: 12px;
+    color: rgba(255,255,255,0.58); text-align: center;
+    text-decoration: none; transition: color 0.15s;
+  }
+  .sidebar-signin:hover { color: rgba(255,255,255,0.85); }
+
+  .main { margin-left: var(--sidebar-width); flex: 1; min-width: 0; }
+
+  .hero {
+    background: var(--hero-bg);
+    border-bottom: 1px solid var(--hero-border);
+    padding: 68px 64px 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -100px; right: -80px;
+    width: 480px; height: 480px;
+    background: none;
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 840px; }
+
+  .hero-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #eef9f3; border: 1px solid #b8dfc8;
+    padding: 5px 12px; margin-bottom: 26px;
+  }
+  .hero-pill-dot { width: 6px; height: 6px; background: var(--green-500); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .hero-pill-text {
+    font-family: 'Saans Mono', 'DM Mono', monospace;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--green-500);
+  }
+
+  .hero h1 {
+    font-family: 'Serrif VF', Georgia, serif;
+    font-size: 52px; font-weight: 400;
+    color: var(--near-black); line-height: 1.08;
+    letter-spacing: -0.03em; max-width: 800px; margin-bottom: 18px;
+  }
+  .hero h1 em { font-style: normal; color: var(--green-500); }
+
+  .hero-sub {
+    font-size: 16px; color: var(--text-secondary);
+    max-width: 560px; line-height: 1.65;
+  }
+
+  .section { padding: 72px 64px; }
+  .section.alt { background: var(--off-white); }
+
+  .eyebrow {
+    display: inline-block;
+    font-family: 'Saans Mono', 'DM Mono', monospace;
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    background: #EEFF8C; color: #000d05;
+    padding: 8px 16px; border: 1px solid #d4e87a; border-radius: 5px; margin-bottom: 16px;
+  }
+  .eyebrow.green { background: #eef9f3; border-color: #057a28; color: #057a28; }
+
+  .stitle {
+    font-family: 'Serrif VF', Georgia, serif; font-size: 40px; font-weight: 400;
+    color: var(--near-black); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 12px;
+  }
+
+  .ssub {
+    font-size: 16px; color: var(--text-secondary);
+    max-width: 480px; line-height: 1.65; margin-bottom: 36px;
+  }
+
+  /* Progress rows */
+  .progress-list {
+    display: flex; flex-direction: column; gap: 1px;
+    border: 1px solid var(--stroke-green); background: var(--stroke-green);
+  }
+  .progress-row {
+    background: var(--white); padding: 16px 20px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .progress-row:hover { background: var(--green-50); }
+  .progress-ltr {
+    width: 36px; height: 36px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Serrif VF', Georgia, serif; font-size: 18px; font-weight: 400;
+    border: 1px solid var(--stroke-green);
+  }
+  .progress-ltr.complete { background: var(--green-500); color: #fff; border-color: var(--green-500); }
+  .progress-ltr.in-progress { background: var(--green-200); color: var(--green-500); }
+  .progress-ltr.locked { background: var(--green-100); color: var(--text-tertiary); }
+  .progress-info { flex: 1; min-width: 0; }
+  .progress-title { font-size: 14px; font-weight: 500; color: var(--near-black); margin-bottom: 2px; }
+  .progress-status {
+    font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+  .progress-status.complete { color: var(--green-500); }
+  .progress-status.in-progress { color: #b08800; }
+  .progress-bar-wrap {
+    width: 200px; flex-shrink: 0;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .progress-bar-track {
+    flex: 1; height: 6px; background: var(--green-100);
+  }
+  .progress-bar-fill {
+    height: 100%; background: var(--green-500);
+    transition: width 0.3s;
+  }
+  .progress-bar-fill.in-progress { background: #d4a800; }
+  .progress-pct {
+    font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 11px; font-weight: 500;
+    color: var(--text-secondary); width: 36px; text-align: right; flex-shrink: 0;
+  }
+
+  /* Tutorial progress grid */
+  .tut-progress-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 1px; background: var(--stroke-green); border: 1px solid var(--stroke-green);
+  }
+  .tut-progress-card {
+    background: var(--white); padding: 22px 20px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .tut-progress-card:hover { background: var(--green-50); }
+  .tut-progress-icon {
+    width: 30px; height: 30px; background: var(--green-200);
+    border: 1px solid var(--stroke-green);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+  }
+  .tut-progress-name { font-size: 14px; font-weight: 500; color: var(--near-black); }
+  .tut-progress-count {
+    font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.06em; color: var(--text-tertiary);
+  }
+  .tut-progress-bar { height: 4px; background: var(--green-100); margin-top: 4px; }
+  .tut-progress-bar-fill { height: 100%; background: var(--green-500); }
+
+  /* Certification cards */
+  .cert-progress-grid {
+    display: grid; grid-template-columns: repeat(4,1fr);
+    gap: 1px; background: var(--stroke-green); border: 1px solid var(--stroke-green);
+  }
+  .cert-progress-card {
+    background: var(--white); padding: 22px 18px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .cert-progress-card:hover { background: var(--green-50); }
+  .cert-progress-tier {
+    font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+  .cert-progress-name {
+    font-family: 'Serrif VF', Georgia, serif; font-size: 18px; font-weight: 400;
+    color: var(--near-black); letter-spacing: -0.01em; line-height: 1.2;
+  }
+  .cert-progress-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.55; flex: 1; }
+  .cert-progress-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 4px 10px; align-self: flex-start;
+  }
+  .cert-progress-badge.earned { background: var(--green-200); color: var(--green-500); border: 1px solid var(--green-500); }
+  .cert-progress-badge.ready { background: var(--accent-label); color: var(--near-black); border: 1px solid #d4e87a; }
+  .cert-progress-badge.locked { background: var(--green-100); color: var(--text-tertiary); border: 1px solid var(--stroke-green); }
+
+  /* Activity log */
+  .activity-list {
+    display: flex; flex-direction: column; gap: 1px;
+    border: 1px solid var(--stroke-green); background: var(--stroke-green);
+  }
+  .activity-row {
+    background: var(--white); padding: 14px 20px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .activity-row:hover { background: var(--green-50); }
+  .activity-dot {
+    width: 8px; height: 8px; flex-shrink: 0;
+    border-radius: 50%;
+  }
+  .activity-dot.completed { background: var(--green-500); }
+  .activity-dot.passed { background: var(--accent-label); border: 1px solid #d4e87a; }
+  .activity-dot.started { background: var(--green-200); border: 1px solid var(--stroke-green); }
+  .activity-text { font-size: 13px; color: var(--near-black); flex: 1; }
+  .activity-date {
+    font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-tertiary); flex-shrink: 0;
+  }
+
+  .cta-wrap {
+    background: #eef9f3; border-top: 1px solid var(--stroke-green);
+    padding: 80px 64px; text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-wrap::before {
+    content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 500px;
+    background: none;
+    pointer-events: none;
+  }
+  .cta-inner { position: relative; z-index: 1; }
+  .cta-wrap .eyebrow { display: table; margin: 0 auto 18px; }
+  .cta-wrap .stitle { text-align: center; margin: 0 auto 10px; font-size: 42px; }
+  .cta-wrap .ssub { margin: 0 auto 30px; text-align: center; max-width: 380px; }
+  .cta-actions { display: flex; align-items: center; justify-content: center; gap: 10px; }
+
+  .btn-primary {
+    font-size: 16px; font-weight: 500; color: #002910;
+    background: #00ff64; border: none; border-radius: 58px;
+    padding: 12px 24px; cursor: pointer; text-decoration: none; transition: background 0.15s;
+  }
+  .btn-primary:hover { background: #00cc50; }
+  .btn-ghost-cta {
+    font-size: 16px; font-weight: 500; color: #002910;
+    background: #eef9f3; border: none; border-radius: 0;
+    padding: 12px 24px; cursor: pointer; text-decoration: none;
+    transition: background 0.15s;
+  }
+  .btn-ghost-cta:hover { background: #ccffe0; }
+
+  footer {
+    background: #002910; border-top: 1px solid rgba(255,255,255,0.08); padding: 32px 64px;
+  }
+  .foot-inner { display: flex; align-items: center; justify-content: space-between; }
+  .foot-links { display: flex; gap: 18px; }
+  .foot-link { font-size: 12px; color: rgba(255,255,255,0.65); text-decoration: none; transition: color 0.15s; }
+  .foot-link:hover { color: #fff; }
+  .foot-copy { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+  @media (max-width: 960px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .mobile-bar { display: flex !important; }
+    .hero, .section, .cta-wrap, footer { padding-left: 28px; padding-right: 28px; }
+    .hero { padding-top: 56px; padding-bottom: 48px; }
+    .section { padding-top: 52px; padding-bottom: 52px; }
+    .tut-progress-grid { grid-template-columns: repeat(2,1fr); }
+    .cert-progress-grid { grid-template-columns: repeat(2,1fr); }
+    .progress-bar-wrap { width: 140px; }
+    .cta-wrap, footer { padding-top: 52px; padding-bottom: 52px; }
+    .foot-inner { flex-direction: column; gap: 16px; text-align: center; }
+    .foot-links { flex-wrap: wrap; justify-content: center; }
+    .hero h1 { font-size: 34px; }
+    .stitle { font-size: 28px; }
+    .cta-wrap .stitle { font-size: 32px; }
+    .cta-actions { flex-direction: column; width: 100%; }
+    .cta-actions .btn-primary,
+    .cta-actions .btn-ghost-cta { width: 100%; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .hero, .section, .cta-wrap, footer { padding-left: 18px; padding-right: 18px; }
+    .hero h1 { font-size: 28px; }
+    .stitle { font-size: 24px; }
+    .ssub { font-size: 14px; }
+    .tut-progress-grid { grid-template-columns: 1fr; }
+    .cert-progress-grid { grid-template-columns: 1fr; }
+    .progress-bar-wrap { width: 100px; }
+  }
+  .mobile-bar {
+    display: none; position: sticky; top: 0; z-index: 99;
+    background: #002910; border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 13px 20px; align-items: center; justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <a class="sidebar-logo" href="airops-university.html">
+    <svg width="96" height="31" viewBox="0 0 784 252" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M111.828 65.6415V88.4663C101.564 72.0112 85.627 61.9258 65.9084 61.9258C23.7703 61.9258 0 92.9782 0 134.647C0 176.581 24.0404 208.695 66.4487 208.695C86.1672 208.695 101.834 198.609 111.828 182.154V204.979H144.782V65.6415H111.828ZM72.9315 181.093C48.8911 181.093 35.1152 159.064 35.1152 134.647C35.1152 110.76 48.621 89.7933 73.4717 89.7933C94.0006 89.7933 111.558 104.391 111.558 134.116C111.558 163.31 94.8109 181.093 72.9315 181.093Z" fill="#ffffff"/>
+      <path d="M173.137 65.6494V204.987H208.252V65.6494H173.137Z" fill="#ffffff"/>
+      <path d="M272.998 100.141V65.6386H237.883V204.976H272.998V125.355C272.998 104.919 287.314 96.691 300.82 96.691C308.653 96.691 316.757 98.8143 321.079 100.407V63.25C298.119 63.25 279.211 76.7856 272.998 100.141Z" fill="#ffffff"/>
+      <path d="M329.629 108.115C329.629 151.377 359.882 182.163 403.371 182.163C447.13 182.163 477.115 151.377 477.115 108.115C477.115 65.6507 447.13 35.3945 403.371 35.3945C359.882 35.3945 329.629 65.6507 329.629 108.115ZM441.997 108.115C441.997 135.187 427.141 154.561 403.371 154.561C379.33 154.561 364.744 135.187 364.744 108.115C364.744 82.1058 379.33 63.2621 403.371 63.2621C427.141 63.2621 441.997 82.1058 441.997 108.115Z" fill="#ffffff"/>
+      <path d="M575.086 61.9258C554.557 61.9258 537.81 73.869 528.896 92.9782V65.6415H493.781V251.425H528.896V180.031C538.891 197.282 557.529 208.695 577.247 208.695C615.604 208.695 642.345 179.235 642.345 137.035C642.345 92.7128 614.523 61.9258 575.086 61.9258ZM568.874 182.685C545.374 182.685 528.896 163.31 528.896 135.708C528.896 107.31 545.374 87.4047 568.874 87.4047C591.293 87.4047 607.23 107.841 607.23 136.77C607.23 163.841 591.293 182.685 568.874 182.685Z" fill="#ffffff"/>
+      <path d="M653.555 156.675C653.555 181.889 676.244 208.695 721.624 208.695C767.274 208.695 783.751 182.42 783.751 161.983C783.751 130.666 746.205 125.092 721.084 120.315C704.066 117.395 693.262 115.007 693.262 105.452C693.262 94.5706 705.417 87.6701 718.383 87.6701C735.94 87.6701 742.693 99.6133 743.233 112.353H778.349C778.349 91.6511 763.492 61.9258 717.572 61.9258C677.865 61.9258 658.147 83.9544 658.147 107.575C658.147 141.282 696.233 144.732 721.354 149.509C735.94 152.163 748.636 155.348 748.636 165.699C748.636 176.05 736.21 182.95 722.975 182.95C710.549 182.95 688.67 176.05 688.67 156.675H653.555Z" fill="#ffffff"/>
+      <path d="M191.339 48.6576C176.921 48.6576 166.578 38.4949 166.578 24.6368C166.578 10.7786 176.921 0 191.339 0C205.13 0 216.1 10.7786 216.1 24.6368C216.1 38.4949 205.13 48.6576 191.339 48.6576Z" fill="#ffffff"/>
+    </svg>
+    <span class="sidebar-logo-sub">University</span>
+  </a>
+
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Learn</span>
+    <a href="airops-university.html" class="sidebar-link"><span class="sidebar-link-icon">&#8962;</span>Home</a>
+    <a href="airops-university-cohort.html" class="sidebar-link"><span class="sidebar-link-icon">&#9678;</span>Cohort<span class="sidebar-link-badge">Open</span></a>
+    <a href="airops-university-course.html" class="sidebar-link"><span class="sidebar-link-icon">&#9655;</span>Course</a>
+    <a href="airops-university-tutorials.html" class="sidebar-link"><span class="sidebar-link-icon">&#8862;</span>Tutorials</a>
+    <a href="airops-university-certifications.html" class="sidebar-link"><span class="sidebar-link-icon">&#9672;</span>Certifications</a>
+  </div>
+
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Community</span>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">&#11041;</span>Slack community</a>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">&#8599;</span>airops.com</a>
+  </div>
+
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Account</span>
+    <a href="airops-university-dashboard.html" class="sidebar-link"><span class="sidebar-link-icon">&#9675;</span>Dashboard</a>
+    <a href="airops-university-progress.html" class="sidebar-link active"><span class="sidebar-link-icon">&#9719;</span>My progress</a>
+  </div>
+
+  <div class="sidebar-spacer"></div>
+
+  <div class="sidebar-cta">
+    <a href="#" class="sidebar-cta-btn">Apply for cohort &rarr;</a>
+    <a href="#" class="sidebar-signin">Sign in</a>
+  </div>
+</nav>
+
+<div class="mobile-bar">
+  <svg width="72" height="23" viewBox="0 0 784 252" fill="none">
+    <path d="M111.828 65.6415V88.4663C101.564 72.0112 85.627 61.9258 65.9084 61.9258C23.7703 61.9258 0 92.9782 0 134.647C0 176.581 24.0404 208.695 66.4487 208.695C86.1672 208.695 101.834 198.609 111.828 182.154V204.979H144.782V65.6415H111.828ZM72.9315 181.093C48.8911 181.093 35.1152 159.064 35.1152 134.647C35.1152 110.76 48.621 89.7933 73.4717 89.7933C94.0006 89.7933 111.558 104.391 111.558 134.116C111.558 163.31 94.8109 181.093 72.9315 181.093Z" fill="#ffffff"/>
+    <path d="M173.137 65.6494V204.987H208.252V65.6494H173.137Z" fill="#ffffff"/>
+    <path d="M272.998 100.141V65.6386H237.883V204.976H272.998V125.355C272.998 104.919 287.314 96.691 300.82 96.691C308.653 96.691 316.757 98.8143 321.079 100.407V63.25C298.119 63.25 279.211 76.7856 272.998 100.141Z" fill="#ffffff"/>
+    <path d="M329.629 108.115C329.629 151.377 359.882 182.163 403.371 182.163C447.13 182.163 477.115 151.377 477.115 108.115C477.115 65.6507 447.13 35.3945 403.371 35.3945C359.882 35.3945 329.629 65.6507 329.629 108.115ZM441.997 108.115C441.997 135.187 427.141 154.561 403.371 154.561C379.33 154.561 364.744 135.187 364.744 108.115C364.744 82.1058 379.33 63.2621 403.371 63.2621C427.141 63.2621 441.997 82.1058 441.997 108.115Z" fill="#ffffff"/>
+    <path d="M575.086 61.9258C554.557 61.9258 537.81 73.869 528.896 92.9782V65.6415H493.781V251.425H528.896V180.031C538.891 197.282 557.529 208.695 577.247 208.695C615.604 208.695 642.345 179.235 642.345 137.035C642.345 92.7128 614.523 61.9258 575.086 61.9258ZM568.874 182.685C545.374 182.685 528.896 163.31 528.896 135.708C528.896 107.31 545.374 87.4047 568.874 87.4047C591.293 87.4047 607.23 107.841 607.23 136.77C607.23 163.841 591.293 182.685 568.874 182.685Z" fill="#ffffff"/>
+    <path d="M653.555 156.675C653.555 181.889 676.244 208.695 721.624 208.695C767.274 208.695 783.751 182.42 783.751 161.983C783.751 130.666 746.205 125.092 721.084 120.315C704.066 117.395 693.262 115.007 693.262 105.452C693.262 94.5706 705.417 87.6701 718.383 87.6701C735.94 87.6701 742.693 99.6133 743.233 112.353H778.349C778.349 91.6511 763.492 61.9258 717.572 61.9258C677.865 61.9258 658.147 83.9544 658.147 107.575C658.147 141.282 696.233 144.732 721.354 149.509C735.94 152.163 748.636 155.348 748.636 165.699C748.636 176.05 736.21 182.95 722.975 182.95C710.549 182.95 688.67 176.05 688.67 156.675H653.555Z" fill="#ffffff"/>
+    <path d="M191.339 48.6576C176.921 48.6576 166.578 38.4949 166.578 24.6368C166.578 10.7786 176.921 0 191.339 0C205.13 0 216.1 10.7786 216.1 24.6368C216.1 38.4949 205.13 48.6576 191.339 48.6576Z" fill="#ffffff"/>
+  </svg>
+  <a href="#" style="font-size:13px;font-weight:500;color:#fff;background:var(--green-500);padding:7px 14px;text-decoration:none;">Apply &rarr;</a>
+</div>
+
+<div class="main">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-pill">
+        <div class="hero-pill-dot"></div>
+        <span class="hero-pill-text">Your learning journey</span>
+      </div>
+      <h1>My <em>Progress</em></h1>
+      <p class="hero-sub">Track your learning journey across all programs</p>
+    </div>
+  </div>
+
+  <!-- Course Progress -->
+  <div class="section">
+    <span class="eyebrow">CITED Framework</span>
+    <h2 class="stitle">Course Progress</h2>
+    <p class="ssub">Your progress through the self-paced CITED course sections.</p>
+    <div class="progress-list">
+      <div class="progress-row">
+        <div class="progress-ltr complete">C</div>
+        <div class="progress-info">
+          <div class="progress-title">Context</div>
+          <div class="progress-status complete">Completed</div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-track"><div class="progress-bar-fill" style="width:100%"></div></div>
+          <span class="progress-pct">100%</span>
+        </div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-ltr complete">I</div>
+        <div class="progress-info">
+          <div class="progress-title">Intelligence</div>
+          <div class="progress-status complete">Completed</div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-track"><div class="progress-bar-fill" style="width:100%"></div></div>
+          <span class="progress-pct">100%</span>
+        </div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-ltr in-progress">T</div>
+        <div class="progress-info">
+          <div class="progress-title">Take Action</div>
+          <div class="progress-status in-progress">In progress</div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-track"><div class="progress-bar-fill in-progress" style="width:40%"></div></div>
+          <span class="progress-pct">40%</span>
+        </div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-ltr locked">E</div>
+        <div class="progress-info">
+          <div class="progress-title">Evaluate</div>
+          <div class="progress-status">Locked</div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-track"><div class="progress-bar-fill" style="width:0%"></div></div>
+          <span class="progress-pct">0%</span>
+        </div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-ltr locked">D</div>
+        <div class="progress-info">
+          <div class="progress-title">Drive</div>
+          <div class="progress-status">Locked</div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-track"><div class="progress-bar-fill" style="width:0%"></div></div>
+          <span class="progress-pct">0%</span>
+        </div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-ltr locked">B</div>
+        <div class="progress-info">
+          <div class="progress-title">Brand Kit Deep Dive</div>
+          <div class="progress-status">Locked</div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-track"><div class="progress-bar-fill" style="width:0%"></div></div>
+          <span class="progress-pct">0%</span>
+        </div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-ltr locked">A</div>
+        <div class="progress-info">
+          <div class="progress-title">Advanced Workflows</div>
+          <div class="progress-status">Locked</div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-track"><div class="progress-bar-fill" style="width:0%"></div></div>
+          <span class="progress-pct">0%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tutorial Progress -->
+  <div class="section alt">
+    <span class="eyebrow green">Tutorials</span>
+    <h2 class="stitle">Tutorial Progress</h2>
+    <p class="ssub">Completion across each tutorial category.</p>
+    <div class="tut-progress-grid">
+      <div class="tut-progress-card">
+        <div class="tut-progress-icon">&#9881;</div>
+        <div class="tut-progress-name">Brand Kit</div>
+        <div class="tut-progress-count">8 / 12 completed</div>
+        <div class="tut-progress-bar"><div class="tut-progress-bar-fill" style="width:66.7%"></div></div>
+      </div>
+      <div class="tut-progress-card">
+        <div class="tut-progress-icon">&#9678;</div>
+        <div class="tut-progress-name">Page360</div>
+        <div class="tut-progress-count">4 / 10 completed</div>
+        <div class="tut-progress-bar"><div class="tut-progress-bar-fill" style="width:40%"></div></div>
+      </div>
+      <div class="tut-progress-card">
+        <div class="tut-progress-icon">&#8644;</div>
+        <div class="tut-progress-name">MCP Setup</div>
+        <div class="tut-progress-count">3 / 8 completed</div>
+        <div class="tut-progress-bar"><div class="tut-progress-bar-fill" style="width:37.5%"></div></div>
+      </div>
+      <div class="tut-progress-card">
+        <div class="tut-progress-icon">&#8220;</div>
+        <div class="tut-progress-name">Citations</div>
+        <div class="tut-progress-count">5 / 11 completed</div>
+        <div class="tut-progress-bar"><div class="tut-progress-bar-fill" style="width:45.5%"></div></div>
+      </div>
+      <div class="tut-progress-card">
+        <div class="tut-progress-icon">&#9655;</div>
+        <div class="tut-progress-name">Workflows</div>
+        <div class="tut-progress-count">3 / 9 completed</div>
+        <div class="tut-progress-bar"><div class="tut-progress-bar-fill" style="width:33.3%"></div></div>
+      </div>
+      <div class="tut-progress-card">
+        <div class="tut-progress-icon">&#9733;</div>
+        <div class="tut-progress-name">Advanced</div>
+        <div class="tut-progress-count">0 / 8 completed</div>
+        <div class="tut-progress-bar"><div class="tut-progress-bar-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Certification Progress -->
+  <div class="section">
+    <span class="eyebrow">Credentials</span>
+    <h2 class="stitle">Certification Progress</h2>
+    <p class="ssub">Earn certifications to validate your expertise and stand out.</p>
+    <div class="cert-progress-grid">
+      <div class="cert-progress-card">
+        <div class="cert-progress-tier">Tier 1</div>
+        <div class="cert-progress-name">AEO Foundations</div>
+        <div class="cert-progress-desc">Core concepts of Answer Engine Optimization and the CITED framework.</div>
+        <div class="cert-progress-badge earned">Earned &middot; Mar 28</div>
+      </div>
+      <div class="cert-progress-card">
+        <div class="cert-progress-tier">Tier 2</div>
+        <div class="cert-progress-name">Brand Kit Specialist</div>
+        <div class="cert-progress-desc">Demonstrate mastery of Brand Kit configuration and optimization.</div>
+        <div class="cert-progress-badge ready">Ready to attempt</div>
+      </div>
+      <div class="cert-progress-card">
+        <div class="cert-progress-tier">Tier 3</div>
+        <div class="cert-progress-name">Content Engineering Professional</div>
+        <div class="cert-progress-desc">End-to-end content engineering workflows and advanced AEO strategy.</div>
+        <div class="cert-progress-badge locked">Locked &middot; Need Brand Kit Specialist</div>
+      </div>
+      <div class="cert-progress-card">
+        <div class="cert-progress-tier">Tier 4</div>
+        <div class="cert-progress-name">Content Engineering Leader</div>
+        <div class="cert-progress-desc">Strategic leadership, team enablement, and organizational AEO practice.</div>
+        <div class="cert-progress-badge locked">Locked &middot; Need all certs + cohort</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activity Log -->
+  <div class="section alt">
+    <span class="eyebrow green">Recent</span>
+    <h2 class="stitle">Activity Log</h2>
+    <p class="ssub">Your recent learning activity across all programs.</p>
+    <div class="activity-list">
+      <div class="activity-row">
+        <div class="activity-dot completed"></div>
+        <div class="activity-text">Completed tutorial: Brand Kit setup</div>
+        <div class="activity-date">Apr 2, 2026</div>
+      </div>
+      <div class="activity-row">
+        <div class="activity-dot completed"></div>
+        <div class="activity-text">Completed tutorial: Adding competitors to Brand Kit</div>
+        <div class="activity-date">Apr 1, 2026</div>
+      </div>
+      <div class="activity-row">
+        <div class="activity-dot started"></div>
+        <div class="activity-text">Started CITED Section 3: Take Action</div>
+        <div class="activity-date">Mar 30, 2026</div>
+      </div>
+      <div class="activity-row">
+        <div class="activity-dot passed"></div>
+        <div class="activity-text">Passed AEO Foundations certification</div>
+        <div class="activity-date">Mar 28, 2026</div>
+      </div>
+      <div class="activity-row">
+        <div class="activity-dot completed"></div>
+        <div class="activity-text">Completed CITED Section 2: Intelligence</div>
+        <div class="activity-date">Mar 27, 2026</div>
+      </div>
+      <div class="activity-row">
+        <div class="activity-dot started"></div>
+        <div class="activity-text">Started CITED Section 2: Intelligence</div>
+        <div class="activity-date">Mar 25, 2026</div>
+      </div>
+      <div class="activity-row">
+        <div class="activity-dot completed"></div>
+        <div class="activity-text">Completed CITED Section 1: Context</div>
+        <div class="activity-date">Mar 22, 2026</div>
+      </div>
+      <div class="activity-row">
+        <div class="activity-dot completed"></div>
+        <div class="activity-text">Completed tutorial: AI Visibility Onboarding</div>
+        <div class="activity-date">Mar 20, 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-wrap">
+    <div class="cta-inner">
+      <span class="eyebrow green">Keep going</span>
+      <h2 class="stitle">Continue your learning journey.</h2>
+      <p class="ssub">Pick up where you left off or explore new tutorials and courses.</p>
+      <div class="cta-actions">
+        <a href="airops-university-course.html" class="btn-primary">Continue course &rarr;</a>
+        <a href="airops-university.html" class="btn-ghost-cta">Back to University home</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="foot-inner">
+      <div class="foot-links">
+        <a href="airops-university-cohort.html" class="foot-link">Cohort</a>
+        <a href="airops-university-course.html" class="foot-link">Course</a>
+        <a href="airops-university-tutorials.html" class="foot-link">Tutorials</a>
+        <a href="airops-university-certifications.html" class="foot-link">Certifications</a>
+        <a href="#" class="foot-link">airops.com</a>
+      </div>
+      <div class="foot-copy">&copy; 2026 AirOps, Inc.</div>
+    </div>
+  </footer>
+
+</div>
+<script src="quill-widget.js" defer></script>
+</body>
+</html>

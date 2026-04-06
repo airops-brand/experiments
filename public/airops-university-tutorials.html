@@ -3,6 +3,7 @@
 <head>
 <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 <meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tutorials — AirOps University</title>
 <style>
@@ -78,7 +79,7 @@
   .sidebar-logo-sub {
     font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
     font-size: 10px; font-weight: 500;
-    letter-spacing: 0.1em; text-transform: uppercase;
+    letter-spacing: 0.06em; text-transform: uppercase;
     color: var(--sidebar-label-color);
     display: block; margin-top: 7px;
   }
@@ -91,7 +92,7 @@
   .sidebar-section-label {
     font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
     font-size: 10px; font-weight: 500;
-    letter-spacing: 0.1em; text-transform: uppercase;
+    letter-spacing: 0.06em; text-transform: uppercase;
     color: var(--sidebar-label-color);
     padding: 0 20px 6px; display: block;
   }
@@ -133,7 +134,7 @@
   }
   .sidebar-cta-btn {
     display: block; width: 100%;
-    font-size: 13px; font-weight: 600;
+    font-size: 13px; font-weight: 500;
     color: var(--white); background: var(--green-500);
     border: none; padding: 10px;
     cursor: pointer; text-align: center; text-decoration: none;
@@ -156,26 +157,22 @@
     position: relative; overflow: hidden;
   }
   .hero::before {
-    content: '';
-    position: absolute; top: -100px; right: -80px;
-    width: 480px; height: 480px;
-    background: radial-gradient(ellipse at center, rgba(0,140,68,0.05) 0%, transparent 70%);
-    pointer-events: none;
+    display: none;
   }
   .hero-inner { position: relative; z-index: 1; max-width: 840px; }
 
   .hero-pill {
     display: inline-flex; align-items: center; gap: 8px;
-    background: #e0f5ea; border: 1px solid #b8dfc8;
-    padding: 5px 12px; margin-bottom: 26px;
+    background: #eef9f3; border: 1px solid #057a28;
+    padding: 8px 16px; margin-bottom: 26px; border-radius: 5px;
   }
   .hero-pill-dot { width: 6px; height: 6px; background: var(--green-500); border-radius: 50%; animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
   .hero-pill-text {
     font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
     font-size: 12px; font-weight: 500;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--green-500);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: #057a28;
   }
 
   .hero h1 {
@@ -210,7 +207,7 @@
   .format-legend-label {
     font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
     font-size: 10px; font-weight: 500;
-    letter-spacing: 0.08em; text-transform: uppercase;
+    letter-spacing: 0.06em; text-transform: uppercase;
     color: var(--text-tertiary);
     margin-right: 4px;
   }
@@ -236,12 +233,13 @@
   .eyebrow {
     display: inline-block;
     font-family: 'Saans Mono', 'Saans Mono', 'DM Mono', monospace;
-    font-size: 11px; font-weight: 500;
-    letter-spacing: 0.08em; text-transform: uppercase;
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
     background: var(--accent-label); color: var(--near-black);
-    padding: 4px 10px; margin-bottom: 16px;
+    padding: 8px 16px; margin-bottom: 16px;
+    border: 1px solid #d4e87a; border-radius: 5px;
   }
-  .eyebrow.green { background: #cceedd; color: #057a28; }
+  .eyebrow.green { background: #eef9f3; border-color: #057a28; color: #057a28; }
 
   .stitle {
     font-family: 'Serrif VF', Georgia, serif; font-size: 40px; font-weight: 400;
@@ -294,7 +292,7 @@
   }
   .tutorial-card-title {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--near-black);
     line-height: 1.35;
     margin-bottom: 6px;
@@ -331,28 +329,25 @@
   }
 
   .btn-primary {
-    font-size: 14px; font-weight: 600; color: var(--white);
-    background: var(--green-500); border: none;
+    font-size: 16px; font-weight: 500; color: #002910;
+    background: #00ff64; border: none; border-radius: 58px;
     padding: 12px 24px; cursor: pointer; text-decoration: none; transition: background 0.15s;
   }
-  .btn-primary:hover { background: #5fcc8a; }
+  .btn-primary:hover { background: #00cc50; }
   .btn-ghost {
-    font-size: 14px; font-weight: 500; color: var(--text-secondary);
-    background: transparent; border: 1px solid var(--stroke-green);
-    padding: 11px 24px; cursor: pointer; text-decoration: none;
-    transition: border-color 0.15s, color 0.15s;
+    font-size: 16px; font-weight: 500; color: #002910;
+    background: #eef9f3; border: none; border-radius: 0;
+    padding: 12px 24px; cursor: pointer; text-decoration: none;
+    transition: background 0.15s;
   }
-  .btn-ghost:hover { border-color: var(--green-500); color: var(--near-black); }
+  .btn-ghost:hover { background: #ccffe0; }
 
   .cta-wrap {
-    background: #eaf6ef; border-top: 1px solid var(--stroke-green);
+    background: #eef9f3; border-top: 1px solid var(--stroke-green);
     padding: 80px 64px; text-align: center; position: relative; overflow: hidden;
   }
   .cta-wrap::before {
-    content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
-    width: 600px; height: 500px;
-    background: radial-gradient(ellipse at center, rgba(0,180,70,0.07) 0%, transparent 65%);
-    pointer-events: none;
+    display: none;
   }
   .cta-inner { position: relative; z-index: 1; }
   .cta-wrap .eyebrow { display: table; margin: 0 auto 18px; }
@@ -360,15 +355,15 @@
   .cta-wrap .ssub { margin: 0 auto 30px; text-align: center; max-width: 380px; }
   .cta-actions { display: flex; align-items: center; justify-content: center; gap: 10px; }
   .btn-ghost-cta {
-    font-size: 14px; font-weight: 500; color: var(--text-secondary);
-    background: transparent; border: 1px solid var(--stroke-green);
-    padding: 11px 26px; cursor: pointer; text-decoration: none;
-    transition: border-color 0.15s, color 0.15s;
+    font-size: 16px; font-weight: 500; color: #002910;
+    background: #eef9f3; border: none; border-radius: 0;
+    padding: 12px 26px; cursor: pointer; text-decoration: none;
+    transition: background 0.15s;
   }
-  .btn-ghost-cta:hover { border-color: var(--green-500); color: var(--near-black); }
+  .btn-ghost-cta:hover { background: #ccffe0; }
 
   footer {
-    background: #002910; border-top: 1px solid rgba(255,255,255,0.08); padding: 32px 64px;
+    background: #00250e; border-top: 1px solid rgba(255,255,255,0.08); padding: 32px 64px;
   }
   .foot-inner { display: flex; align-items: center; justify-content: space-between; }
   .foot-links { display: flex; gap: 18px; }
@@ -412,7 +407,7 @@
   }
   .mobile-bar {
     display: none; position: sticky; top: 0; z-index: 99;
-    background: #002910; border-bottom: 1px solid rgba(255,255,255,0.1);
+    background: #00250e; border-bottom: 1px solid rgba(255,255,255,0.1);
     padding: 13px 20px; align-items: center; justify-content: space-between;
   }
 </style>
@@ -435,23 +430,23 @@
 
   <div class="sidebar-section">
     <span class="sidebar-section-label">Learn</span>
-    <a href="airops-university.html" class="sidebar-link"><span class="sidebar-link-icon">&#8962;</span>Home</a>
-    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">&#9678;</span>Cohort<span class="sidebar-link-badge">Open</span></a>
-    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">&#9655;</span>Course</a>
-    <a href="airops-university-tutorials.html" class="sidebar-link active"><span class="sidebar-link-icon">&#8862;</span>Tutorials</a>
-    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">&#9672;</span>Certifications</a>
+    <a href="airops-university.html" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-home-4-line"></i></span>Home</a>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-group-line"></i></span>Cohort<span class="sidebar-link-badge">Open</span></a>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-play-circle-line"></i></span>Course</a>
+    <a href="airops-university-tutorials.html" class="sidebar-link active"><span class="sidebar-link-icon"><i class="ri-grid-line"></i></span>Tutorials</a>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-award-line"></i></span>Certifications</a>
   </div>
 
   <div class="sidebar-section">
     <span class="sidebar-section-label">Community</span>
-    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">&#11041;</span>Slack community</a>
-    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">&#8599;</span>airops.com</a>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-slack-line"></i></span>Slack community</a>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-external-link-line"></i></span>airops.com</a>
   </div>
 
   <div class="sidebar-section">
     <span class="sidebar-section-label">Account</span>
-    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">&#9675;</span>Dashboard</a>
-    <a href="#" class="sidebar-link"><span class="sidebar-link-icon">&#9719;</span>My progress</a>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-dashboard-line"></i></span>Dashboard</a>
+    <a href="#" class="sidebar-link"><span class="sidebar-link-icon"><i class="ri-time-line"></i></span>My progress</a>
   </div>
 
   <div class="sidebar-spacer"></div>
@@ -472,7 +467,7 @@
     <path d="M653.555 156.675C653.555 181.889 676.244 208.695 721.624 208.695C767.274 208.695 783.751 182.42 783.751 161.983C783.751 130.666 746.205 125.092 721.084 120.315C704.066 117.395 693.262 115.007 693.262 105.452C693.262 94.5706 705.417 87.6701 718.383 87.6701C735.94 87.6701 742.693 99.6133 743.233 112.353H778.349C778.349 91.6511 763.492 61.9258 717.572 61.9258C677.865 61.9258 658.147 83.9544 658.147 107.575C658.147 141.282 696.233 144.732 721.354 149.509C735.94 152.163 748.636 155.348 748.636 165.699C748.636 176.05 736.21 182.95 722.975 182.95C710.549 182.95 688.67 176.05 688.67 156.675H653.555Z" fill="#ffffff"/>
     <path d="M191.339 48.6576C176.921 48.6576 166.578 38.4949 166.578 24.6368C166.578 10.7786 176.921 0 191.339 0C205.13 0 216.1 10.7786 216.1 24.6368C216.1 38.4949 205.13 48.6576 191.339 48.6576Z" fill="#ffffff"/>
   </svg>
-  <a href="#" style="font-size:13px;font-weight:600;color:#fff;background:var(--green-500);padding:7px 14px;text-decoration:none;">Apply &rarr;</a>
+  <a href="#" style="font-size:13px;font-weight:500;color:#002910;background:#00ff64;padding:7px 14px;text-decoration:none;border-radius:58px;">Apply &rarr;</a>
 </div>
 
 <div class="main">
@@ -1123,5 +1118,6 @@
   </footer>
 
 </div>
+<script src="quill-widget.js" defer></script>
 </body>
 </html>
