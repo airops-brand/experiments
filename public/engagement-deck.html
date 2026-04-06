@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AirOps Engagement Deck</title>
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@font-face { font-family: 'Saans'; src: local('Inter'); font-weight: 400; }
+@font-face { font-family: 'Saans'; src: local('Inter'); font-weight: 500; }
+@font-face { font-family: 'Saans Mono'; src: local('DM Mono'); font-weight: 500; }
+@font-face { font-family: 'Serrif VF'; src: local('Georgia'); font-weight: 400; }
+
+:root {
+  --forest: #002910;
+  --deep-forest: #00250e;
+  --dark-green: #001408;
+  --mid-green: #008c44;
+  --brand-green: #057a28;
+  --bright-green: #009b32;
+  --interaction-green: #00ff64;
+  --hover-green: #00cc50;
+  --super-light: #CCFFE0;
+  --green-100: #dfeae3;
+  --pale-green: #eef9f3;
+  --mint: #f8fffb;
+  --off-white: #F8FFFA;
+  --white: #ffffff;
+  --brand-stroke: #d4e8da;
+  --label-yellow: #EEFF8C;
+  --pink-200: #fee7fd;
+  --pink-mid: #c54b9b;
+  --pink-darkest: #3a092c;
+  --indigo-mid: #1b1b8f;
+  --text-primary: #002910;
+  --text-secondary: #01200d;
+  --text-on-dark: #f8fffa;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', 'Saans', sans-serif;
+  background: var(--deep-forest);
+  color: var(--text-primary);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ─── Slide System ─── */
+.deck { position: relative; width: 100vw; height: 100vh; }
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+.slide.active { display: flex; }
+
+/* ─── Nav Bar ─── */
+.deck-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: var(--deep-forest);
+  border-top: 1px solid rgba(0,255,100,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  z-index: 1000;
+  backdrop-filter: blur(12px);
+}
+.deck-nav button {
+  background: none;
+  border: 1px solid rgba(0,255,100,0.25);
+  color: var(--interaction-green);
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.84px;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.deck-nav button:hover { background: rgba(0,255,100,0.1); }
+.deck-nav button:disabled { opacity: 0.3; cursor: default; }
+.deck-nav .slide-counter {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: rgba(248,255,250,0.5);
+  letter-spacing: 0.84px;
+}
+.deck-nav .slide-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(248,255,250,0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─── Shared Layouts ─── */
+.slide-light {
+  background: var(--white);
+  color: var(--text-primary);
+  padding: 80px 80px 80px;
+  justify-content: flex-start;
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+}
+.slide-dark {
+  background: var(--forest);
+  color: var(--text-on-dark);
+  padding: 80px 80px 80px;
+  justify-content: flex-start;
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+}
+.slide-canvas {
+  background: var(--white);
+  background-image: radial-gradient(var(--brand-stroke) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--text-primary);
+  padding: 80px 80px 80px;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+}
+.slide-black {
+  background: #000;
+  color: #fff;
+  padding: 80px 80px 80px;
+  justify-content: flex-end;
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+}
+
+/* ─── Typography ─── */
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.84px;
+  line-height: 1.3;
+  padding: 8px 16px;
+  border: 1px solid;
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 32px;
+}
+.eyebrow-green { background: var(--off-white); border-color: var(--mid-green); color: var(--forest); }
+.eyebrow-dark { background: rgba(0,13,5,0.6); border-color: rgba(192,255,210,0.4); color: #c0ffd2; }
+.eyebrow-yellow { background: var(--label-yellow); border-color: #d4e87a; color: #000d05; }
+
+h1 {
+  font-family: 'Georgia', serif;
+  font-weight: 400;
+  font-size: 72px;
+  line-height: 1.0;
+  letter-spacing: -2.16px;
+  color: inherit;
+  margin-bottom: 24px;
+}
+h1 .sans-line {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+h2 {
+  font-family: 'Georgia', serif;
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 1.0;
+  letter-spacing: -1.12px;
+  margin-bottom: 24px;
+}
+h2 .sans-line {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+  margin-bottom: 16px;
+}
+h4 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+.large-body {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  line-height: 1.3;
+  color: inherit;
+  opacity: 0.85;
+}
+.body-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: 0.18px;
+  max-width: 680px;
+}
+.body-text-dark { color: rgba(248,255,250,0.8); }
+
+/* ─── Logo ─── */
+.logo { margin-bottom: 0; }
+.logo svg { width: 100px; height: 32px; }
+.logo-dark svg { fill: var(--text-on-dark); color: var(--text-on-dark); }
+.logo-light svg { fill: var(--forest); color: var(--forest); }
+
+/* ─── Stats ─── */
+.stat-number {
+  font-family: 'Georgia', serif;
+  font-weight: 400;
+  font-size: 96px;
+  line-height: 1.0;
+  letter-spacing: -3px;
+  color: var(--interaction-green);
+}
+.stat-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  line-height: 1.4;
+  opacity: 0.7;
+  margin-top: 12px;
+}
+
+/* ─── Cards ─── */
+.card-grid {
+  display: grid;
+  gap: 1px;
+  background: var(--brand-stroke);
+}
+.card-grid-4 { grid-template-columns: repeat(4, 1fr); }
+.card-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.card-grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+.card {
+  background: var(--off-white);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.card-dark {
+  background: var(--forest);
+  padding: 32px;
+  border-left: 3px solid var(--mid-green);
+}
+
+/* ─── Tables ─── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+.data-table th {
+  background: var(--forest);
+  color: var(--text-on-dark);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.84px;
+  padding: 14px 16px;
+  text-align: left;
+}
+.data-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--brand-stroke);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+}
+.data-table tr:nth-child(even) { background: var(--mint); }
+
+/* ─── Bar Chart ─── */
+.bar-chart { display: flex; flex-direction: column; gap: 12px; }
+.bar-row { display: flex; align-items: center; gap: 16px; }
+.bar-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  width: 200px;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bar-track { flex: 1; height: 28px; background: rgba(0,255,100,0.08); position: relative; }
+.bar-fill {
+  position: absolute; left: 0; top: 0; height: 100%;
+  background: var(--interaction-green);
+  transition: width 0.8s ease-out;
+}
+.bar-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  width: 60px;
+}
+
+/* ─── Misc ─── */
+.divider { width: 100%; height: 1px; background: var(--brand-stroke); margin: 32px 0; }
+.divider-green { background: var(--mid-green); }
+.green-accent { color: var(--interaction-green); }
+.green-text { color: var(--mid-green); }
+.section-number {
+  font-family: 'Georgia', serif;
+  font-size: 28px;
+  color: var(--mid-green);
+  margin-bottom: 8px;
+}
+.spacer-24 { height: 24px; }
+.spacer-40 { height: 40px; }
+.spacer-64 { height: 64px; }
+.flex-row { display: flex; gap: 48px; }
+.flex-col { display: flex; flex-direction: column; }
+.flex-1 { flex: 1; }
+.max-w-half { max-width: 50%; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.text-center { text-align: center; }
+.opacity-60 { opacity: 0.6; }
+.relative { position: relative; }
+
+/* ─── Phase Indicator ─── */
+.phase-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.84px;
+  padding: 4px 10px;
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 16px;
+}
+
+/* ─── Feature Row ─── */
+.feature-row {
+  display: flex;
+  align-items: flex-start;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--brand-stroke);
+  gap: 32px;
+}
+.feature-row:last-child { border-bottom: none; }
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pale-green);
+  color: var(--mid-green);
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+/* ─── Opportunity Cards ─── */
+.opp-card {
+  background: var(--white);
+  border: 1px solid var(--brand-stroke);
+  border-left: 4px solid var(--mid-green);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.opp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.opp-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.84px;
+  padding: 4px 10px;
+  background: var(--label-yellow);
+  color: #000d05;
+}
+.opp-price {
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--pale-green);
+  padding: 6px 12px;
+  color: var(--forest);
+}
+.opp-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: rgba(0,0,0,0.4);
+}
+.opp-highlight {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--mid-green);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ─── TOC ─── */
+.toc-section {
+  margin-bottom: 20px;
+}
+.toc-phase {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.84px;
+  color: var(--mid-green);
+  margin-bottom: 8px;
+}
+.toc-item {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: var(--text-primary);
+  padding: 4px 0;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.toc-item:hover { color: var(--mid-green); }
+
+/* ─── Scorecard ─── */
+.scorecard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--brand-stroke);
+  border: 1px solid var(--brand-stroke);
+}
+.scorecard-cell {
+  background: var(--white);
+  padding: 24px;
+}
+.scorecard-cell-header {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.84px;
+  color: var(--mid-green);
+  margin-bottom: 16px;
+}
+.scorecard-item {
+  font-size: 15px;
+  color: var(--text-secondary);
+  padding: 6px 0;
+}
+
+/* ─── Scenario Badges ─── */
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--brand-stroke);
+  margin-top: 24px;
+}
+.scenario-badge {
+  padding: 16px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.scenario-badge .label {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+/* ─── Quote ─── */
+.quote-block {
+  font-family: 'Georgia', serif;
+  font-size: 24px;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--interaction-green);
+  border-left: 3px solid var(--interaction-green);
+  padding-left: 24px;
+  max-width: 700px;
+}
+.quote-attr {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  color: rgba(248,255,250,0.7);
+  margin-top: 12px;
+}
+
+/* ─── Scroll helpers ─── */
+.slide-scroll-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 40px;
+}
+
+/* ─── Timeline Steps ─── */
+.steps-row {
+  display: flex;
+  gap: 2px;
+}
+.step-card {
+  flex: 1;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.step-number {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.84px;
+  color: var(--mid-green);
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 00: Cover -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-dark active" data-title="Cover">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+    <div class="logo logo-dark" style="margin-bottom:64px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="140" viewBox="0 0 100 32" fill="none" aria-label="AirOps"><path d="M14.2683 8.35377V11.2588C12.9587 9.16447 10.9253 7.88086 8.40935 7.88086C3.03288 7.88086 0 11.833 0 17.1364C0 22.4735 3.06735 26.5608 8.47828 26.5608C10.9942 26.5608 12.9931 25.2772 14.2683 23.1829V26.0879H18.473V8.35377H14.2683ZM9.30543 23.0478C6.23809 23.0478 4.48039 20.2441 4.48039 17.1364C4.48039 14.0963 6.20362 11.4277 9.37436 11.4277C11.9937 11.4277 14.2339 13.2856 14.2339 17.0688C14.2339 20.7846 12.0971 23.0478 9.30543 23.0478Z" fill="currentColor"/><path d="M22.0938 8.35547V26.0896H26.5741V8.35547H22.0938Z" fill="currentColor"/><path d="M34.832 12.7461V8.3548H30.3516V26.0889H34.832V15.9551C34.832 13.3541 36.6586 12.307 38.3818 12.307C39.3813 12.307 40.4152 12.5772 40.9666 12.7799V8.05078C38.0372 8.05078 35.6246 9.77353 34.832 12.7461Z" fill="currentColor"/><path d="M42.0625 13.7594C42.0625 19.2655 45.9225 23.1839 51.4713 23.1839C57.0546 23.1839 60.8804 19.2655 60.8804 13.7594C60.8804 8.35475 57.0546 4.50391 51.4713 4.50391C45.9225 4.50391 42.0625 8.35475 42.0625 13.7594ZM56.3998 13.7594C56.3998 17.2049 54.5042 19.6708 51.4713 19.6708C48.404 19.6708 46.5429 17.2049 46.5429 13.7594C46.5429 10.4491 48.404 8.05073 51.4713 8.05073C54.5042 8.05073 56.3998 10.4491 56.3998 13.7594Z" fill="currentColor"/><path d="M73.3738 7.88086C70.7545 7.88086 68.6177 9.40093 67.4804 11.833V8.35377H63V31.9993H67.4804V22.9127C68.7556 25.1083 71.1336 26.5608 73.6496 26.5608C78.5435 26.5608 81.9555 22.8113 81.9555 17.4404C81.9555 11.7993 78.4057 7.88086 73.3738 7.88086ZM72.5811 23.2505C69.5827 23.2505 67.4804 20.7846 67.4804 17.2715C67.4804 13.6571 69.5827 11.1237 72.5811 11.1237C75.4417 11.1237 77.4751 13.7247 77.4751 17.4066C77.4751 20.8521 75.4417 23.2505 72.5811 23.2505Z" fill="currentColor"/><path d="M83.3906 19.9401C83.3906 23.1491 86.2856 26.5608 92.0757 26.5608C97.9002 26.5608 100.003 23.2167 100.003 20.6157C100.003 16.6297 95.212 15.9203 92.0068 15.3123C89.8355 14.9407 88.4569 14.6367 88.4569 13.4207C88.4569 12.0357 90.0078 11.1575 91.6621 11.1575C93.9023 11.1575 94.7639 12.6775 94.8329 14.2989H99.3133C99.3133 11.6641 97.4177 7.88086 91.5587 7.88086C86.4924 7.88086 83.9765 10.6845 83.9765 13.6909C83.9765 17.9809 88.836 18.42 92.0412 19.028C93.9023 19.3658 95.5221 19.7712 95.5221 21.0886C95.5221 22.406 93.9368 23.2842 92.248 23.2842C90.6626 23.2842 87.871 22.406 87.871 19.9401H83.3906Z" fill="currentColor"/><path d="M24.4093 6.19288C22.5697 6.19288 21.25 4.89943 21.25 3.13563C21.25 1.37184 22.5697 0 24.4093 0C26.1688 0 27.5685 1.37184 27.5685 3.13563C27.5685 4.89943 26.1688 6.19288 24.4093 6.19288Z" fill="currentColor"/></svg>
+    </div>
+    <h1 style="font-size:80px;line-height:0.95;max-width:800px;">
+      Your AI Visibility<br><span class="sans-line">Starts Here</span>
+    </h1>
+    <div class="spacer-40"></div>
+    <div style="font-family:'DM Mono',monospace;font-size:13px;text-transform:uppercase;letter-spacing:0.84px;color:rgba(248,255,250,0.4);">
+      [Customer Name] · Prepared by [AM Name] · [Month Year]
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 01: What This Deck Is + TOC -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-light" data-title="What This Deck Is">
+  <div class="flex-row" style="flex:1;">
+    <div class="flex-1" style="padding-right:48px;">
+      <span class="eyebrow eyebrow-green">WHAT THIS DECK IS</span>
+      <h1 style="font-size:64px;">A modular AM toolkit<br><span class="sans-line">for client conversations</span></h1>
+      <p class="body-text" style="margin-bottom:40px;">Not a linear story. Slides are pulled based on the account situation. No two client situations are the same.</p>
+
+      <div style="display:flex;flex-direction:column;gap:24px;">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:14px;font-weight:500;color:var(--mid-green);text-transform:uppercase;letter-spacing:0.84px;">00 FOUNDATION</div>
+          <p class="body-text" style="font-size:16px;margin-top:4px;">Lay a foundational AirOps message on how we partner with clients and the current landscape.</p>
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:14px;font-weight:500;color:var(--mid-green);text-transform:uppercase;letter-spacing:0.84px;">01 DIAGNOSE</div>
+          <p class="body-text" style="font-size:16px;margin-top:4px;">Before any client contact, complete the internal diagnosis. Establish account health.</p>
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:14px;font-weight:500;color:var(--mid-green);text-transform:uppercase;letter-spacing:0.84px;">02 DISCOVER</div>
+          <p class="body-text" style="font-size:16px;margin-top:4px;">Use the discovery slides as conversation guides. Listen for the outcomes that map to a prescription.</p>
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:14px;font-weight:500;color:var(--mid-green);text-transform:uppercase;letter-spacing:0.84px;">03 PRESCRIBE</div>
+          <p class="body-text" style="font-size:16px;margin-top:4px;">Pull only the prescription slides that match what you learned. Multiple prescriptions can be stacked.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-1" style="border-left:1px solid var(--brand-stroke);padding-left:48px;overflow-y:auto;">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.84px;color:var(--mid-green);margin-bottom:24px;">TABLE OF CONTENTS</div>
+
+      <div class="toc-section">
+        <div class="toc-phase">Phase 0 &mdash; Foundation</div>
+        <div class="toc-item">What AirOps Stands For</div>
+        <div class="toc-item">The Shift &middot; Lay of the Land</div>
+      </div>
+      <div class="toc-section">
+        <div class="toc-phase">Phase 1 &mdash; Internal Diagnosis</div>
+        <div class="toc-item">Account Health Scorecard</div>
+        <div class="toc-item">Commercials &amp; Plan Overview</div>
+      </div>
+      <div class="toc-section">
+        <div class="toc-phase">Phase 2 &mdash; Discovery</div>
+        <div class="toc-item">Discovery Areas</div>
+      </div>
+      <div class="toc-section">
+        <div class="toc-phase">Bridge &mdash; Context Setting</div>
+        <div class="toc-item">AirOps Has Changed Since You Signed</div>
+      </div>
+      <div class="toc-section">
+        <div class="toc-phase">Phase 3 &mdash; Prescription</div>
+        <div class="toc-item">Foundation &middot; High Impact &middot; Quick Win</div>
+        <div class="toc-item">What's New in AirOps</div>
+        <div class="toc-item">Offsite &middot; AirOps Next &middot; Integrations</div>
+      </div>
+      <div class="toc-section">
+        <div class="toc-phase">Closing</div>
+        <div class="toc-item">Best Practices &middot; Enablement &middot; Next Steps</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 02: Foundation Section Divider -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-dark" data-title="Foundation">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <span class="eyebrow eyebrow-dark" style="margin-bottom:24px;">PHASE 00</span>
+    <h1 style="font-size:96px;line-height:0.9;">Foundation</h1>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 03: Promise of AirOps -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-light" data-title="What AirOps Stands For">
+  <span class="eyebrow eyebrow-green">PROMISE OF AIROPS</span>
+  <h1 style="font-size:56px;margin-bottom:48px;">What AirOps stands for</h1>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--brand-stroke);border:1px solid var(--brand-stroke);">
+    <div class="card">
+      <div class="section-number">1</div>
+      <h4 style="font-family:'Georgia',serif;font-weight:400;font-size:28px;">You are the hero</h4>
+      <p class="body-text" style="font-size:16px;">Every workflow, every agent, every feature is built to elevate your team's expertise. Your judgment drives the strategy; our platform multiplies the impact.</p>
+    </div>
+    <div class="card">
+      <div class="section-number">2</div>
+      <h4 style="font-family:'Georgia',serif;font-weight:400;font-size:28px;">When you win, we win</h4>
+      <p class="body-text" style="font-size:16px;">We measure our success by your growth metrics. Your pipeline, your rankings, your revenue. That's our scoreboard too.</p>
+    </div>
+    <div class="card">
+      <div class="section-number">3</div>
+      <h4 style="font-family:'Georgia',serif;font-weight:400;font-size:28px;">Partners, not vendors</h4>
+      <p class="body-text" style="font-size:16px;">Dedicated strategy support, shared roadmaps, and a team that's in the trenches with you. We don't disappear after onboarding.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 04: Four Structural Shifts -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-light" data-title="Four Structural Shifts">
+  <span class="eyebrow eyebrow-yellow">THE SHIFT</span>
+  <h1 style="font-size:56px;">Four structural shifts<br><span class="sans-line">happening in the market</span></h1>
+  <div class="spacer-24"></div>
+
+  <div style="display:flex;flex-direction:column;gap:0;">
+    <div style="display:flex;align-items:baseline;gap:24px;padding:24px 0;border-bottom:1px solid var(--brand-stroke);">
+      <span style="font-family:'Georgia',serif;font-size:32px;color:var(--mid-green);min-width:40px;">1</span>
+      <div>
+        <div style="font-size:22px;font-weight:500;">Deeper personalization and context</div>
+        <div style="font-size:16px;opacity:0.6;margin-top:4px;">AI interfaces know who you are and adapt</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:24px;padding:24px 0;border-bottom:1px solid var(--brand-stroke);">
+      <span style="font-family:'Georgia',serif;font-size:32px;color:var(--mid-green);min-width:40px;">2</span>
+      <div>
+        <div style="font-size:22px;font-weight:500;">Full-funnel commerce + apps</div>
+        <div style="font-size:16px;opacity:0.6;margin-top:4px;">Not just search, but buying, booking, doing</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:24px;padding:24px 0;border-bottom:1px solid var(--brand-stroke);">
+      <span style="font-family:'Georgia',serif;font-size:32px;color:var(--mid-green);min-width:40px;">3</span>
+      <div>
+        <div style="font-size:22px;font-weight:500;">10 blue links becoming generative</div>
+        <div style="font-size:16px;opacity:0.6;margin-top:4px;">Google itself is going AI-first</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:24px;padding:24px 0;">
+      <span style="font-family:'Georgia',serif;font-size:32px;color:var(--mid-green);min-width:40px;">4</span>
+      <div>
+        <div style="font-size:22px;font-weight:500;">Agent architectures in takeoff</div>
+        <div style="font-size:16px;opacity:0.6;margin-top:4px;">Autonomous agents choosing brands for users</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 05: The Shift Is Here -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-dark" data-title="The Shift Is Here">
+  <span class="eyebrow eyebrow-dark">THE SHIFT</span>
+  <h1 style="font-size:64px;">The shift is here</h1>
+  <div class="spacer-40"></div>
+
+  <div style="display:flex;gap:48px;margin-bottom:64px;">
+    <div style="flex:1;">
+      <div class="stat-number" data-count-to="800" data-count-suffix="M" data-count-duration="1200">0M</div>
+      <div class="stat-label">people using ChatGPT<br>every week</div>
+    </div>
+    <div style="flex:1;">
+      <div class="stat-number" data-count-to="1.5" data-count-suffix="B" data-count-decimals="1" data-count-duration="1200">0B</div>
+      <div class="stat-label">seeing generative<br>responses on Google</div>
+    </div>
+    <div style="flex:1;">
+      <div class="stat-label" style="font-size:22px;opacity:1;font-weight:500;color:var(--text-on-dark);">new agents between<br>you &amp; your buyer</div>
+    </div>
+  </div>
+
+  <div style="font-family:'Georgia',serif;font-size:36px;line-height:1.2;color:var(--interaction-green);max-width:800px;">
+    There is a new intermediary between you and your buyer. Agents.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 06: Data Behind the Shift -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-dark" data-title="Data Behind the Shift">
+  <span class="eyebrow eyebrow-dark">THE SHIFT</span>
+  <h1 style="font-size:56px;">The data behind<br><span class="sans-line">the shift</span></h1>
+  <div class="spacer-40"></div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+    <div style="border:1px solid rgba(0,255,100,0.15);padding:40px;text-align:center;">
+      <div class="stat-number" style="font-size:72px;" data-count-to="34" data-count-suffix="%" data-count-duration="1000">0%</div>
+      <div class="stat-label" style="margin-top:16px;">AI is 34% the size of search.<br>Visits are +300% YoY.</div>
+    </div>
+    <div style="border:1px solid rgba(0,255,100,0.15);padding:40px;text-align:center;">
+      <div class="stat-number" style="font-size:72px;" data-count-to="86" data-count-suffix="%" data-count-duration="1000">0%</div>
+      <div class="stat-label" style="margin-top:16px;">ChatGPT owns 86% market<br>share of AI interfaces.</div>
+    </div>
+    <div style="border:1px solid rgba(0,255,100,0.15);padding:40px;text-align:center;">
+      <div class="stat-number" style="font-size:72px;" data-count-to="75" data-count-suffix="%" data-count-duration="1000">0%</div>
+      <div class="stat-label" style="margin-top:16px;">75% of AI usage happens<br>on mobile apps.</div>
+    </div>
+  </div>
+  <div style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(248,255,250,0.35);margin-top:24px;letter-spacing:0.4px;">Sources: Similarweb, AirOps Research</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 07: 85% Stat -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-dark" data-title="85% AI Visibility">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+    <span class="eyebrow eyebrow-dark" style="margin-bottom:48px;">THE SHIFT</span>
+    <div class="stat-number" style="font-size:160px;line-height:0.9;" data-count-to="85" data-count-suffix="%" data-count-duration="1400">0%</div>
+    <div class="spacer-24"></div>
+    <div class="large-body" style="max-width:700px;color:var(--text-on-dark);">of your top-of-funnel AI visibility is<br>determined by what other people say about you</div>
+    <div class="spacer-40"></div>
+    <div style="text-align:left;max-width:700px;">
+      <div style="font-size:16px;color:rgba(248,255,250,0.7);padding:8px 0;">1. Agents form brand narratives from onsite, offsite, owned and earned content</div>
+      <div style="font-size:16px;color:rgba(248,255,250,0.7);padding:8px 0;">2. Offsite pages, reviews, and communities are the primary citation sources</div>
+      <div style="font-size:16px;color:rgba(248,255,250,0.7);padding:8px 0;">3. Authority emerges from repetition and consistency across multiple URLs</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 08: What Makes a Winning System -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-light" data-title="Winning System">
+  <span class="eyebrow eyebrow-yellow">THE SHIFT</span>
+  <h1 style="font-size:56px;">What makes a<br><span class="sans-line">winning system?</span></h1>
+  <div class="spacer-24"></div>
+
+  <div style="display:flex;flex-direction:column;gap:0;">
+    <div style="display:flex;padding:24px 0;border-bottom:1px solid var(--brand-stroke);background:var(--off-white);padding:24px;">
+      <div style="font-weight:500;font-size:18px;min-width:240px;">Context</div>
+      <div style="font-size:16px;color:var(--text-secondary);">Brand truth: guidelines, product data, internal knowledge, customer language</div>
+    </div>
+    <div style="display:flex;padding:24px;background:var(--white);">
+      <div style="font-weight:500;font-size:18px;min-width:240px;">Channel Intelligence</div>
+      <div style="font-size:16px;color:var(--text-secondary);">The right prompts, full view of content influence and health</div>
+    </div>
+    <div style="display:flex;padding:24px;background:var(--off-white);">
+      <div style="font-weight:500;font-size:18px;min-width:240px;">Execution</div>
+      <div style="font-size:16px;color:var(--text-secondary);">Agents + workflows that drive real results at scale</div>
+    </div>
+    <div style="display:flex;padding:24px;background:var(--white);">
+      <div style="font-weight:500;font-size:18px;min-width:240px;">Operating Model</div>
+      <div style="font-size:16px;color:var(--text-secondary);">Content Engineer role, testing cadence, evidence-based prioritization</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 09: Unlock Your Next Chapter -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-light" data-title="Unlock Next Chapter">
+  <h1 style="font-size:56px;margin-bottom:40px;">Unlock your<br><span class="sans-line">next chapter</span></h1>
+
+  <div style="display:flex;flex-direction:column;gap:0;border-top:1px solid var(--brand-stroke);">
+    <div class="feature-row">
+      <div class="feature-icon"><i class="ri-settings-3-line"></i></div>
+      <div style="flex:1;">
+        <h4 style="font-size:20px;margin-bottom:4px;">Advanced Agent Workflows</h4>
+        <p style="font-size:16px;color:var(--text-secondary);">Multi-step AI agents that research, draft, optimize, and publish, triggered by your data signals.</p>
+      </div>
+    </div>
+    <div class="feature-row">
+      <div class="feature-icon"><i class="ri-palette-line"></i></div>
+      <div style="flex:1;">
+        <h4 style="font-size:20px;margin-bottom:4px;">Brand Knowledge Integration</h4>
+        <p style="font-size:16px;color:var(--text-secondary);">Your voice, your guidelines, your expertise, your knowledge baked into every output. No generic AI content.</p>
+      </div>
+    </div>
+    <div class="feature-row">
+      <div class="feature-icon"><i class="ri-line-chart-line"></i></div>
+      <div style="flex:1;">
+        <h4 style="font-size:20px;margin-bottom:4px;">Growth Strategy Partnership</h4>
+        <p style="font-size:16px;color:var(--text-secondary);">Quarterly business reviews, dedicated strategists, and proactive recommendations tied to your KPIs.</p>
+      </div>
+    </div>
+    <div class="feature-row">
+      <div class="feature-icon"><i class="ri-route-line"></i></div>
+      <div style="flex:1;">
+        <h4 style="font-size:20px;margin-bottom:4px;">Priority Roadmap Access</h4>
+        <p style="font-size:16px;color:var(--text-secondary);">Your feature requests shape our product. Renewal partners get early access and direct influence on what we build next.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 10: Diagnosis Section Divider -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-dark" data-title="Internal Diagnosis">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <span class="eyebrow eyebrow-dark" style="margin-bottom:24px;">PHASE 01</span>
+    <h1 style="font-size:96px;line-height:0.9;">Internal<br><span class="sans-line">Diagnosis</span></h1>
+    <p class="body-text body-text-dark" style="margin-top:24px;max-width:500px;">Before any client contact, complete the internal diagnosis. Establish account health to determine the account scenario.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 11: Account Health Scorecard -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-light" data-title="Account Health Scorecard">
+  <div style="display:flex;align-items:center;gap:16px;margin-bottom:32px;">
+    <span class="phase-tag" style="background:var(--pale-green);color:var(--mid-green);">PHASE 1 &mdash; INTERNAL DIAGNOSIS</span>
+    <span class="phase-tag" style="background:#fff3cd;color:#856404;">INTERNAL &mdash; DO NOT PRESENT</span>
+  </div>
+  <h2 style="font-size:48px;margin-bottom:32px;">Account health scorecard</h2>
+
+  <div class="scorecard-grid">
+    <div class="scorecard-cell">
+      <div class="scorecard-cell-header">Commercial Baseline</div>
+      <div class="scorecard-item">Account name</div>
+      <div class="scorecard-item">Segment (Ent / Agency / MM / SMB)</div>
+      <div class="scorecard-item">ARR / TCV</div>
+      <div class="scorecard-item">Renewal date</div>
+    </div>
+    <div class="scorecard-cell">
+      <div class="scorecard-cell-header">Workflow Health</div>
+      <div class="scorecard-item">Original workflows still running? [Y/N]</div>
+      <div class="scorecard-item">Output quality degraded? [Y/N / Unknown]</div>
+      <div class="scorecard-item">Task usage trend [Stable / Declining / Flatlined]</div>
+      <div class="scorecard-item">Workflow runs trend [Up / Down / Flat]</div>
+    </div>
+    <div class="scorecard-cell">
+      <div class="scorecard-cell-header">Content Performance</div>
+      <div class="scorecard-item">Published pages tracked via events? [Y/N]</div>
+      <div class="scorecard-item">GSC / GA4 connected? [Y/N]</div>
+      <div class="scorecard-item">Citation rate trend [Up / Down / Flat]</div>
+      <div class="scorecard-item">Mention rate trend [Up / Down / Flat]</div>
+    </div>
+    <div class="scorecard-cell">
+      <div class="scorecard-cell-header">Engagement Signals</div>
+      <div class="scorecard-item">Last meaningful touchpoint [Date + who]</div>
+      <div class="scorecard-item">Original champion still in role? [Y/N]</div>
+      <div class="scorecard-item">Recent Slack channel activity? [Y/N]</div>
+      <div class="scorecard-item">Open support / Intercom issues? [Y/N]</div>
+    </div>
+  </div>
+
+  <div class="scenario-grid">
+    <div class="scenario-badge" style="background:#d4edda;color:#155724;">
+      <i class="ri-checkbox-circle-line"></i> Working + Engaged
+      <div class="label">Forward-looking discovery</div>
+    </div>
+    <div class="scenario-badge" style="background:#fff3cd;color:#856404;">
+      <i class="ri-alert-line"></i> Working + Disengaged
+      <div class="label">Re-engagement discovery</div>
+    </div>
+    <div class="scenario-badge" style="background:#cce5ff;color:#004085;">
+      <i class="ri-tools-line"></i> Broken + Engaged
+      <div class="label">Fix first, then discover</div>
+    </div>
+    <div class="scenario-badge" style="background:#f8d7da;color:#721c24;">
+      <i class="ri-error-warning-line"></i> Broken + Disengaged
+      <div class="label">Fix and re-engage simultaneously</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 12: Discovery Section -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-dark" data-title="Discovery">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <span class="eyebrow eyebrow-dark" style="margin-bottom:24px;">PHASE 02</span>
+    <h1 style="font-size:96px;line-height:0.9;">Discovery</h1>
+    <p class="body-text body-text-dark" style="margin-top:24px;max-width:500px;">Understanding where you are today</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 13: Discovery Areas -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-light" data-title="Discovery Areas">
+  <span class="phase-tag" style="background:var(--pale-green);color:var(--mid-green);">PHASE 2 &mdash; DISCOVERY</span>
+  <h2 style="font-size:48px;margin-bottom:32px;">Discovery areas</h2>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+    <div style="border:1px solid var(--brand-stroke);border-top:3px solid var(--forest);padding:28px;">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--mid-green);text-transform:uppercase;letter-spacing:0.84px;margin-bottom:12px;">01 &nbsp; Workflow &amp; platform health</div>
+      <div style="font-size:15px;color:var(--text-secondary);line-height:1.8;">
+        Workflow adoption &amp; run status<br>
+        Output quality &amp; model performance<br>
+        Team changes since activation
+      </div>
+    </div>
+    <div style="border:1px solid var(--brand-stroke);border-top:3px solid var(--forest);padding:28px;">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--mid-green);text-transform:uppercase;letter-spacing:0.84px;margin-bottom:12px;">02 &nbsp; Content strategy &amp; prioritization</div>
+      <div style="font-size:15px;color:var(--text-secondary);line-height:1.8;">
+        Content creation &amp; refresh process<br>
+        Head term vs. long-tail coverage<br>
+        Stale content identification
+      </div>
+    </div>
+    <div style="border:1px solid var(--brand-stroke);border-top:3px solid var(--forest);padding:28px;">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--mid-green);text-transform:uppercase;letter-spacing:0.84px;margin-bottom:12px;">03 &nbsp; Reporting &amp; measurement</div>
+      <div style="font-size:15px;color:var(--text-secondary);line-height:1.8;">
+        Reporting cadence &amp; tooling<br>
+        Proving content lift to leadership<br>
+        Customer listening &amp; insights
+      </div>
+    </div>
+    <div style="border:1px solid var(--brand-stroke);border-top:3px solid var(--forest);padding:28px;">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--mid-green);text-transform:uppercase;letter-spacing:0.84px;margin-bottom:12px;">04 &nbsp; AI visibility &amp; competitive position</div>
+      <div style="font-size:15px;color:var(--text-secondary);line-height:1.8;">
+        AI search tracking across providers<br>
+        Competitor citation gaps<br>
+        Offsite &amp; third-party strategy
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 14: What's New in AirOps -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-dark" data-title="What's New in AirOps">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+    <div class="logo logo-dark" style="margin-bottom:48px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="100" viewBox="0 0 100 32" fill="none" aria-label="AirOps"><path d="M14.2683 8.35377V11.2588C12.9587 9.16447 10.9253 7.88086 8.40935 7.88086C3.03288 7.88086 0 11.833 0 17.1364C0 22.4735 3.06735 26.5608 8.47828 26.5608C10.9942 26.5608 12.9931 25.2772 14.2683 23.1829V26.0879H18.473V8.35377H14.2683ZM9.30543 23.0478C6.23809 23.0478 4.48039 20.2441 4.48039 17.1364C4.48039 14.0963 6.20362 11.4277 9.37436 11.4277C11.9937 11.4277 14.2339 13.2856 14.2339 17.0688C14.2339 20.7846 12.0971 23.0478 9.30543 23.0478Z" fill="currentColor"/><path d="M22.0938 8.35547V26.0896H26.5741V8.35547H22.0938Z" fill="currentColor"/><path d="M34.832 12.7461V8.3548H30.3516V26.0889H34.832V15.9551C34.832 13.3541 36.6586 12.307 38.3818 12.307C39.3813 12.307 40.4152 12.5772 40.9666 12.7799V8.05078C38.0372 8.05078 35.6246 9.77353 34.832 12.7461Z" fill="currentColor"/><path d="M42.0625 13.7594C42.0625 19.2655 45.9225 23.1839 51.4713 23.1839C57.0546 23.1839 60.8804 19.2655 60.8804 13.7594C60.8804 8.35475 57.0546 4.50391 51.4713 4.50391C45.9225 4.50391 42.0625 8.35475 42.0625 13.7594ZM56.3998 13.7594C56.3998 17.2049 54.5042 19.6708 51.4713 19.6708C48.404 19.6708 46.5429 17.2049 46.5429 13.7594C46.5429 10.4491 48.404 8.05073 51.4713 8.05073C54.5042 8.05073 56.3998 10.4491 56.3998 13.7594Z" fill="currentColor"/><path d="M73.3738 7.88086C70.7545 7.88086 68.6177 9.40093 67.4804 11.833V8.35377H63V31.9993H67.4804V22.9127C68.7556 25.1083 71.1336 26.5608 73.6496 26.5608C78.5435 26.5608 81.9555 22.8113 81.9555 17.4404C81.9555 11.7993 78.4057 7.88086 73.3738 7.88086ZM72.5811 23.2505C69.5827 23.2505 67.4804 20.7846 67.4804 17.2715C67.4804 13.6571 69.5827 11.1237 72.5811 11.1237C75.4417 11.1237 77.4751 13.7247 77.4751 17.4066C77.4751 20.8521 75.4417 23.2505 72.5811 23.2505Z" fill="currentColor"/><path d="M83.3906 19.9401C83.3906 23.1491 86.2856 26.5608 92.0757 26.5608C97.9002 26.5608 100.003 23.2167 100.003 20.6157C100.003 16.6297 95.212 15.9203 92.0068 15.3123C89.8355 14.9407 88.4569 14.6367 88.4569 13.4207C88.4569 12.0357 90.0078 11.1575 91.6621 11.1575C93.9023 11.1575 94.7639 12.6775 94.8329 14.2989H99.3133C99.3133 11.6641 97.4177 7.88086 91.5587 7.88086C86.4924 7.88086 83.9765 10.6845 83.9765 13.6909C83.9765 17.9809 88.836 18.42 92.0412 19.028C93.9023 19.3658 95.5221 19.7712 95.5221 21.0886C95.5221 22.406 93.9368 23.2842 92.248 23.2842C90.6626 23.2842 87.871 22.406 87.871 19.9401H83.3906Z" fill="currentColor"/><path d="M24.4093 6.19288C22.5697 6.19288 21.25 4.89943 21.25 3.13563C21.25 1.37184 22.5697 0 24.4093 0C26.1688 0 27.5685 1.37184 27.5685 3.13563C27.5685 4.89943 26.1688 6.19288 24.4093 6.19288Z" fill="currentColor"/></svg>
+    </div>
+    <h1 style="font-size:72px;color:var(--interaction-green);">What's new<br><span class="sans-line" style="color:var(--interaction-green);">in AirOps</span></h1>
+    <p class="large-body" style="color:rgba(248,255,250,0.7);max-width:600px;margin-top:24px;">New features across Insights, Actions, Brand Context, and MCP that help you craft content that wins</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 15: Product Features -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-light" data-title="Product Features">
+  <span class="eyebrow eyebrow-green">PRODUCT FEATURES</span>
+  <h2 style="font-size:40px;margin-bottom:32px;">Platform capabilities</h2>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+    <div style="border:1px solid var(--brand-stroke);padding:28px;">
+      <span class="eyebrow eyebrow-green" style="font-size:11px;padding:4px 10px;margin-bottom:16px;">BRAND CONTEXT</span>
+      <h4 style="font-family:'Georgia',serif;font-weight:400;">Brand Kit</h4>
+      <p style="font-size:15px;color:var(--text-secondary);line-height:1.5;">One governed home for your brand, accessible everywhere and always fresh. MCP Read and Write. Versioning and history. Visual Guidelines.</p>
+    </div>
+    <div style="border:1px solid var(--brand-stroke);padding:28px;">
+      <span class="eyebrow eyebrow-green" style="font-size:11px;padding:4px 10px;margin-bottom:16px;">BRAND CONTEXT</span>
+      <h4 style="font-family:'Georgia',serif;font-weight:400;">Content Review</h4>
+      <p style="font-size:15px;color:var(--text-secondary);line-height:1.5;">Prebuilt checks across readability, structure, SEO &amp; AEO readiness, credibility, and information gain. One-click apply fixes.</p>
+    </div>
+    <div style="border:1px solid var(--brand-stroke);padding:28px;">
+      <span class="eyebrow eyebrow-green" style="font-size:11px;padding:4px 10px;margin-bottom:16px;">INSIGHTS</span>
+      <h4 style="font-family:'Georgia',serif;font-weight:400;">Page 360</h4>
+      <p style="font-size:15px;color:var(--text-secondary);line-height:1.5;">The first view bringing together Google Search Console, GA4, and AI search signals for every tracked page. Smart Filters for one-click prioritization.</p>
+    </div>
+    <div style="border:1px solid var(--brand-stroke);padding:28px;">
+      <span class="eyebrow eyebrow-green" style="font-size:11px;padding:4px 10px;margin-bottom:16px;">INSIGHTS</span>
+      <h4 style="font-family:'Georgia',serif;font-weight:400;">Citations 360</h4>
+      <p style="font-size:15px;color:var(--text-secondary);line-height:1.5;">See exactly which domains and pages AI trusts in your category. Find competitive gaps. Citation Influence Score and trend data per URL.</p>
+    </div>
+    <div style="border:1px solid var(--brand-stroke);padding:28px;">
+      <span class="eyebrow eyebrow-green" style="font-size:11px;padding:4px 10px;margin-bottom:16px;">INSIGHTS</span>
+      <h4 style="font-family:'Georgia',serif;font-weight:400;">Prompt Universe</h4>
+      <p style="font-size:15px;color:var(--text-secondary);line-height:1.5;">A comprehensive map of what people are asking AI. Prompt volume estimates, intent signals, and competitive leaderboards per prompt.</p>
+    </div>
+    <div style="border:1px solid var(--brand-stroke);padding:28px;">
+      <span class="eyebrow eyebrow-green" style="font-size:11px;padding:4px 10px;margin-bottom:16px;">ACTION</span>
+      <h4 style="font-family:'Georgia',serif;font-weight:400;">AirOps MCP</h4>
+      <p style="font-size:15px;color:var(--text-secondary);line-height:1.5;">Like giving Claude a login to your AirOps account. Access Pages 360, Prompts, and Citations 360 data directly in Claude, Cursor, or any MCP client.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 16: AirOps Next -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-light" data-title="AirOps Next">
+  <h1 style="font-size:48px;margin-bottom:16px;">AirOps Next:<br><span class="sans-line">Agents that unlock growth</span></h1>
+  <p class="body-text" style="margin-bottom:40px;">Take signals, respond, verify, and improve continuously to drive growth for your organization.</p>
+
+  <div style="display:flex;gap:24px;">
+    <div style="flex:1;display:flex;flex-direction:column;gap:12px;">
+      <div style="background:var(--off-white);border-left:3px solid var(--mid-green);padding:20px;">
+        <div style="font-weight:500;font-size:16px;">Brand Kit</div>
+        <div style="font-size:14px;color:var(--text-secondary);">Centralize brand context and ensure consistency across outputs</div>
+      </div>
+      <div style="background:var(--off-white);border-left:3px solid var(--mid-green);padding:20px;">
+        <div style="font-weight:500;font-size:16px;">Insights</div>
+        <div style="font-size:14px;color:var(--text-secondary);">Capture signals across AI and traditional search</div>
+      </div>
+      <div style="background:var(--off-white);border-left:3px solid var(--mid-green);padding:20px;">
+        <div style="font-weight:500;font-size:16px;">Collaboration</div>
+        <div style="font-size:14px;color:var(--text-secondary);">Bring the right humans into the loop at the right time</div>
+      </div>
+      <div style="background:var(--off-white);border-left:3px solid var(--mid-green);padding:20px;">
+        <div style="font-weight:500;font-size:16px;">Triggers</div>
+        <div style="font-size:14px;color:var(--text-secondary);">Track and react to triggers across external signals, internal events</div>
+      </div>
+      <div style="background:var(--off-white);border-left:3px solid var(--mid-green);padding:20px;">
+        <div style="font-weight:500;font-size:16px;">Continuous learning</div>
+        <div style="font-size:14px;color:var(--text-secondary);">Create institutional memory so the system gets better every day</div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:16px;">
+      <div style="background:var(--forest);color:var(--text-on-dark);padding:24px;font-size:20px;font-weight:500;">High quality outputs</div>
+      <div style="background:var(--forest);color:var(--text-on-dark);padding:24px;font-size:20px;font-weight:500;">Proactive action</div>
+      <div style="background:var(--forest);color:var(--text-on-dark);padding:24px;font-size:20px;font-weight:500;">Clear ROI</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 17: Best Practices -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-light" data-title="Best Practices">
+  <span class="phase-tag" style="background:var(--pale-green);color:var(--mid-green);">CLOSING &mdash; BEST PRACTICES</span>
+  <h2 style="font-size:48px;margin-bottom:32px;">Getting the most<br><span class="sans-line">out of AirOps</span></h2>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--brand-stroke);">
+    <div style="background:var(--white);padding:24px;border-top:3px solid var(--mid-green);">
+      <h4 style="font-size:16px;margin-bottom:8px;">Connect GSC &amp; GA4</h4>
+      <p style="font-size:14px;color:var(--text-secondary);">Unlock Page360 insights. 35% of AI citations go to content updated in the last 3 months.</p>
+    </div>
+    <div style="background:var(--white);padding:24px;border-top:3px solid var(--mid-green);">
+      <h4 style="font-size:16px;margin-bottom:8px;">Publish 3-5 new pieces weekly</h4>
+      <p style="font-size:14px;color:var(--text-secondary);">Consistent publishing signals relevance to AI models and expands your citation footprint.</p>
+    </div>
+    <div style="background:var(--white);padding:24px;border-top:3px solid var(--mid-green);">
+      <h4 style="font-size:16px;margin-bottom:8px;">Refresh 3-5 pages weekly</h4>
+      <p style="font-size:14px;color:var(--text-secondary);">Stale content loses 50%+ of its AI citation chance after one year.</p>
+    </div>
+    <div style="background:var(--white);padding:24px;border-top:3px solid var(--mid-green);">
+      <h4 style="font-size:16px;margin-bottom:8px;">Attend Cohort + Office Hours</h4>
+      <p style="font-size:14px;color:var(--text-secondary);">Teams that engage with the community ramp faster and discover high-impact use cases sooner.</p>
+    </div>
+    <div style="background:var(--white);padding:24px;border-top:3px solid var(--mid-green);">
+      <h4 style="font-size:16px;margin-bottom:8px;">Generate weekly reports via MCP</h4>
+      <p style="font-size:14px;color:var(--text-secondary);">Regular reporting keeps your team aligned on progress and surfaces trends early.</p>
+    </div>
+    <div style="background:var(--white);padding:24px;border-top:3px solid var(--mid-green);">
+      <h4 style="font-size:16px;margin-bottom:8px;">Integrate your CMS</h4>
+      <p style="font-size:14px;color:var(--text-secondary);">CMS integration turns your content pipeline into an engine.</p>
+    </div>
+    <div style="background:var(--white);padding:24px;border-top:3px solid var(--mid-green);">
+      <h4 style="font-size:16px;margin-bottom:8px;">Update Brand Kit monthly</h4>
+      <p style="font-size:14px;color:var(--text-secondary);">Monthly Brand Kit syncs keep outputs on-brand and prevent positioning drift.</p>
+    </div>
+    <div style="background:var(--white);padding:24px;border-top:3px solid var(--mid-green);">
+      <h4 style="font-size:16px;margin-bottom:8px;">Sync sitemap to Knowledge Base</h4>
+      <p style="font-size:14px;color:var(--text-secondary);">Ensures internal linking workflows always connect to your latest published pages.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 18: Enablement -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-light" data-title="Enablement Programs">
+  <span class="phase-tag" style="background:var(--pale-green);color:var(--mid-green);">CLOSING &mdash; ENABLEMENT</span>
+  <h2 style="font-size:48px;margin-bottom:8px;">Three learning tracks.<br><span class="sans-line">All included.</span></h2>
+  <div style="font-family:'DM Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.84px;color:var(--mid-green);margin-bottom:32px;">INCLUDED IN YOUR INVESTMENT</div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--brand-stroke);border:1px solid var(--brand-stroke);">
+    <div style="background:var(--forest);padding:28px;color:var(--text-on-dark);">
+      <div style="font-family:'Georgia',serif;font-size:40px;color:var(--interaction-green);">01</div>
+      <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.84px;color:var(--interaction-green);margin:8px 0 16px;">BEGINNER</div>
+      <h4 style="color:var(--text-on-dark);font-size:22px;">Foundations Builder</h4>
+      <div style="color:var(--interaction-green);font-size:15px;margin:8px 0 16px;">1 session, 90 min</div>
+      <p style="font-size:15px;color:rgba(248,255,250,0.7);">90-min live session. Jump in, get oriented, and start building immediately.</p>
+    </div>
+    <div style="background:var(--forest);padding:28px;color:var(--text-on-dark);">
+      <div style="font-family:'Georgia',serif;font-size:40px;color:var(--interaction-green);">02</div>
+      <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.84px;color:var(--interaction-green);margin:8px 0 16px;">CERTIFICATE</div>
+      <h4 style="color:var(--text-on-dark);font-size:22px;">Intermediate Cohort</h4>
+      <div style="color:var(--interaction-green);font-size:15px;margin:8px 0 16px;">6 sessions over 2 weeks</div>
+      <p style="font-size:15px;color:rgba(248,255,250,0.7);">Earn Content Engineer Certificate. Structured learning with Demo Day presentation.</p>
+    </div>
+    <div style="background:var(--forest);padding:28px;color:var(--text-on-dark);">
+      <div style="font-family:'Georgia',serif;font-size:40px;color:var(--interaction-green);">03</div>
+      <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.84px;color:var(--interaction-green);margin:8px 0 16px;">ADVANCED</div>
+      <h4 style="color:var(--text-on-dark);font-size:22px;">Advanced Cohort</h4>
+      <div style="color:var(--interaction-green);font-size:15px;margin:8px 0 16px;">1-week intensive</div>
+      <p style="font-size:15px;color:rgba(248,255,250,0.7);">Advanced techniques, automation mastery, and Demo Day presentation.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 19: Next Steps -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide slide-light" data-title="Next Steps">
+  <span class="phase-tag" style="background:var(--pale-green);color:var(--mid-green);">CLOSING</span>
+  <h2 style="font-size:48px;margin-bottom:32px;">Next steps</h2>
+
+  <div style="display:flex;flex-direction:column;gap:0;">
+    <div style="display:flex;align-items:center;gap:24px;padding:20px 0;border-bottom:1px solid var(--brand-stroke);">
+      <span style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.84px;padding:4px 10px;background:var(--pale-green);color:var(--mid-green);min-width:80px;text-align:center;">YOU</span>
+      <span style="font-size:16px;">Share updated success metrics and any new team members to add to the account</span>
+      <span style="font-family:'DM Mono',monospace;font-size:13px;color:rgba(0,0,0,0.35);margin-left:auto;">[Date]</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:24px;padding:20px 0;border-bottom:1px solid var(--brand-stroke);">
+      <span style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.84px;padding:4px 10px;background:var(--forest);color:var(--text-on-dark);min-width:80px;text-align:center;">AIROPS</span>
+      <span style="font-size:16px;">Send Offsite discovery overview and schedule intro call</span>
+      <span style="font-family:'DM Mono',monospace;font-size:13px;color:rgba(0,0,0,0.35);margin-left:auto;">[Date]</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:24px;padding:20px 0;border-bottom:1px solid var(--brand-stroke);">
+      <span style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.84px;padding:4px 10px;background:var(--pale-green);color:var(--mid-green);min-width:80px;text-align:center;">YOU</span>
+      <span style="font-size:16px;">Review Page360 data for stale content opportunities</span>
+      <span style="font-family:'DM Mono',monospace;font-size:13px;color:rgba(0,0,0,0.35);margin-left:auto;">[Date]</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:24px;padding:20px 0;border-bottom:1px solid var(--brand-stroke);">
+      <span style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.84px;padding:4px 10px;background:var(--forest);color:var(--text-on-dark);min-width:80px;text-align:center;">AIROPS</span>
+      <span style="font-size:16px;">Connect Claude MCP connector for your team</span>
+      <span style="font-family:'DM Mono',monospace;font-size:13px;color:rgba(0,0,0,0.35);margin-left:auto;">[Date]</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:24px;padding:20px 0;">
+      <span style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.84px;padding:4px 10px;background:var(--label-yellow);color:#000d05;min-width:80px;text-align:center;">BOTH</span>
+      <span style="font-size:16px;">QBR follow-up sync to review progress on recommendations</span>
+      <span style="font-family:'DM Mono',monospace;font-size:13px;color:rgba(0,0,0,0.35);margin-left:auto;">[Date]</span>
+    </div>
+  </div>
+
+  <div style="margin-top:auto;padding-top:40px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--brand-stroke);">
+    <div class="logo logo-light">
+      <svg xmlns="http://www.w3.org/2000/svg" width="80" viewBox="0 0 100 32" fill="none" aria-label="AirOps"><path d="M14.2683 8.35377V11.2588C12.9587 9.16447 10.9253 7.88086 8.40935 7.88086C3.03288 7.88086 0 11.833 0 17.1364C0 22.4735 3.06735 26.5608 8.47828 26.5608C10.9942 26.5608 12.9931 25.2772 14.2683 23.1829V26.0879H18.473V8.35377H14.2683ZM9.30543 23.0478C6.23809 23.0478 4.48039 20.2441 4.48039 17.1364C4.48039 14.0963 6.20362 11.4277 9.37436 11.4277C11.9937 11.4277 14.2339 13.2856 14.2339 17.0688C14.2339 20.7846 12.0971 23.0478 9.30543 23.0478Z" fill="currentColor"/><path d="M22.0938 8.35547V26.0896H26.5741V8.35547H22.0938Z" fill="currentColor"/><path d="M34.832 12.7461V8.3548H30.3516V26.0889H34.832V15.9551C34.832 13.3541 36.6586 12.307 38.3818 12.307C39.3813 12.307 40.4152 12.5772 40.9666 12.7799V8.05078C38.0372 8.05078 35.6246 9.77353 34.832 12.7461Z" fill="currentColor"/><path d="M42.0625 13.7594C42.0625 19.2655 45.9225 23.1839 51.4713 23.1839C57.0546 23.1839 60.8804 19.2655 60.8804 13.7594C60.8804 8.35475 57.0546 4.50391 51.4713 4.50391C45.9225 4.50391 42.0625 8.35475 42.0625 13.7594ZM56.3998 13.7594C56.3998 17.2049 54.5042 19.6708 51.4713 19.6708C48.404 19.6708 46.5429 17.2049 46.5429 13.7594C46.5429 10.4491 48.404 8.05073 51.4713 8.05073C54.5042 8.05073 56.3998 10.4491 56.3998 13.7594Z" fill="currentColor"/><path d="M73.3738 7.88086C70.7545 7.88086 68.6177 9.40093 67.4804 11.833V8.35377H63V31.9993H67.4804V22.9127C68.7556 25.1083 71.1336 26.5608 73.6496 26.5608C78.5435 26.5608 81.9555 22.8113 81.9555 17.4404C81.9555 11.7993 78.4057 7.88086 73.3738 7.88086ZM72.5811 23.2505C69.5827 23.2505 67.4804 20.7846 67.4804 17.2715C67.4804 13.6571 69.5827 11.1237 72.5811 11.1237C75.4417 11.1237 77.4751 13.7247 77.4751 17.4066C77.4751 20.8521 75.4417 23.2505 72.5811 23.2505Z" fill="currentColor"/><path d="M83.3906 19.9401C83.3906 23.1491 86.2856 26.5608 92.0757 26.5608C97.9002 26.5608 100.003 23.2167 100.003 20.6157C100.003 16.6297 95.212 15.9203 92.0068 15.3123C89.8355 14.9407 88.4569 14.6367 88.4569 13.4207C88.4569 12.0357 90.0078 11.1575 91.6621 11.1575C93.9023 11.1575 94.7639 12.6775 94.8329 14.2989H99.3133C99.3133 11.6641 97.4177 7.88086 91.5587 7.88086C86.4924 7.88086 83.9765 10.6845 83.9765 13.6909C83.9765 17.9809 88.836 18.42 92.0412 19.028C93.9023 19.3658 95.5221 19.7712 95.5221 21.0886C95.5221 22.406 93.9368 23.2842 92.248 23.2842C90.6626 23.2842 87.871 22.406 87.871 19.9401H83.3906Z" fill="currentColor"/><path d="M24.4093 6.19288C22.5697 6.19288 21.25 4.89943 21.25 3.13563C21.25 1.37184 22.5697 0 24.4093 0C26.1688 0 27.5685 1.37184 27.5685 3.13563C27.5685 4.89943 26.1688 6.19288 24.4093 6.19288Z" fill="currentColor"/></svg>
+    </div>
+    <div style="font-family:'DM Mono',monospace;font-size:13px;color:rgba(0,0,0,0.35);letter-spacing:0.4px;">airops.com &middot; support@airops.com</div>
+  </div>
+</div>
+
+</div><!-- end deck -->
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- Navigation -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="deck-nav">
+  <button id="prevBtn" onclick="navigate(-1)"><i class="ri-arrow-left-s-line"></i> PREV</button>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+    <div class="slide-counter" id="slideCounter">01 / 20</div>
+    <div class="slide-title" id="slideTitle">Cover</div>
+  </div>
+  <button id="nextBtn" onclick="navigate(1)">NEXT <i class="ri-arrow-right-s-line"></i></button>
+</div>
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+
+/* ─── Count-Up Animation ─── */
+function easeOutExpo(t) {
+  return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+}
+
+function animateCountUp(el) {
+  const target = parseFloat(el.dataset.countTo);
+  const suffix = el.dataset.countSuffix || '';
+  const decimals = parseInt(el.dataset.countDecimals || '0', 10);
+  const duration = parseInt(el.dataset.countDuration || '1000', 10);
+  const delay = parseInt(el.dataset.countDelay || '0', 10);
+
+  // Reset to 0
+  el.textContent = '0' + suffix;
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(12px)';
+  el.style.transition = 'none';
+
+  setTimeout(() => {
+    el.style.transition = 'opacity 0.3s ease-out, transform 0.4s ease-out';
+    el.style.opacity = '1';
+    el.style.transform = 'translateY(0)';
+
+    const start = performance.now();
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeOutExpo(progress);
+      const currentValue = easedProgress * target;
+
+      if (decimals > 0) {
+        el.textContent = currentValue.toFixed(decimals) + suffix;
+      } else {
+        el.textContent = Math.round(currentValue) + suffix;
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        // Ensure final value is exact
+        el.textContent = (decimals > 0 ? target.toFixed(decimals) : target) + suffix;
+      }
+    }
+    requestAnimationFrame(tick);
+  }, delay);
+}
+
+function animateSlideStats(slideEl) {
+  const stats = slideEl.querySelectorAll('[data-count-to]');
+  stats.forEach((el, i) => {
+    // Stagger each stat by 150ms
+    el.dataset.countDelay = String(i * 150);
+    animateCountUp(el);
+  });
+}
+
+/* ─── Slide Navigation ─── */
+function showSlide(i) {
+  slides.forEach(s => s.classList.remove('active'));
+  slides[i].classList.add('active');
+  current = i;
+  document.getElementById('slideCounter').textContent =
+    String(i + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+  document.getElementById('slideTitle').textContent =
+    slides[i].dataset.title || '';
+  document.getElementById('prevBtn').disabled = i === 0;
+  document.getElementById('nextBtn').disabled = i === total - 1;
+
+  // Trigger count-up animations on the new slide
+  animateSlideStats(slides[i]);
+}
+
+function navigate(dir) {
+  const next = current + dir;
+  if (next >= 0 && next < total) showSlide(next);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+});
+
+showSlide(0);
+</script>
+</body>
+</html>
