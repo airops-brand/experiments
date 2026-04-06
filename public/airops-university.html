@@ -402,17 +402,21 @@
     display: flex; align-items: center; justify-content: space-between;
     border-top: 1.5px solid #dfeae3; padding-top: 16px;
   }
-  .tut-card-format {
-    display: flex; align-items: center; gap: 4px;
+  .tut-card-pill {
     font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 14px; font-weight: 500;
     text-transform: uppercase; letter-spacing: 0.84px; line-height: 1.3;
-    color: #002910; opacity: 0.5;
+    padding: 8px 16px; border: 1px solid; border-radius: 5px;
+    display: inline-flex; align-items: center; width: fit-content;
   }
-  .tut-card-format i { font-size: 20px; opacity: 0.7; }
   .tut-card-dur {
     font-family: 'Saans Mono', 'DM Mono', monospace; font-size: 14px; font-weight: 500;
     text-transform: uppercase; letter-spacing: 0.84px; color: #008c44;
-    display: flex; align-items: center;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tut-card-play {
+    width: 24px; height: 24px; background: #eef9f3; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #008c44; font-size: 12px;
   }
   .tut-icon { width: 26px; height: 26px; background: var(--green-200); border: 1px solid var(--stroke-green); display: flex; align-items: center; justify-content: center; font-size: 11px; }
   .tut-name { font-size: 13px; font-weight: 500; color: var(--near-black); }
@@ -701,35 +705,35 @@
     <div class="tutorial-grid">
       <a href="airops-university-tutorials.html" class="tut-card">
         <div><div class="tut-card-title">Brand Kits</div><div class="tut-card-desc">Configure voice, audiences, and content rules to make every output unmistakably yours.</div></div>
-        <div class="tut-card-footer"><span class="tut-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tut-card-dur">~2 MIN</span></div>
+        <div class="tut-card-footer"><span class="tut-card-pill" style="background:#fee7fd;border-color:#c54b9b;color:#3a092c;">POINT + CLICK</span><span class="tut-card-dur">12 GUIDES <span class="tut-card-play"><i class="ri-play-fill"></i></span></span></div>
       </a>
       <a href="airops-university-tutorials.html" class="tut-card">
         <div><div class="tut-card-title">Page360</div><div class="tut-card-desc">Analyze any page's AI visibility, citation potential, and optimization opportunities in one view.</div></div>
-        <div class="tut-card-footer"><span class="tut-card-format"><i class="ri-play-circle-line"></i> VIDEO</span><span class="tut-card-dur">~3 MIN</span></div>
+        <div class="tut-card-footer"><span class="tut-card-pill" style="background:#eef9f3;border-color:#057a28;color:#057a28;">VIDEO</span><span class="tut-card-dur">8 GUIDES <span class="tut-card-play"><i class="ri-play-fill"></i></span></span></div>
       </a>
       <a href="airops-university-tutorials.html" class="tut-card">
         <div><div class="tut-card-title">Workflows</div><div class="tut-card-desc">Build multi-step content pipelines with drag-and-drop logic, live inputs, and brand grounding.</div></div>
-        <div class="tut-card-footer"><span class="tut-card-format"><i class="ri-walk-line"></i> WALKTHROUGH</span><span class="tut-card-dur">~4 MIN</span></div>
+        <div class="tut-card-footer"><span class="tut-card-pill" style="background:#e5e5ff;border-color:#1b1b8f;color:#0f0f57;">WALKTHROUGH</span><span class="tut-card-dur">10 GUIDES <span class="tut-card-play"><i class="ri-play-fill"></i></span></span></div>
       </a>
       <a href="airops-university-tutorials.html" class="tut-card">
         <div><div class="tut-card-title">Citations</div><div class="tut-card-desc">Track where AI answer engines mention and cite your brand across ChatGPT, Gemini, and Perplexity.</div></div>
-        <div class="tut-card-footer"><span class="tut-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tut-card-dur">~2 MIN</span></div>
+        <div class="tut-card-footer"><span class="tut-card-pill" style="background:#EEFF8C;border-color:#d4e87a;color:#000d05;">POINT + CLICK</span><span class="tut-card-dur">7 GUIDES <span class="tut-card-play"><i class="ri-play-fill"></i></span></span></div>
       </a>
       <a href="airops-university-tutorials.html" class="tut-card">
         <div><div class="tut-card-title">Knowledge Bases</div><div class="tut-card-desc">Bring your data and documents into AirOps to ground every AI output in your brand's expertise.</div></div>
-        <div class="tut-card-footer"><span class="tut-card-format"><i class="ri-play-circle-line"></i> VIDEO</span><span class="tut-card-dur">~3 MIN</span></div>
+        <div class="tut-card-footer"><span class="tut-card-pill" style="background:#c9ebf2;border-color:#1b1b8f;color:#0f0f57;">VIDEO</span><span class="tut-card-dur">6 GUIDES <span class="tut-card-play"><i class="ri-play-fill"></i></span></span></div>
       </a>
       <a href="airops-university-tutorials.html" class="tut-card">
         <div><div class="tut-card-title">MCP Connector</div><div class="tut-card-desc">Connect AirOps to external tools and data sources using the Model Context Protocol.</div></div>
-        <div class="tut-card-footer"><span class="tut-card-format"><i class="ri-walk-line"></i> WALKTHROUGH</span><span class="tut-card-dur">~2 MIN</span></div>
+        <div class="tut-card-footer"><span class="tut-card-pill" style="background:#fee7fd;border-color:#c54b9b;color:#3a092c;">WALKTHROUGH</span><span class="tut-card-dur">5 GUIDES <span class="tut-card-play"><i class="ri-play-fill"></i></span></span></div>
       </a>
       <a href="airops-university-tutorials.html" class="tut-card">
         <div><div class="tut-card-title">Insights</div><div class="tut-card-desc">Monitor visibility trends, sentiment shifts, and competitive positioning in AI search results.</div></div>
-        <div class="tut-card-footer"><span class="tut-card-format"><i class="ri-cursor-line"></i> POINT + CLICK</span><span class="tut-card-dur">~1 MIN</span></div>
+        <div class="tut-card-footer"><span class="tut-card-pill" style="background:#eef9f3;border-color:#057a28;color:#057a28;">POINT + CLICK</span><span class="tut-card-dur">6 GUIDES <span class="tut-card-play"><i class="ri-play-fill"></i></span></span></div>
       </a>
       <a href="airops-university-tutorials.html" class="tut-card">
         <div><div class="tut-card-title">Integrations</div><div class="tut-card-desc">Push results directly into your CMS, CRM, and analytics tools with zero manual handoffs.</div></div>
-        <div class="tut-card-footer"><span class="tut-card-format"><i class="ri-play-circle-line"></i> VIDEO</span><span class="tut-card-dur">~2 MIN</span></div>
+        <div class="tut-card-footer"><span class="tut-card-pill" style="background:#e5e5ff;border-color:#1b1b8f;color:#0f0f57;">VIDEO</span><span class="tut-card-dur">4 GUIDES <span class="tut-card-play"><i class="ri-play-fill"></i></span></span></div>
       </a>
     </div>
     <div style="text-align:center;"><a href="#" class="link-muted">Browse all 58 tutorials →</a></div>
