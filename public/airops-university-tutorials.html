@@ -258,7 +258,7 @@
   }
 
   .tutorial-card {
-    background: #fff;
+    background: var(--card-bg, #fff);
     border: 1.5px solid var(--card-border, #dfeae3);
     text-decoration: none;
     color: inherit;
@@ -304,11 +304,11 @@
   }
 
   /* Category color themes - from the web design system palette */
-  .cat-green { --card-border: #dfeae3; --card-title: #000d05; --card-body: #002910; --card-accent: #008c44; }
-  .cat-pink { --card-border: #fee7fd; --card-title: #0d020a; --card-body: #3a092c; --card-accent: #c54b9b; }
-  .cat-indigo { --card-border: #e5e5ff; --card-title: #0f0f57; --card-body: #0f0f57; --card-accent: #1b1b8f; }
-  .cat-yellow { --card-border: #eeff8c; --card-title: #242603; --card-body: #242603; --card-accent: #586605; }
-  .cat-teal { --card-border: #c9ebf2; --card-title: #0a3945; --card-body: #0a3945; --card-accent: #196c80; }
+  .cat-green { --card-bg: #ffffff; --card-border: #dfeae3; --card-title: #000d05; --card-body: #002910; --card-accent: #008c44; }
+  .cat-pink { --card-bg: #fff7ff; --card-border: #fee7fd; --card-title: #0d020a; --card-body: #3a092c; --card-accent: #c54b9b; }
+  .cat-indigo { --card-bg: #f5f6ff; --card-border: #e5e5ff; --card-title: #0f0f57; --card-body: #0f0f57; --card-accent: #1b1b8f; }
+  .cat-yellow { --card-bg: #fdfff3; --card-border: #eeff8c; --card-title: #242603; --card-body: #242603; --card-accent: #586605; }
+  .cat-teal { --card-bg: #f2fcff; --card-border: #c9ebf2; --card-title: #0a3945; --card-body: #0a3945; --card-accent: #196c80; }
 
   .btn-primary {
     font-size: 16px; font-weight: 500; color: #002910;
