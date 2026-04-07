@@ -76,7 +76,10 @@
   .slide-panelists{background:var(--white);padding:80px;gap:48px}
   .slide-panelists .section-header{display:flex;flex-direction:column;gap:20px}
   .panelists-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1.5px solid var(--text-secondary)}
-  .panelist-card{background:var(--white);padding:40px 32px;display:flex;flex-direction:column;gap:12px;border:0.75px solid var(--text-secondary)}
+  .panelist-card{background:var(--white);padding:40px 32px;display:flex;flex-direction:row;gap:20px;border:0.75px solid var(--text-secondary)}
+  .panelist-photo{width:80px;height:80px;min-width:80px;background:var(--green-100);border:1px solid var(--stroke);display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .panelist-photo img{width:100%;height:100%;object-fit:cover}
+  .panelist-info{display:flex;flex-direction:column;gap:12px}
   .panelist-role{font-family:var(--font-mono);font-size:14px;font-weight:500;letter-spacing:0.84px;text-transform:uppercase;color:var(--mid-green);line-height:1.3}
   .panelist-card h3{font-family:var(--font-serif);font-weight:400;font-size:32px;letter-spacing:-0.64px;line-height:1.1;color:var(--forest)}
   .panelist-title{font-family:var(--font-mono);font-size:13px;font-weight:500;letter-spacing:0.52px;color:var(--text-secondary);text-transform:uppercase}
@@ -177,11 +180,11 @@
     <h2 class="h2-comp h2-comp--sm"><span class="serif-line">Who's on stage</span></h2>
   </div>
   <div class="panelists-grid">
-    <div class="panelist-card"><span class="panelist-role">MODERATOR</span><h3>Jess Rosenberg</h3><p class="panelist-title">HEAD OF BRAND, AIROPS</p><p class="panelist-bio">Built AirOps' machine-readable brand system. Former Twitter. Practitioner-builder at the intersection of brand strategy and AI infrastructure.</p></div>
-    <div class="panelist-card"><span class="panelist-role">PANELIST</span><h3>Kira Klaas</h3><p class="panelist-title">BRAND, LATER</p><p class="panelist-bio">Leading brand at the social-first marketing platform. Perspective on maintaining brand integrity across high-velocity social content at scale.</p></div>
-    <div class="panelist-card"><span class="panelist-role">PANELIST</span><h3>James Hurst</h3><p class="panelist-title">BRAND, HELLOFRESH</p><p class="panelist-bio">Building brand systems for a global DTC brand operating across dozens of markets. Perspective on governance at scale when every market needs local relevance.</p></div>
-    <div class="panelist-card"><span class="panelist-role">PANELIST</span><h3>Leland Maschmeyer</h3><p class="panelist-title">PARTNER, COLLINS</p><p class="panelist-bio">One of the most respected voices in brand strategy and design. Perspective on what makes brand systems durable when the production model fundamentally changes.</p></div>
-    <div class="panelist-card"><span class="panelist-role">PANELIST</span><h3>Paul Jun</h3><p class="panelist-title">HEAD OF BRAND, RAMP</p><p class="panelist-bio">Leading brand at one of the fastest-growing fintech companies. Perspective on building and scaling brand identity in a high-growth, product-led environment.</p></div>
+    <div class="panelist-card"><div class="panelist-photo"></div><div class="panelist-info"><span class="panelist-role">MODERATOR</span><h3>Jess Rosenberg</h3><p class="panelist-title">HEAD OF BRAND, AIROPS</p><p class="panelist-bio">Built AirOps' machine-readable brand system. Former Twitter. Practitioner-builder at the intersection of brand strategy and AI infrastructure.</p></div></div>
+    <div class="panelist-card"><div class="panelist-photo"></div><div class="panelist-info"><span class="panelist-role">PANELIST</span><h3>Kira Klaas</h3><p class="panelist-title">BRAND, LATER</p><p class="panelist-bio">Leading brand at the social-first marketing platform. Perspective on maintaining brand integrity across high-velocity social content at scale.</p></div></div>
+    <div class="panelist-card"><div class="panelist-photo"></div><div class="panelist-info"><span class="panelist-role">PANELIST</span><h3>James Hurst</h3><p class="panelist-title">BRAND, HELLOFRESH</p><p class="panelist-bio">Building brand systems for a global DTC brand operating across dozens of markets. Perspective on governance at scale when every market needs local relevance.</p></div></div>
+    <div class="panelist-card"><div class="panelist-photo"></div><div class="panelist-info"><span class="panelist-role">PANELIST</span><h3>Leland Maschmeyer</h3><p class="panelist-title">PARTNER, COLLINS</p><p class="panelist-bio">One of the most respected voices in brand strategy and design. Perspective on what makes brand systems durable when the production model fundamentally changes.</p></div></div>
+    <div class="panelist-card"><div class="panelist-photo"></div><div class="panelist-info"><span class="panelist-role">PANELIST</span><h3>Paul Jun</h3><p class="panelist-title">HEAD OF BRAND, RAMP</p><p class="panelist-bio">Leading brand at one of the fastest-growing fintech companies. Perspective on building and scaling brand identity in a high-growth, product-led environment.</p></div></div>
   </div>
 </section>
 
