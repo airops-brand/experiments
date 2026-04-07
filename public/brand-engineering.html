@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brand Engineering: Scaling Brand in the AI Era</title>
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --near-black:#000d05;--forest:#002910;--deep-forest:#00250e;--dark-green:#001408;
+    --mid-green:#008c44;--brand-green:#057a28;--bright-green:#009b32;--interaction:#00ff64;
+    --hover-green:#00cc50;--super-light:#CCFFE0;--green-100:#dfeae3;--pale-green:#eef9f3;
+    --mint:#f8fffb;--off-white:#F8FFFA;--white:#ffffff;--label-yellow:#EEFF8C;
+    --pink-200:#fee7fd;--pink-mid:#c54b9b;--pink-darkest:#3a092c;
+    --indigo:#1b1b8f;--indigo-dark:#0f0f57;
+    --text-on-dark:#f8fffa;--text-primary:#002910;--text-secondary:#01200d;
+    --stroke:#d4e8da;
+    --font-serif:Georgia,serif;--font-sans:'Inter','Helvetica Neue',sans-serif;--font-mono:'DM Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:var(--font-sans);background:var(--white);color:var(--text-primary);-webkit-font-smoothing:antialiased}
+  .slide{width:100%;max-width:1440px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden}
+  .pill{display:inline-flex;align-items:center;padding:8px 16px;border:1px solid;border-radius:5px;font-family:var(--font-mono);font-size:14px;font-weight:500;letter-spacing:0.84px;line-height:1.3;text-transform:uppercase;width:fit-content}
+  .pill--green-light{background:var(--mint);border-color:var(--mid-green);color:var(--forest)}
+  .pill--green{background:var(--green-100);border-color:var(--mid-green);color:var(--forest)}
+  .pill--dark{background:var(--near-black);border-color:transparent;color:var(--interaction)}
+  .pill--indigo{background:var(--indigo-dark);border-color:transparent;color:#d0d0ff}
+  .pill--pink{background:var(--pink-200);border-color:var(--pink-mid);color:var(--pink-darkest)}
+  .h2-comp{font-weight:400;line-height:1.1}
+  .h2-comp .serif-line{display:block;font-family:var(--font-serif);font-size:72px;letter-spacing:-2.16px}
+  .h2-comp .sans-line{display:block;font-family:var(--font-sans);font-weight:400;font-size:72px;line-height:1.0;letter-spacing:-1.44px}
+  .h2-comp--sm .serif-line{font-size:56px;letter-spacing:-1.12px}
+  .h2-comp--sm .sans-line{font-size:56px;letter-spacing:-1.12px}
+  .btn-primary{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;background:var(--interaction);color:var(--forest);font-family:var(--font-sans);font-weight:500;font-size:20px;line-height:1.0;text-decoration:none;border:none;border-radius:58px;cursor:pointer}
+  .btn-primary:hover{background:var(--hover-green)}
+  .btn-primary i{font-size:24px}
+  .slide-nav{position:fixed;right:24px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:100}
+  .slide-nav a{width:8px;height:8px;border-radius:50%;background:var(--green-100);display:block;transition:all 0.2s}
+  .slide-nav a.active,.slide-nav a:hover{background:var(--mid-green);transform:scale(1.4)}
+  .meta-item{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:13px;font-weight:500;letter-spacing:0.52px;color:rgba(248,255,250,0.45)}
+  .meta-item i{font-size:16px;color:var(--interaction)}
+  .slide-hero{background:var(--deep-forest);border:1px solid var(--brand-green);color:var(--text-on-dark);padding:64px 80px 56px;justify-content:space-between}
+  .slide-hero .top-bar{display:flex;justify-content:space-between;align-items:flex-start}
+  .slide-hero .logo{color:var(--text-on-dark)}
+  .slide-hero .hero-content{flex:1;display:flex;flex-direction:column;justify-content:center;gap:28px;max-width:960px;padding:48px 0}
+  .slide-hero .h2-comp .serif-line,.slide-hero .h2-comp .sans-line{color:var(--text-on-dark)}
+  .slide-hero .hero-sub{font-size:20px;line-height:1.5;color:rgba(248,255,250,0.65);max-width:680px}
+  .slide-hero .meta-row{display:flex;gap:32px;align-items:center;flex-wrap:wrap;margin-top:8px}
+  .slide-hero .bottom-bar{display:flex;justify-content:space-between;align-items:flex-end}
+  .slide-hero .event-label{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:0.84px;text-transform:uppercase;color:rgba(248,255,250,0.3)}
+  .green-bar{width:48px;height:4px;background:var(--interaction)}
+  .slide-abstract{background:var(--white);background-image:radial-gradient(var(--stroke) 1px,transparent 1px);background-size:24px 24px;padding:80px;gap:48px}
+  .slide-abstract .section-header{display:flex;flex-direction:column;gap:20px}
+  .abstract-body{display:grid;grid-template-columns:1fr 1fr;gap:48px;background:var(--white);padding:40px;border:1px solid var(--stroke)}
+  .abstract-body p{font-size:18px;line-height:1.6;letter-spacing:0.18px;color:var(--text-secondary)}
+  .abstract-body p+p{margin-top:20px}
+  .highlight-block{background:var(--pale-green);border-left:4px solid var(--mid-green);padding:24px 28px;margin-top:24px}
+  .highlight-block p{font-size:16px;line-height:1.6;color:var(--forest);font-weight:500}
+  .slide-themes{background:var(--white);padding:80px;gap:48px}
+  .slide-themes .section-header{display:flex;flex-direction:column;gap:20px}
+  .themes-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1.5px solid var(--text-secondary)}
+  .theme-card{background:var(--white);padding:40px;display:flex;flex-direction:column;gap:16px;border:0.75px solid var(--text-secondary)}
+  .theme-number{font-family:var(--font-serif);font-size:56px;font-weight:400;color:var(--green-100);line-height:1;letter-spacing:-1.12px}
+  .theme-card h3{font-family:var(--font-sans);font-weight:600;font-size:20px;letter-spacing:-0.01em;color:var(--forest);line-height:1.3}
+  .theme-card p{font-size:16px;line-height:1.6;color:var(--text-secondary)}
+  .slide-questions{background:var(--deep-forest);border:1px solid var(--brand-green);color:var(--text-on-dark);padding:80px;gap:40px}
+  .slide-questions .section-header{display:flex;flex-direction:column;gap:20px}
+  .slide-questions .h2-comp .serif-line,.slide-questions .h2-comp .sans-line{color:var(--text-on-dark)}
+  .questions-container{display:flex;flex-direction:column}
+  .section-divider{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:0.84px;text-transform:uppercase;color:#c0ffd2;padding:28px 0 12px}
+  .question-block{display:grid;grid-template-columns:36px 1fr;gap:16px;align-items:baseline;padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+  .q-num{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--interaction);letter-spacing:0.84px}
+  .q-text{font-size:17px;line-height:1.55;color:rgba(248,255,250,0.8);letter-spacing:0.17px}
+  .slide-panelists{background:var(--white);padding:80px;gap:48px}
+  .slide-panelists .section-header{display:flex;flex-direction:column;gap:20px}
+  .panelists-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1.5px solid var(--text-secondary)}
+  .panelist-card{background:var(--white);padding:40px 32px;display:flex;flex-direction:column;gap:12px;border:0.75px solid var(--text-secondary)}
+  .panelist-role{font-family:var(--font-mono);font-size:14px;font-weight:500;letter-spacing:0.84px;text-transform:uppercase;color:var(--mid-green);line-height:1.3}
+  .panelist-card h3{font-family:var(--font-serif);font-weight:400;font-size:32px;letter-spacing:-0.64px;line-height:1.1;color:var(--forest)}
+  .panelist-title{font-family:var(--font-mono);font-size:13px;font-weight:500;letter-spacing:0.52px;color:var(--text-secondary);text-transform:uppercase}
+  .panelist-bio{font-size:15px;line-height:1.6;color:var(--text-secondary);margin-top:8px}
+  .slide-cta{background:var(--indigo);color:var(--text-on-dark);padding:80px;justify-content:center;align-items:center;text-align:center;gap:28px}
+  .slide-cta .h2-comp .serif-line,.slide-cta .h2-comp .sans-line{color:var(--text-on-dark)}
+  .slide-cta .cta-sub{font-size:18px;line-height:1.6;letter-spacing:0.18px;color:rgba(248,255,250,0.65);max-width:560px}
+  .cta-details{display:flex;gap:40px;margin-top:12px}
+  @media(max-width:768px){
+    .slide{padding:40px 24px!important;min-height:auto}
+    .h2-comp .serif-line{font-size:48px!important;letter-spacing:-1.44px!important}
+    .h2-comp .sans-line{font-size:48px!important;letter-spacing:-1.44px!important}
+    .abstract-body{grid-template-columns:1fr;padding:24px}
+    .themes-grid{grid-template-columns:1fr}
+    .panelists-grid{grid-template-columns:1fr}
+    .slide-hero .meta-row{flex-direction:column;gap:12px;align-items:flex-start}
+    .cta-details{flex-direction:column;gap:12px}
+    .btn-primary{font-size:16px;padding:16px 24px}
+    .btn-primary i{font-size:20px}
+    .slide-nav{display:none}
+  }
+</style>
+</head>
+<body>
+<nav class="slide-nav"><a href="#hero" class="active"></a><a href="#abstract"></a><a href="#themes"></a><a href="#questions"></a><a href="#panelists"></a><a href="#cta"></a></nav>
+
+<section class="slide slide-hero" id="hero">
+  <div class="top-bar">
+    <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="100" viewBox="0 0 100 32" fill="none" aria-label="AirOps"><path d="M14.2683 8.35377V11.2588C12.9587 9.16447 10.9253 7.88086 8.40935 7.88086C3.03288 7.88086 0 11.833 0 17.1364C0 22.4735 3.06735 26.5608 8.47828 26.5608C10.9942 26.5608 12.9931 25.2772 14.2683 23.1829V26.0879H18.473V8.35377H14.2683ZM9.30543 23.0478C6.23809 23.0478 4.48039 20.2441 4.48039 17.1364C4.48039 14.0963 6.20362 11.4277 9.37436 11.4277C11.9937 11.4277 14.2339 13.2856 14.2339 17.0688C14.2339 20.7846 12.0971 23.0478 9.30543 23.0478Z" fill="currentColor"/><path d="M22.0938 8.35547V26.0896H26.5741V8.35547H22.0938Z" fill="currentColor"/><path d="M34.832 12.7461V8.3548H30.3516V26.0889H34.832V15.9551C34.832 13.3541 36.6586 12.307 38.3818 12.307C39.3813 12.307 40.4152 12.5772 40.9666 12.7799V8.05078C38.0372 8.05078 35.6246 9.77353 34.832 12.7461Z" fill="currentColor"/><path d="M42.0625 13.7594C42.0625 19.2655 45.9225 23.1839 51.4713 23.1839C57.0546 23.1839 60.8804 19.2655 60.8804 13.7594C60.8804 8.35475 57.0546 4.50391 51.4713 4.50391C45.9225 4.50391 42.0625 8.35475 42.0625 13.7594ZM56.3998 13.7594C56.3998 17.2049 54.5042 19.6708 51.4713 19.6708C48.404 19.6708 46.5429 17.2049 46.5429 13.7594C46.5429 10.4491 48.404 8.05073 51.4713 8.05073C54.5042 8.05073 56.3998 10.4491 56.3998 13.7594Z" fill="currentColor"/><path d="M73.3738 7.88086C70.7545 7.88086 68.6177 9.40093 67.4804 11.833V8.35377H63V31.9993H67.4804V22.9127C68.7556 25.1083 71.1336 26.5608 73.6496 26.5608C78.5435 26.5608 81.9555 22.8113 81.9555 17.4404C81.9555 11.7993 78.4057 7.88086 73.3738 7.88086ZM72.5811 23.2505C69.5827 23.2505 67.4804 20.7846 67.4804 17.2715C67.4804 13.6571 69.5827 11.1237 72.5811 11.1237C75.4417 11.1237 77.4751 13.7247 77.4751 17.4066C77.4751 20.8521 75.4417 23.2505 72.5811 23.2505Z" fill="currentColor"/><path d="M83.3906 19.9401C83.3906 23.1491 86.2856 26.5608 92.0757 26.5608C97.9002 26.5608 100.003 23.2167 100.003 20.6157C100.003 16.6297 95.212 15.9203 92.0068 15.3123C89.8355 14.9407 88.4569 14.6367 88.4569 13.4207C88.4569 12.0357 90.0078 11.1575 91.6621 11.1575C93.9023 11.1575 94.7639 12.6775 94.8329 14.2989H99.3133C99.3133 11.6641 97.4177 7.88086 91.5587 7.88086C86.4924 7.88086 83.9765 10.6845 83.9765 13.6909C83.9765 17.9809 88.836 18.42 92.0412 19.028C93.9023 19.3658 95.5221 19.7712 95.5221 21.0886C95.5221 22.406 93.9368 23.2842 92.248 23.2842C90.6626 23.2842 87.871 22.406 87.871 19.9401H83.3906Z" fill="currentColor"/><path d="M24.4093 6.19288C22.5697 6.19288 21.25 4.89943 21.25 3.13563C21.25 1.37184 22.5697 0 24.4093 0C26.1688 0 27.5685 1.37184 27.5685 3.13563C27.5685 4.89943 26.1688 6.19288 24.4093 6.19288Z" fill="currentColor"/></svg></div>
+    <span class="pill pill--dark">CONFERENCE 2026</span>
+  </div>
+  <div class="hero-content">
+    <h1 class="h2-comp"><span class="serif-line">Brand Engineering</span><span class="sans-line">Scaling brand quality in the AI era</span></h1>
+    <p class="hero-sub">A panel on what breaks, what holds, and what has to be rebuilt when AI removes the production bottleneck and brand becomes the only real differentiator.</p>
+    <div class="meta-row">
+      <div class="meta-item"><i class="ri-calendar-line"></i> May 13, 2026</div>
+      <div class="meta-item"><i class="ri-map-pin-line"></i> City Winery, NYC</div>
+      <div class="meta-item"><i class="ri-time-line"></i> Panel + Live Q&A</div>
+      <div class="meta-item"><i class="ri-user-star-line"></i> Moderated by Jess Rosenberg</div>
+    </div>
+  </div>
+  <div class="bottom-bar"><span class="event-label">AirOps Conference / Brand Engineering Track</span><div class="green-bar"></div></div>
+</section>
+
+<section class="slide slide-abstract" id="abstract">
+  <div class="section-header">
+    <span class="pill pill--green-light">PANEL ABSTRACT</span>
+    <h2 class="h2-comp h2-comp--sm"><span class="serif-line">Brand was built for scarcity.</span><span class="sans-line">AI just made content infinite.</span></h2>
+  </div>
+  <div class="abstract-body">
+    <div>
+      <p>For decades, brand systems operated under a simple constraint: content was expensive to produce and humans were the bottleneck. Guidelines, governance frameworks, and approval chains were all designed around that reality.</p>
+      <p>That constraint is gone. AI has made content production fast, cheap, and limitless. The question brand leaders now face isn't how to produce more. It's how to make sure "more" doesn't destroy what makes their brand recognizable, trusted, and alive.</p>
+    </div>
+    <div>
+      <p>This panel brings together brand leaders actively navigating that shift. Not the theoretical version. The real one: where brand systems break, where governance becomes a bottleneck instead of a safeguard, and where the opportunity lives for brands willing to rebuild their infrastructure for an AI-native world.</p>
+      <div class="highlight-block"><p>The central tension: brand consistency vs. brand relevance. Governance can over-index on consistency and kill the thing that makes a brand feel unique. This panel explores how to hold both.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide slide-themes" id="themes">
+  <div class="section-header">
+    <span class="pill pill--green">KEY THEMES</span>
+    <h2 class="h2-comp h2-comp--sm"><span class="serif-line">What we'll cover</span><span class="sans-line">and why it matters now</span></h2>
+  </div>
+  <div class="themes-grid">
+    <div class="theme-card"><span class="theme-number">01</span><h3>What AI can't replicate</h3><p>Every brand has a non-negotiable core. The thing that, if removed, makes it unrecognizable. We'll surface what that is for each panelist and how they protect it at scale.</p></div>
+    <div class="theme-card"><span class="theme-number">02</span><h3>Brand systems built for machines</h3><p>Most brand guidelines were written for humans. Can a model actually use yours and output on-brand content? What has to change when the reader is an LLM, not a designer?</p></div>
+    <div class="theme-card"><span class="theme-number">03</span><h3>What you've built to solve the pain</h3><p>Real examples of systems, tools, and processes panelists have created to maintain brand quality at AI scale. What worked, what didn't, and what they'd rebuild if starting today.</p></div>
+    <div class="theme-card"><span class="theme-number">04</span><h3>Org design for brand governance</h3><p>Who owns brand quality when the volume of output 10x's overnight? Is it brand, legal, marketing ops, the CMO? We'll talk about whether current org structures match the problem.</p></div>
+  </div>
+</section>
+
+<section class="slide slide-questions" id="questions">
+  <div class="section-header">
+    <span class="pill pill--dark">DISCUSSION FRAMEWORK</span>
+    <h2 class="h2-comp h2-comp--sm"><span class="serif-line">The questions</span><span class="sans-line">driving the conversation</span></h2>
+  </div>
+  <div class="questions-container">
+    <div class="section-divider">Opening: Set the stakes</div>
+    <div class="question-block"><span class="q-num">01</span><span class="q-text">When you look at your brand today, what's the one thing AI can't yet replicate? And what's the thing that, if not present, would make your brand unrecognizable?</span></div>
+    <div class="question-block"><span class="q-num">02</span><span class="q-text">There's a version of this conversation where "brand governance in the age of AI" becomes a compliance conversation. What does governance actually mean to you, and is it even the right word?</span></div>
+    <div class="section-divider">Middle: The real work</div>
+    <div class="question-block"><span class="q-num">03</span><span class="q-text">Most brand systems were designed for a world where content was expensive and humans were the bottleneck. What breaks first when that constraint disappears?</span></div>
+    <div class="question-block"><span class="q-num">04</span><span class="q-text">Are your brand systems built for AI and machines? Can a model actually use them and output completely on-brand content and designs?</span></div>
+    <div class="question-block"><span class="q-num">05</span><span class="q-text">There's tension between brand consistency and brand relevance. Governance can over-index on consistency and kill the thing that makes a brand feel alive. How do you think about that tradeoff?</span></div>
+    <div class="question-block"><span class="q-num">06</span><span class="q-text">Who actually owns this challenge in your org? And does the org structure you have match the problem you're trying to solve?</span></div>
+    <div class="section-divider">Closing: The forward-looking stuff</div>
+    <div class="question-block"><span class="q-num">07</span><span class="q-text">If brand is the differentiator, that implies brand investment needs to go up, not down. Are you seeing that argument win internally?</span></div>
+    <div class="question-block"><span class="q-num">08</span><span class="q-text">Give me a provocation: what's a belief most brand leaders hold about AI and brand governance that you think is just wrong?</span></div>
+  </div>
+</section>
+
+<section class="slide slide-panelists" id="panelists">
+  <div class="section-header">
+    <span class="pill pill--pink">PANELISTS</span>
+    <h2 class="h2-comp h2-comp--sm"><span class="serif-line">Who's on stage</span></h2>
+  </div>
+  <div class="panelists-grid">
+    <div class="panelist-card"><span class="panelist-role">MODERATOR</span><h3>Jess Rosenberg</h3><p class="panelist-title">HEAD OF BRAND, AIROPS</p><p class="panelist-bio">Built AirOps' machine-readable brand system. Former Twitter. Practitioner-builder at the intersection of brand strategy and AI infrastructure.</p></div>
+    <div class="panelist-card"><span class="panelist-role">PANELIST</span><h3>Kira [TBC]</h3><p class="panelist-title">SOCIAL + BRAND</p><p class="panelist-bio">Perspective on trust damage in social, where AI missteps happen publicly and recovery is measured in hours, not quarters.</p></div>
+    <div class="panelist-card"><span class="panelist-role">PANELIST</span><h3>Jess E. [TBC]</h3><p class="panelist-title">BRAND, ATTENTIVE</p><p class="panelist-bio">Leading brand at a company built on customer communication at scale. Perspective on failure modes in high-volume, high-stakes messaging.</p></div>
+  </div>
+</section>
+
+<section class="slide slide-cta" id="cta">
+  <span class="pill pill--indigo">REGISTER NOW</span>
+  <h2 class="h2-comp h2-comp--sm"><span class="serif-line">Brand is the differentiator.</span><span class="sans-line">Come build for it.</span></h2>
+  <p class="cta-sub">Join brand, content, and marketing leaders for a half-day of panels, workshops, and conversations on scaling quality in an AI-first world.</p>
+  <a href="https://www.airops.com/brand-engineering-webinar" class="btn-primary">Register for AirOps Conference <i class="ri-arrow-right-line"></i></a>
+  <div class="cta-details">
+    <div class="meta-item"><i class="ri-calendar-line"></i> May 13, 2026</div>
+    <div class="meta-item"><i class="ri-map-pin-line"></i> City Winery, NYC</div>
+    <div class="meta-item"><i class="ri-group-line"></i> Director+ Brand & Content Leaders</div>
+  </div>
+</section>
+
+<script>
+  const sections=document.querySelectorAll('.slide'),navDots=document.querySelectorAll('.slide-nav a');
+  const observer=new IntersectionObserver(e=>{e.forEach(entry=>{if(entry.isIntersecting){navDots.forEach(d=>d.classList.remove('active'));const a=document.querySelector('.slide-nav a[href="#'+entry.target.id+'"]');if(a)a.classList.add('active')}})},{threshold:0.35});
+  sections.forEach(s=>observer.observe(s));
+</script>
+<script src="quill-widget.js" defer></script>
+<script src="agentation-loader.js" defer></script>
+</body>
+</html>
