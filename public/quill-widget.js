@@ -139,14 +139,13 @@
         </div>
       </div>
       <div class="quill-body">
-        <div class="quill-msg-user">Summarize this playbook</div>
         <div class="quill-msg-ai">
-          <p>Great! I will start summarizing this playbook</p>
+          <p>Hi! I'm Quill - your learning assistant. Feel free to ask me questions as you embark on your AirOps learning journey! You can ask me things like...</p>
           <ul>
-            <li>It's a playbook that automates blog refreshes - give it a URL, and it scrapes the article, pulls metadata, and figures out the primary keyword and AEO prompt.</li>
-            <li>It analyzes competitors to find content gaps and builds a section-by-section refresh brief.</li>
-            <li>It applies edits surgically - only changing what the brief calls for, preserving voice and links.</li>
-            <li>It finishes with a link audit and metadata refresh so everything's SEO-ready.</li>
+            <li>What is AEO and how is it different from SEO?</li>
+            <li>How do I set up my first Brand Kit?</li>
+            <li>What's the CITED framework?</li>
+            <li>How do I track AI citations for my brand?</li>
           </ul>
         </div>
       </div>
