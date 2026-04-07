@@ -11,7 +11,7 @@
       transition: transform 0.2s, box-shadow 0.2s;
     }
     .quill-fab:hover { transform: scale(1.08); box-shadow: 0 6px 18px rgba(0,0,0,0.24); }
-    .quill-fab svg { width: 22px; height: 22px; }
+    .quill-fab i { font-size: 22px; color: #00ff64; }
     .quill-fab.open { display: none; }
 
     .quill-panel {
@@ -121,15 +121,13 @@
 
   const HTML = `
     <button class="quill-fab" id="quillFab" aria-label="Open Quill chat">
-      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 2C5.58 2 2 5.13 2 9c0 2.39 1.4 4.52 3.55 5.78L4.5 18l3.6-1.8c.62.13 1.25.2 1.9.2 4.42 0 8-3.13 8-7s-3.58-7-8-7z" fill="#00ff64"/>
-      </svg>
+      <i class="ri-quill-pen-line"></i>
     </button>
     <div class="quill-panel" id="quillPanel">
       <div class="quill-header">
         <div class="quill-header-left">
           <div class="quill-header-icon">
-            <svg width="12" height="12" viewBox="0 0 20 20" fill="none"><path d="M10 2C5.58 2 2 5.13 2 9c0 2.39 1.4 4.52 3.55 5.78L4.5 18l3.6-1.8c.62.13 1.25.2 1.9.2 4.42 0 8-3.13 8-7s-3.58-7-8-7z" fill="#002910"/></svg>
+            <i class="ri-quill-pen-line"></i>
           </div>
           <span class="quill-header-title">Quill</span>
         </div>
@@ -178,6 +176,22 @@
       </div>
     </div>
   `;
+
+  // Inject Remix Icon CDN if not already loaded
+  if (!document.querySelector('link[href*="remixicon"]')) {
+    const riLink = document.createElement('link');
+    riLink.rel = 'stylesheet';
+    riLink.href = 'https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css';
+    document.head.appendChild(riLink);
+  }
+
+  // Inject agentation loader if not already loaded
+  if (!document.querySelector('script[src*="agentation-loader"]')) {
+    const agScript = document.createElement('script');
+    agScript.src = 'agentation-loader.js';
+    agScript.defer = true;
+    document.head.appendChild(agScript);
+  }
 
   // Inject
   const style = document.createElement('style');
